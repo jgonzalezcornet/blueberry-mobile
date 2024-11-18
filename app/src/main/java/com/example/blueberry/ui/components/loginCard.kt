@@ -1,4 +1,4 @@
-package com.example.blueberry
+package com.example.blueberry.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,15 +21,19 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import com.example.blueberry.PreviewScreenSizes
+import com.example.blueberry.R
 
 @Composable
-fun LoginCard() {
+fun LoginCard(
+    modifier: Modifier = Modifier
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
+            .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {

@@ -1,14 +1,9 @@
-package com.example.blueberry
+package com.example.blueberry.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,9 +14,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.blueberry.PreviewScreenSizes
+import com.example.blueberry.R
 
 @Composable
-fun RegisterCard() {
+fun RegisterCard(
+    modifier: Modifier = Modifier
+) {
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -30,8 +29,8 @@ fun RegisterCard() {
     var confirmPassword by remember { mutableStateOf("") }
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
+            .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -54,7 +53,6 @@ fun RegisterCard() {
                     )
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
@@ -63,7 +61,6 @@ fun RegisterCard() {
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 OutlinedTextField(
                     value = lastName,
                     onValueChange = { lastName = it },
@@ -72,7 +69,6 @@ fun RegisterCard() {
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
@@ -81,7 +77,6 @@ fun RegisterCard() {
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 OutlinedTextField(
                     value = dni,
                     onValueChange = { dni = it },
@@ -90,7 +85,6 @@ fun RegisterCard() {
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
@@ -99,14 +93,6 @@ fun RegisterCard() {
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = stringResource(R.string.register_password_rules),
-                    style = TextStyle(fontSize = 12.sp, color = Color.Gray),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-
                 OutlinedTextField(
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
@@ -114,8 +100,16 @@ fun RegisterCard() {
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.register_password_rules),
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Spacer(modifier = Modifier.height(16.dp))
-
                 Button(
                     onClick = { /* Acción de registro */ },
                     modifier = Modifier.fillMaxWidth(),
