@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">blueberry</string>
+    <string name="app_name">Blueberry</string>
     <string name="login_title">Iniciar sesión</string>
     <string name="login_email_label">Correo electrónico</string>
     <string name="login_password_label">Contraseña</string>
