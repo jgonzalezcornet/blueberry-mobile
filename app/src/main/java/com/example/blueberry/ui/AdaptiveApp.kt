@@ -7,16 +7,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Paid
-import androidx.compose.material.icons.rounded.CreditCard
 import androidx.compose.material.icons.rounded.AccountBalance
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.CreditCard
+import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.Paid
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -35,24 +36,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.blueberry.R
 import com.example.blueberry.ui.components.TopBar
 import com.example.blueberry.ui.login.LoginScreen
 import com.example.blueberry.ui.login.RegisterScreen
-import com.example.blueberry.ui.main.HomeScreen
-import com.example.blueberry.ui.navigation.AppDestinations
-import com.example.blueberry.R
-import androidx.compose.material3.IconButton
 import com.example.blueberry.ui.main.ActivityScreen
 import com.example.blueberry.ui.main.AliasScreen
 import com.example.blueberry.ui.main.CardsScreen
+import com.example.blueberry.ui.main.HomeScreen
 import com.example.blueberry.ui.main.LinkScreen
 import com.example.blueberry.ui.main.ProfileScreen
 import com.example.blueberry.ui.main.TransferScreen
+import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.launch
 
 @Composable
 fun AdaptiveApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.ALIAS) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.ACTIVITY) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -285,7 +285,8 @@ fun AdaptiveApp() {
                 modifier = Modifier.padding(paddingValues)
             )
             AppDestinations.ACTIVITY -> ActivityScreen(
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
+                onBackNavigation = { currentDestination = AppDestinations.HOME }
             )
             AppDestinations.CARDS -> CardsScreen(
                 modifier = Modifier.padding(paddingValues)
@@ -295,7 +296,8 @@ fun AdaptiveApp() {
                 onBackNavigation = { currentDestination = AppDestinations.HOME }
             )
             AppDestinations.LINK -> LinkScreen(
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
+                onBackNavigation = { currentDestination = AppDestinations.HOME }
             )
             AppDestinations.TRANSFER -> TransferScreen(
                 modifier = Modifier.padding(paddingValues)

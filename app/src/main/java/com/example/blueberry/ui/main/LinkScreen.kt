@@ -4,16 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.blueberry.PreviewScreenSizes
-import com.example.blueberry.ui.components.ScreenTitle
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.LinkCard
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import com.example.blueberry.ui.components.LinkGeneratedCard
+import com.example.blueberry.ui.components.ScreenTitle
 
 @Composable
 fun LinkScreen(
@@ -23,7 +23,7 @@ fun LinkScreen(
     var linkModalOpen by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         ScreenTitle(
             title = stringResource(R.string.link_screen_title),
@@ -40,7 +40,7 @@ fun LinkScreen(
     }
 }
 
-@PreviewScreenSizes
+@Preview(showBackground = true)
 @Composable
 fun LinkScreenPreview() {
     LinkScreen()
