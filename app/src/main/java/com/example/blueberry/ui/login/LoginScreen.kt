@@ -9,12 +9,18 @@ import com.example.blueberry.ui.components.LoginCard
 import com.example.blueberry.ui.components.TopBar
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToRegister: () -> Unit = {},
+    onLoginSuccess: () -> Unit = {}
+) {
     Scaffold(
         topBar = { TopBar() }
     ) { paddingValues ->
         LoginCard(
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            onNavigateToRegister = onNavigateToRegister,
+            onLoginSuccess = onLoginSuccess
         )
     }
 }

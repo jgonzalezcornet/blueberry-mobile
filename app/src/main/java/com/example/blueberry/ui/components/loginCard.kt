@@ -26,7 +26,9 @@ import com.example.blueberry.R
 
 @Composable
 fun LoginCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateToRegister: () -> Unit = {},
+    onLoginSuccess: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -86,7 +88,7 @@ fun LoginCard(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { /* Algo */ },
+                    onClick = { onLoginSuccess() },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(R.color.primary_blue)

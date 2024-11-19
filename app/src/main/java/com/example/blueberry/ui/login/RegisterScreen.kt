@@ -9,7 +9,11 @@ import com.example.blueberry.ui.components.RegisterCard
 import com.example.blueberry.ui.components.TopBar
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+    modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit = {},
+    onRegisterSuccess: () -> Unit = {}
+) {
     Scaffold(
         topBar = { TopBar() }
     ) { paddingValues ->

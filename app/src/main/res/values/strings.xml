@@ -20,4 +20,20 @@
     - Al menos 1 (un) carácter especial
     </string>
     <string name="register_button">Registrarse</string>
+    <string name="hamburger_icon_description">Icono de menu hamburguesa</string>
+    <string name="home_title">Inicio</string>
+    <string name="activity_title">Actividades</string>
+    <string name="cards_title">Tarjetas</string>
+    <string name="profile_title">Perfil</string>
+    <string name="link_title">Link</string>
+    <string name="alias_title">Alias</string>
+    <string name="transfer_title">Transferencia</string>
+    <string name="welcome_message">¡Bienvenido a Blueberry!</string>
+    <string name="home_description">Tu banco digital para todas tus necesidades financieras</string>
+    <string name="activity_description">Revisa tus últimos movimientos y transacciones</string>
+    <string name="alias_description">Gestiona tus alias para transferencias rápidas</string>
+    <string name="cards_description">Administra tus tarjetas y sus configuraciones</string>
+    <string name="link_description">Vincula tus cuentas y servicios externos</string>
+    <string name="profile_description">Gestiona tu información personal y preferencias</string>
+    <string name="transfer_description">Realiza transferencias de forma rápida y segura</string>
 </resources>

@@ -5,7 +5,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,13 +28,15 @@ import com.example.blueberry.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar() {
+fun TopBar(
+    isUserLoggedIn: Boolean = false,
+    onMenuClick: () -> Unit = {}
+) {
     TopAppBar(
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Text(
                     text = stringResource(id = R.string.app_name),
                     color = Color.White,
@@ -45,6 +51,17 @@ fun TopBar() {
                 )
             }
         },
+        actions = {
+            if (isUserLoggedIn) {
+                IconButton(onClick = onMenuClick) {
+                    Icon(
+                        Icons.Rounded.Menu,
+                        contentDescription = stringResource(id = R.string.hamburger_icon_description),
+                        tint = Color.White
+                    )
+                }
+            }
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.primary_blue)
         )
@@ -54,6 +71,12 @@ fun TopBar() {
 @PreviewScreenSizes
 @Composable
 fun TopBarPreview() {
-    TopBar()
+    TopBar(isUserLoggedIn = true)
+}
+
+@PreviewScreenSizes
+@Composable
+fun TopBarNotLoggedInPreview() {
+    TopBar(isUserLoggedIn = false)
 }
 
