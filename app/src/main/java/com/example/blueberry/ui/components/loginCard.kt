@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
+import com.example.blueberry.ui.theme.PrimaryBlue
 
 @Composable
 fun LoginCard(
@@ -91,7 +92,7 @@ fun LoginCard(
                     onClick = { onLoginSuccess() },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.primary_blue)
+                        containerColor = PrimaryBlue // Set the background color here
                     )
                 ) {
                     Text(

@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,12 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
+import com.example.blueberry.ui.theme.PrimaryBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
     isUserLoggedIn: Boolean = false,
-    onMenuClick: () -> Unit = {}
+    openModalNavigation: () -> Unit = {},
 ) {
     TopAppBar(
         title = {
@@ -53,7 +53,7 @@ fun TopBar(
         },
         actions = {
             if (isUserLoggedIn) {
-                IconButton(onClick = onMenuClick) {
+                IconButton(onClick = openModalNavigation) {
                     Icon(
                         Icons.Rounded.Menu,
                         contentDescription = stringResource(id = R.string.hamburger_icon_description),
@@ -63,7 +63,7 @@ fun TopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorResource(id = R.color.primary_blue)
+            containerColor = PrimaryBlue
         )
     )
 }
