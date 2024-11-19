@@ -6,10 +6,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.blueberry.ui.AppDestinations
 import com.example.blueberry.ui.screens.ActivityScreen
 import com.example.blueberry.ui.screens.CardsScreen
 import com.example.blueberry.ui.screens.HomeScreen
 import com.example.blueberry.ui.screens.ProfileScreen
+import com.example.blueberry.ui.screens.SettingsScreen
 import com.example.blueberry.ui.theme.BlueberryTheme
 
 
@@ -17,7 +19,7 @@ import com.example.blueberry.ui.theme.BlueberryTheme
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "home"
+    startDestination: String = AppDestinations.HOME.route
 ) {
     BlueberryTheme {
         NavHost(
@@ -25,18 +27,11 @@ fun AppNavHost(
             startDestination = startDestination,
             modifier = modifier
         ) {
-            composable("home") {
-                HomeScreen()
-            }
-            composable("activity") {
-                ActivityScreen()
-            }
-            composable("cards") {
-                CardsScreen()
-            }
-            composable("profile") {
-                ProfileScreen()
-            }
+            composable(AppDestinations.HOME.route) { HomeScreen() }
+            composable(AppDestinations.ACTIVITY.route) { ActivityScreen() }
+            composable(AppDestinations.CARDS.route) { CardsScreen() }
+            composable(AppDestinations.SETTINGS.route) { SettingsScreen() }
+            composable("profile") { ProfileScreen() } // TODO: Ver como cambiar este path hardcodaeado
         }
     }
 }

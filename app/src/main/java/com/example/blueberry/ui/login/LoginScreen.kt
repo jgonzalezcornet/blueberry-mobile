@@ -6,17 +6,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.ui.components.LoginCard
-import com.example.blueberry.ui.components.TopBar
+import com.example.blueberry.ui.components.TopBarNotLogged
 
 @Composable
 fun LoginScreen() {
     Scaffold(
-        topBar = { TopBar() }
+        topBar = { TopBarNotLogged() }
     ) { paddingValues ->
         LoginCard(
             modifier = Modifier.padding(paddingValues)
         )
     }
+}
+
+@Composable
+fun TopBarNotLogged() {
+    TODO("Not yet implemented")
 }
 
 @PreviewScreenSizes

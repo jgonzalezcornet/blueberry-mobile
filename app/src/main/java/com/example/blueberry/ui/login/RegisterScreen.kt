@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.ui.components.RegisterCard
-import com.example.blueberry.ui.components.TopBar
+import com.example.blueberry.ui.components.TopBarNotLogged
 
 @Composable
 fun RegisterScreen() {
     Scaffold(
-        topBar = { TopBar() }
+        topBar = { TopBarNotLogged() }
     ) { paddingValues ->
         RegisterCard(
             modifier = Modifier.padding(paddingValues)

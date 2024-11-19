@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.MaterialTheme
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 
@@ -89,7 +90,7 @@ fun LoginCard(
                     onClick = { /* Algo */ },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.primary_blue)
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(

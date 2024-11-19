@@ -25,9 +25,12 @@
     <string name="activity">Activity</string>
     <string name="cards">Cards</string>
     <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    !-- Ver si se terminan usando o no --!
     <string name="homeRoute">home</string>
     <string name="activityRoute">activity</string>
     <string name="cardsRoute">cards</string>
     <string name="profileRoute">profile</string>
+    <string name="settingsRoute">settings</string>
 
 </resources>

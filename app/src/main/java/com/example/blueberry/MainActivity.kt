@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import com.example.blueberry.ui.login.LoginScreen
+import com.example.blueberry.ui.login.RegisterScreen
 import com.example.blueberry.ui.screens.MainScreen
 import com.example.blueberry.ui.theme.BlueberryTheme
 
@@ -25,6 +26,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     BlueberryTheme {
-        MainScreen()
+        RegisterScreen()
     }
 }

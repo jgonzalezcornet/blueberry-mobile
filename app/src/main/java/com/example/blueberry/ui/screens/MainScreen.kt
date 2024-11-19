@@ -5,7 +5,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.blueberry.ui.components.TopBar
+import com.example.blueberry.ui.components.TopBarLogged
 import com.example.blueberry.ui.navigation.AppNavHost
 import com.example.blueberry.ui.navigation.BottomBar
 
@@ -15,7 +15,7 @@ fun MainScreen() {
 
     Scaffold(
         bottomBar = { BottomBar(navController) },
-        topBar = { TopBar() }
+        topBar = { TopBarLogged(navController) }
     ) { innerPadding ->
         AppNavHost(
             navController = navController,

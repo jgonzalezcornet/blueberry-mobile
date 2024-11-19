@@ -114,7 +114,7 @@ fun RegisterCard(
                     onClick = { /* Acción de registro */ },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.primary_blue)
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(
