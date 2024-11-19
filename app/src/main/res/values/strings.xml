@@ -20,4 +20,14 @@
     - Al menos 1 (un) carácter especial
     </string>
     <string name="register_button">Registrarse</string>
+
+    <string name="home">Home</string>
+    <string name="activity">Activity</string>
+    <string name="cards">Cards</string>
+    <string name="profile">Profile</string>
+    <string name="homeRoute">home</string>
+    <string name="activityRoute">activity</string>
+    <string name="cardsRoute">cards</string>
+    <string name="profileRoute">profile</string>
+
 </resources>
