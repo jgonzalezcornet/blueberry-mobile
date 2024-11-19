@@ -26,6 +26,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     BlueberryTheme {
-        RegisterScreen()
+        MainScreen()
     }
 }

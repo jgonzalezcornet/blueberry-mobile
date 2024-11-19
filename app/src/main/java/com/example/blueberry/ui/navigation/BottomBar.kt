@@ -18,8 +18,7 @@ import com.example.blueberry.ui.AppDestinations
 
 @Composable
 fun BottomBar(navController: NavHostController) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: AppDestinations.HOME.route
+    val currentRoute = currentRoute(navController)
 
     BottomNavigation(
         backgroundColor = MaterialTheme.colorScheme.secondary, // Secondary color for the bar
@@ -62,4 +61,10 @@ fun BottomBar(navController: NavHostController) {
             )
         }
     }
+}
+
+@Composable
+fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
 }

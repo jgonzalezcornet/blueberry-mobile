@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.example.blueberry.R
 
@@ -50,9 +51,15 @@ fun TopBarLogged(navController: NavHostController) {
                     )
                 }
                 Row {
-                    UserButton(
-                        onClick = { navController.navigate("profile") },
-                    )
+                    UserButton(onClick = {
+                        navController.navigate("profile") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    })
                     Spacer(modifier = Modifier.width(8.dp))
                 }
             }
