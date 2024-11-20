@@ -24,6 +24,7 @@
     <string name="home_title">Inicio</string>
     <string name="activity_title">Actividad</string>
     <string name="cards_title">Tarjetas</string>
+    <string name="add_card_title">Agregar tarjeta</string>
     <string name="profile_title">Perfil</string>
     <string name="link_title">Cobrar con link de pago</string>
     <string name="alias_title">Ingresar dinero</string>
@@ -64,5 +65,31 @@
     <string name="date_format">d \'de\' MMMM</string>
     <string name="date_format_with_year">d \'de\' MMMM, YYYY</string>
     <string name="today_string">Hoy</string>
-
+    <string name="add_card_button">+ Agregar tarjeta</string>
+    <string name="card_number_label">Número de tarjeta</string>
+    <string name="card_holder_name_label">Nombre del titular</string>
+    <string name="expiry_date_label">Vencimiento</string>
+    <string name="cvv_label">CVV</string>
+    <string name="account_type">Tipo de cuenta</string>
+    <string name="alias">Alias</string>
+    <string name="cvu_cbu">CVU/CBU</string>
+    <string name="payment_link">Link de pago</string>
+    <string name="amount_label">Monto</string>
+    <string name="continue_button">Continuar</string>
+    <string name="enter_data">Ingrese los datos</string>
+    <string name="enter_alias_title">Ingrese el alias</string>
+    <string name="enter_cvu_title">Ingrese el CVU/CBU</string>
+    <string name="enter_payment_link_title">Ingrese el link de pago</string>
+    <string name="card_logo_description">Logo de la tarjeta</string>
+    <string name="card_holder_label">TITULAR</string>
+    <string name="card_expiry_label">VENCIMIENTO</string>
+    <string name="delete_card_button">Eliminar tarjeta</string>
+    <string name="payment_details">Detalles del pago</string>
+    <string name="destination_label">Destino</string>
+    <string name="select_payment_method">Seleccionar método de pago</string>
+    <string name="account_balance">Dinero en cuenta</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="pay_button">Pagar</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="logout">Cerrar sesión</string>
 </resources>

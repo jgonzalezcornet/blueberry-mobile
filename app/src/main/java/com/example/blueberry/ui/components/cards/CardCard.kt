@@ -1,5 +1,6 @@
 package com.example.blueberry.ui.components.cards
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -17,14 +18,16 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CardCard(
     cardItem: CardItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClick: () -> Unit = {}
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { onCardClick() },
         colors = CardDefaults.cardColors(containerColor = cardItem.cardType.backgroundColor)
     ) {
         Box(

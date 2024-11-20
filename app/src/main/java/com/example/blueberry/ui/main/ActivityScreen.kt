@@ -41,8 +41,9 @@ fun ActivityScreen(
         ActivityItem(Date(2024 - 1900, 6, 7), ActivityType.PAYMENT, "Sandra Perez", 12000.0),
         ActivityItem(Date(2024 - 1900, 10, 19), ActivityType.PAYMENT, "Sandra Perez", 123000.0)
     )
+
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         ScreenTitle(
             title = stringResource(R.string.activity_title),

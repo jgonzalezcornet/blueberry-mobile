@@ -29,7 +29,7 @@ fun ScreenTitle(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(start = 16.dp, top = 80.dp, end = 16.dp, bottom = 4.dp)
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 4.dp)
     ) {
         Icon(
             imageVector = Icons.Rounded.ArrowBackIosNew,

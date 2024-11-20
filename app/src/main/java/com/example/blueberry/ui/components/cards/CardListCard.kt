@@ -6,20 +6,24 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun CardListCard(
     cards: List<CardItem>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClick: (CardItem) -> Unit = {}
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         LazyColumn(
             modifier = Modifier
@@ -27,7 +31,10 @@ fun CardListCard(
                 .padding(vertical = 8.dp)
         ) {
             items(cards) { card ->
-                CardCard(cardItem = card)
+                CardCard(
+                    cardItem = card,
+                    onCardClick = { onCardClick(card) }
+                )
             }
         }
     }

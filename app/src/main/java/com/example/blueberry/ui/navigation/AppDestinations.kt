@@ -16,6 +16,7 @@ enum class AppDestinations (
     PROFILE(R.string.profile_title, Icons.Rounded.AccountCircle, R.string.profile_title),
     ACTIVITY(R.string.activity_title, Icons.Rounded.AccountCircle, R.string.activity_title),
     CARDS(R.string.cards_title, Icons.Rounded.AccountCircle, R.string.cards_title),
+    ADD_CARD(R.string.add_card_title, Icons.Rounded.AccountCircle, R.string.add_card_title),
     ALIAS(R.string.alias_title, Icons.Rounded.AccountCircle, R.string.alias_title),
     LINK(R.string.link_title, Icons.Rounded.AccountCircle, R.string.link_title),
     TRANSFER(R.string.transfer_title, Icons.Rounded.AccountCircle, R.string.transfer_title),

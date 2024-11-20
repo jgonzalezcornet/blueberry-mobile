@@ -11,7 +11,7 @@ enum class CardType(
     VISA(Color(0xFF1A1F71), R.drawable.visa),
     MASTERCARD(Color(0xFFEB001B), R.drawable.mastercard),
     AMEX(Color(0xFF2E77BC), R.drawable.amex),
-    OTHER(Color.Gray, 0);
+    OTHER(Color.Gray, R.drawable.unknown);
 
     companion object {
         fun fromCardNumber(cardNumber: String): CardType {

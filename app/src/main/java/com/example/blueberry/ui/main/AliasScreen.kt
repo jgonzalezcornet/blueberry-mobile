@@ -30,7 +30,7 @@ fun AliasScreen(
     var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         ScreenTitle(
             title = stringResource(R.string.alias_title),

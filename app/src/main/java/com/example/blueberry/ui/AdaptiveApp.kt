@@ -1,8 +1,10 @@
 package com.example.blueberry.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -41,6 +43,7 @@ import com.example.blueberry.ui.components.TopBar
 import com.example.blueberry.ui.login.LoginScreen
 import com.example.blueberry.ui.login.RegisterScreen
 import com.example.blueberry.ui.main.ActivityScreen
+import com.example.blueberry.ui.main.AddCardScreen
 import com.example.blueberry.ui.main.AliasScreen
 import com.example.blueberry.ui.main.CardsScreen
 import com.example.blueberry.ui.main.HomeScreen
@@ -52,10 +55,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AdaptiveApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.ACTIVITY) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.TRANSFER) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -247,64 +249,76 @@ fun AdaptiveApp() {
             }
         },
     ) {
-
-
-        Scaffold(
-        topBar = {
-            TopBar(
-                isUserLoggedIn = currentDestination !in listOf(AppDestinations.LOGIN, AppDestinations.REGISTER),
-                openModalNavigation = { scope.launch { drawerState.open() } }
-            )
-        }
-    ) { paddingValues ->
-        when(currentDestination) {
-            AppDestinations.LOGIN -> LoginScreen(
-                modifier = Modifier.padding(paddingValues),
-                onNavigateToRegister = { 
-                    currentDestination = AppDestinations.REGISTER 
+        Box(
+            modifier = Modifier.fillMaxSize().background(Color.Transparent)
+        ) {
+            Scaffold(
+                topBar = {
+                    TopBar(
+                        isUserLoggedIn = currentDestination !in listOf(AppDestinations.LOGIN, AppDestinations.REGISTER),
+                        openModalNavigation = { scope.launch { drawerState.open() } }
+                    )
                 },
-                onLoginSuccess = {
-                    currentDestination = AppDestinations.HOME
-                }
-            )
-            AppDestinations.REGISTER -> RegisterScreen(
-                modifier = Modifier.padding(paddingValues),
-                onNavigateBack = { 
-                    currentDestination = AppDestinations.LOGIN 
-                },
-                onRegisterSuccess = {
-                    currentDestination = AppDestinations.HOME
-                }
-            )
-            
-            AppDestinations.HOME -> HomeScreen(
-                modifier = Modifier.padding(paddingValues)
-            )
+                containerColor = Color.Transparent
+            ) { paddingValues ->
+                when(currentDestination) {
+                    AppDestinations.LOGIN -> LoginScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onNavigateToRegister = {
+                            currentDestination = AppDestinations.REGISTER
+                        },
+                        onLoginSuccess = {
+                            currentDestination = AppDestinations.HOME
+                        }
+                    )
+                    AppDestinations.REGISTER -> RegisterScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onNavigateBack = {
+                            currentDestination = AppDestinations.LOGIN
+                        },
+                        onRegisterSuccess = {
+                            currentDestination = AppDestinations.HOME
+                        }
+                    )
 
-            AppDestinations.PROFILE -> ProfileScreen(
-                modifier = Modifier.padding(paddingValues)
-            )
-            AppDestinations.ACTIVITY -> ActivityScreen(
-                modifier = Modifier.padding(paddingValues),
-                onBackNavigation = { currentDestination = AppDestinations.HOME }
-            )
-            AppDestinations.CARDS -> CardsScreen(
-                modifier = Modifier.padding(paddingValues)
-            )
-            AppDestinations.ALIAS -> AliasScreen(
-                modifier = Modifier.padding(paddingValues),
-                onBackNavigation = { currentDestination = AppDestinations.HOME }
-            )
-            AppDestinations.LINK -> LinkScreen(
-                modifier = Modifier.padding(paddingValues),
-                onBackNavigation = { currentDestination = AppDestinations.HOME }
-            )
-            AppDestinations.TRANSFER -> TransferScreen(
-                modifier = Modifier.padding(paddingValues)
-            )
+                    AppDestinations.HOME -> HomeScreen(
+                        modifier = Modifier.padding(paddingValues)
+                    )
+
+                    AppDestinations.PROFILE -> ProfileScreen(
+                        modifier = Modifier.padding(paddingValues)
+                    )
+                    AppDestinations.ACTIVITY -> ActivityScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.HOME }
+                    )
+                    AppDestinations.CARDS -> CardsScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.HOME },
+                        onAddCardClick = {
+                            currentDestination = AppDestinations.ADD_CARD
+                        }
+                    )
+                    AppDestinations.ADD_CARD -> AddCardScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = {
+                            currentDestination = AppDestinations.CARDS
+                        }
+                    )
+                    AppDestinations.ALIAS -> AliasScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.HOME }
+                    )
+                    AppDestinations.LINK -> LinkScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.HOME }
+                    )
+                    AppDestinations.TRANSFER -> TransferScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.HOME }
+                    )
+                }
+            }
         }
-    }
-
-
     }
 }
