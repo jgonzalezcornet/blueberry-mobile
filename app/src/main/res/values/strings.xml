@@ -92,4 +92,12 @@
     <string name="pay_button">Pagar</string>
     <string name="change_password">Cambiar contraseña</string>
     <string name="logout">Cerrar sesión</string>
+
+    <string name="insert_money">Ingresar dinero</string>
+    <string name="charge_money">Cobrar con link</string>
+    <string name="transfer_money">Transferir</string>
+    <string name="last_activity_string">Última Actividad</string>
+
+
+
 </resources>

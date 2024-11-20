@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AdaptiveApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.PROFILE) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -282,7 +282,12 @@ fun AdaptiveApp() {
                     )
 
                     AppDestinations.HOME -> HomeScreen(
-                        modifier = Modifier.padding(paddingValues)
+                        modifier = Modifier.padding(paddingValues),
+                        onInsertMoneyClick = { currentDestination = AppDestinations.ALIAS },
+                        onChargeMoneyClick = { currentDestination = AppDestinations.LINK },
+                        onTransferMoneyClick = { currentDestination = AppDestinations.TRANSFER },
+                        onActivityClick = { currentDestination = AppDestinations.ACTIVITY },
+                        onCardsClick = { currentDestination = AppDestinations.CARDS }
                     )
 
                     AppDestinations.PROFILE -> ProfileScreen(
