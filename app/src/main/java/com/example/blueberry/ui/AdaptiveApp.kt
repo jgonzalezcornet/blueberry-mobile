@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AdaptiveApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.TRANSFER) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.PROFILE) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 

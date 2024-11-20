@@ -25,10 +25,11 @@ import com.example.blueberry.ui.theme.SecondaryPink
 @Composable
 fun LinkGeneratedCard(
     modifier: Modifier = Modifier,
+    amount: String,
     onClose: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val link = "https://blueberry.com/user123/payment"
+    val link = "https://blueberry.com/user123/payment/$amount"
 
     Dialog(onDismissRequest = { onClose() }) {
         Card(
@@ -47,13 +48,19 @@ fun LinkGeneratedCard(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.link_generated_title),
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.weight(1f),
-                        color = Color.Black,
-                        fontSize = 18.sp
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.link_generated_title),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            text = "Monto: $$amount",
+                            color = Color.Black,
+                            fontSize = 14.sp
+                        )
+                    }
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = stringResource(R.string.close_button),
@@ -89,5 +96,7 @@ fun LinkGeneratedCard(
 @Preview(showBackground = true)
 @Composable
 fun LinkGeneratedCardPreview() {
-    LinkGeneratedCard()
+    LinkGeneratedCard(
+        amount = "\$10000"
+    )
 }

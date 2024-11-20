@@ -9,12 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.ui.theme.PrimaryBlue
-import com.example.blueberry.ui.theme.SecondaryPink
 
 @Composable
 fun ProfileCard(
@@ -31,7 +31,7 @@ fun ProfileCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .background(color = PrimaryBlue, shape = RoundedCornerShape(12.dp))
+            .background(color = Color.White, shape = RoundedCornerShape(12.dp))
             .padding(16.dp), // Inner padding for spacing
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -41,7 +41,7 @@ fun ProfileCard(
             text = "Perfil de Usuario",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = SecondaryPink,
+            color = Color.Black,
             textAlign = TextAlign.Center
         )
 
@@ -83,7 +83,7 @@ fun ProfileInfoRow(label: String, value: String) {
         Text(
             text = "$label:",
             fontSize = 16.sp,
-            color = SecondaryPink,
+            color = Color.Black,
             fontWeight = FontWeight.Bold
         )
         Text(
@@ -101,11 +101,11 @@ fun CustomButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = SecondaryPink)
+        colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
     ) {
         Text(
             text = text,
-            color = PrimaryBlue,
+            color = Color.White,
             fontWeight = FontWeight.Bold
         )
     }

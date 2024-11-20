@@ -1,6 +1,5 @@
 package com.example.blueberry.ui.components
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,10 +25,9 @@ import com.example.blueberry.ui.theme.PrimaryBlue
 @Composable
 fun LinkCard(
     modifier: Modifier = Modifier,
-    onGenerateLink: (String) -> Unit = {}
+    onGenerateLink: (String) -> Unit = {},
 ) {
     var amount by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     Box(
         modifier = modifier
@@ -82,9 +79,6 @@ fun LinkCard(
                     onClick = {
                         if (amount.isNotEmpty()) {
                             onGenerateLink(amount)
-                            Toast.makeText(context, "Link generado para: $$amount", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, "Por favor, ingrese un monto válido", Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -106,5 +100,5 @@ fun LinkCard(
 @Preview(showBackground = true)
 @Composable
 fun LinkCardPreview() {
-    LinkCard(onGenerateLink = { amount -> println("Link generado para monto: $amount") })
+    LinkCard()
 }

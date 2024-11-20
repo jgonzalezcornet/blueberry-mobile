@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -55,102 +53,109 @@ fun AddCardScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
-            value = cardNumber,
-            onValueChange = {
-                if (it.length <= 16 && it.all { char -> char.isDigit() }) {
-                    cardNumber = it
-                }
-            },
-            label = { Text(stringResource(R.string.card_number_label)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        Card(
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = cardHolderName,
-            onValueChange = {
-                if (it.all { char -> char.isLetter() || char.isWhitespace() }) {
-                    cardHolderName = it.uppercase()
-                }
-            },
-            label = { Text(stringResource(R.string.card_holder_name_label)) },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            OutlinedTextField(
-                value = expiryMonth,
-                onValueChange = {
-                    if (it.length <= 2 && it.all { char -> char.isDigit() }) {
-                        expiryMonth = it
-                    }
-                },
-                label = { Text("MM") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.weight(1f),
-                singleLine = true
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                OutlinedTextField(
+                    value = cardNumber,
+                    onValueChange = {
+                        if (it.length <= 16 && it.all { char -> char.isDigit() }) {
+                            cardNumber = it
+                        }
+                    },
+                    label = { Text(stringResource(R.string.card_number_label)) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
 
-            OutlinedTextField(
-                value = expiryYear,
-                onValueChange = {
-                    if (it.length <= 2 && it.all { char -> char.isDigit() }) {
-                        expiryYear = it
-                    }
-                },
-                label = { Text("YY") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.weight(1f),
-                singleLine = true
-            )
+                OutlinedTextField(
+                    value = cardHolderName,
+                    onValueChange = {
+                        if (it.all { char -> char.isLetter() || char.isWhitespace() }) {
+                            cardHolderName = it.uppercase()
+                        }
+                    },
+                    label = { Text(stringResource(R.string.card_holder_name_label)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedTextField(
+                        value = expiryMonth,
+                        onValueChange = {
+                            if (it.length <= 2 && it.all { char -> char.isDigit() }) {
+                                expiryMonth = it
+                            }
+                        },
+                        label = { Text("MM") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f),
+                        singleLine = true
+                    )
+
+                    OutlinedTextField(
+                        value = expiryYear,
+                        onValueChange = {
+                            if (it.length <= 2 && it.all { char -> char.isDigit() }) {
+                                expiryYear = it
+                            }
+                        },
+                        label = { Text("AA") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f),
+                        singleLine = true
+                    )
+                }
+
+                OutlinedTextField(
+                    value = cvv,
+                    onValueChange = {
+                        if (it.length <= 3 && it.all { char -> char.isDigit() }) {
+                            cvv = it
+                        }
+                    },
+                    label = { Text(stringResource(R.string.cvv_label)) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onFocusChanged { focusState ->
+                            showBack = focusState.isFocused
+                        },
+                    singleLine = true
+                )
+
+                Button(
+                    onClick = onAddCardSuccess,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
+                    enabled = cardNumber.length == 16 &&
+                            cardHolderName.isNotEmpty() &&
+                            expiryMonth.length == 2 &&
+                            expiryYear.length == 2 &&
+                            cvv.length == 3
+                ) {
+                    Text(
+                        text = stringResource(R.string.add_card_button),
+                        color = Color.White
+                    )
+                }
+            }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
 
-        OutlinedTextField(
-            value = cvv,
-            onValueChange = {
-                if (it.length <= 3 && it.all { char -> char.isDigit() }) {
-                    cvv = it
-                }
-            },
-            label = { Text(stringResource(R.string.cvv_label)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier
-                .fillMaxWidth()
-                .onFocusChanged { focusState ->
-                    showBack = focusState.isFocused
-                },
-            singleLine = true,
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = onAddCardSuccess,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
-            enabled = cardNumber.length == 16 &&
-                    cardHolderName.isNotEmpty() &&
-                    expiryMonth.length == 2 &&
-                    expiryYear.length == 2 &&
-                    cvv.length == 3
-        ) {
-            Text(
-                text = stringResource(R.string.add_card_button),
-                color = Color.White
-            )
-        }
     }
 }
 

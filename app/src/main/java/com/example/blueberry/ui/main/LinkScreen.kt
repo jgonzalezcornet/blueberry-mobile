@@ -21,6 +21,7 @@ fun LinkScreen(
     onBackNavigation: () -> Unit = {}
 ) {
     var linkModalOpen by rememberSaveable { mutableStateOf(false) }
+    var amount by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = modifier.fillMaxSize()
@@ -30,10 +31,14 @@ fun LinkScreen(
             onBackNavigation = onBackNavigation
         )
         LinkCard(
-            onGenerateLink = { linkModalOpen = true }
+            onGenerateLink = { newAmount ->
+                amount = newAmount
+                linkModalOpen = true 
+            }
         )
         if(linkModalOpen){
             LinkGeneratedCard(
+                amount = amount,
                 onClose = { linkModalOpen = false }
             )
         }
