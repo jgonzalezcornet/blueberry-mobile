@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -46,6 +47,14 @@ fun TransferCard(
                 label = { 
                     Text(
                         stringResource(R.string.transfer_email_label)
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Correo electronico",
+                        tint = Color.Gray,
+                        modifier = Modifier.padding(start = 4.dp)
                     )
                 },
                 modifier = Modifier

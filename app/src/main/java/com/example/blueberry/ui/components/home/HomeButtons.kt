@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun HomeButtons(
@@ -81,7 +82,7 @@ fun ActionButton(
             Icon(
                 painter = icon,
                 contentDescription = text,
-                tint = MaterialTheme.colorScheme.surfaceBright,
+                tint = Color.White,
                 modifier = Modifier.size(30.dp)
             )
         }

@@ -55,7 +55,7 @@ fun BalanceCard(
         ) {
             Column(
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surfaceBright)
+                    .background(Color.White)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -73,7 +73,7 @@ fun BalanceCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = if (isBalanceVisible) balance else "*****",
+                        text = if (isBalanceVisible) "\$${balance}" else "*****",
                         style = TextStyle(
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,

@@ -13,20 +13,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.blueberry.ui.components.ChangePasswordCard
 import com.example.blueberry.ui.home.HomeViewModel
 import com.example.blueberry.MyApplication
+import com.example.blueberry.R
+import com.example.blueberry.ui.components.ScreenTitle
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
+    onBackNavigation: () -> Unit = {},
     onLogout: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
     val uiState = viewModel.uiState
     var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
-    var changePasswordModalOpen by rememberSaveable { mutableStateOf(false) }
     var refreshTrigger by rememberSaveable { mutableStateOf(0) }
 
     LaunchedEffect(refreshTrigger) {
@@ -34,9 +36,15 @@ fun ProfileScreen(
         viewModel.getWalletDetails()
     }
 
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
+        ScreenTitle(
+            title = stringResource(R.string.profile_title),
+            onBackNavigation = onBackNavigation
+        )
+
         ProfileCard(
             firstName = uiState.currentUser?.firstName ?: "",
             lastName = uiState.currentUser?.lastName ?: "",
@@ -44,7 +52,6 @@ fun ProfileScreen(
             alias = uiState.details?.alias ?: "",
             cbu = uiState.details?.cbu ?: "",
             onChangeAliasClick = { changeAliasModalOpen = true },
-            onChangePasswordClick = { changePasswordModalOpen = true },
             onLogout = {
                 viewModel.logout()
                 onLogout()
@@ -58,11 +65,6 @@ fun ProfileScreen(
                     changeAliasModalOpen = false
                     refreshTrigger += 1
                 }
-            )
-        }
-        if(changePasswordModalOpen){
-            ChangePasswordCard(
-                onClose = { changePasswordModalOpen = false }
             )
         }
     }

@@ -20,10 +20,10 @@ import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -57,6 +57,9 @@ import com.example.blueberry.ui.main.ProfileScreen
 import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.launch
+import androidx.compose.material3.MaterialTheme
+
+
 
 @Composable
 fun AdaptiveApp() {
@@ -68,7 +71,7 @@ fun AdaptiveApp() {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
-                drawerContainerColor = MaterialTheme.colorScheme.background,
+                drawerContainerColor = Color.White,
             ) {
                 Box(
                     modifier = Modifier
@@ -92,6 +95,10 @@ fun AdaptiveApp() {
                 }
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -102,7 +109,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.home_title))
+                            Text(text = stringResource(R.string.home_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.HOME,
@@ -115,6 +122,10 @@ fun AdaptiveApp() {
                 )
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -125,7 +136,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             ) 
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.transfer_title))
+                            Text(text = stringResource(R.string.transfer_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.TRANSFER,
@@ -138,6 +149,10 @@ fun AdaptiveApp() {
                 )
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -148,7 +163,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.alias_title))
+                            Text(text = stringResource(R.string.alias_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.ALIAS,
@@ -161,6 +176,10 @@ fun AdaptiveApp() {
                 )
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -171,7 +190,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.activity_title))
+                            Text(text = stringResource(R.string.activity_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.ACTIVITY,
@@ -184,6 +203,10 @@ fun AdaptiveApp() {
                 )
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -194,7 +217,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.cards_title))
+                            Text(text = stringResource(R.string.cards_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.CARDS,
@@ -207,6 +230,10 @@ fun AdaptiveApp() {
                 )
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -217,7 +244,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.link_title))
+                            Text(text = stringResource(R.string.link_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.LINK,
@@ -230,6 +257,10 @@ fun AdaptiveApp() {
                 )
 
                 NavigationDrawerItem(
+                    colors = NavigationDrawerItemDefaults.colors(
+                        unselectedContainerColor = Color.White,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     label = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -240,7 +271,7 @@ fun AdaptiveApp() {
                                 tint = Color.Black
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(R.string.profile_title))
+                            Text(text = stringResource(R.string.profile_title), color = Color.Black)
                         }
                     },
                     selected = currentDestination == AppDestinations.PROFILE,
@@ -326,7 +357,8 @@ fun AdaptiveApp() {
 
                     AppDestinations.PROFILE -> ProfileScreen(
                         modifier = Modifier.padding(paddingValues),
-                        onLogout = { currentDestination = AppDestinations.LOGIN }
+                        onLogout = { currentDestination = AppDestinations.LOGIN },
+                        onBackNavigation = { currentDestination = AppDestinations.HOME }
                     )
                     AppDestinations.ACTIVITY -> ActivityScreen(
                         modifier = Modifier.padding(paddingValues),
@@ -358,7 +390,7 @@ fun AdaptiveApp() {
                     )
                     AppDestinations.TRANSFER -> TransferScreen(
                         modifier = Modifier.padding(paddingValues),
-                        onBackNavigation = { currentDestination = AppDestinations.TRANSFER },
+                        onBackNavigation = { currentDestination = AppDestinations.HOME },
                         onTransferSuccess = { currentDestination = AppDestinations.HOME }
                     )
                 }

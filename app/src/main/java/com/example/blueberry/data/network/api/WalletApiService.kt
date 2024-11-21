@@ -1,7 +1,9 @@
 package com.example.blueberry.data.network.api
 
 import com.example.blueberry.data.network.model.NetworkAlias
+import com.example.blueberry.data.network.model.NetworkBalance
 import com.example.blueberry.data.network.model.NetworkCard
+import com.example.blueberry.data.network.model.NetworkRecharge
 import com.example.blueberry.data.network.model.NetworkWalletDetails
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,6 +29,9 @@ interface WalletApiService {
 
     @PUT("wallet/update-alias")
     suspend fun updateAlias(@Body alias: NetworkAlias): Response<Unit>
+
+    @POST("wallet/recharge")
+    suspend fun recharge(@Body recharge: NetworkRecharge): Response<NetworkBalance>
 
 
 }

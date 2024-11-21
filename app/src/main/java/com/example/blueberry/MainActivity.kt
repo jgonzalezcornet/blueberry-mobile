@@ -21,13 +21,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.blueberry.ui.AdaptiveApp
 import com.example.blueberry.ui.theme.BlueberryTheme
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BlueberryTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
                     RepeatingPatternImage(painter = painterResource(id = R.drawable.background))
                 }
                 AdaptiveApp()

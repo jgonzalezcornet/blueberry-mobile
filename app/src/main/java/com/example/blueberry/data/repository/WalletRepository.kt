@@ -1,6 +1,8 @@
 package com.example.blueberry.data.repository
 
+import com.example.blueberry.data.model.Balance
 import com.example.blueberry.data.model.Card
+import com.example.blueberry.data.model.Recharge
 import com.example.blueberry.data.model.WalletDetails
 import com.example.blueberry.data.network.WalletRemoteDataSource
 import com.example.blueberry.data.network.model.NetworkAlias
@@ -49,6 +51,10 @@ class WalletRepository(
 
     suspend fun updateAlias(alias: NetworkAlias) {
         remoteDataSource.updateAlias(alias)
+    }
+
+    suspend fun recharge(recharge: Recharge): Balance {
+        return remoteDataSource.recharge(recharge.asNetworkModel()).asModel()
     }
 
 }

@@ -132,13 +132,19 @@
     <string name="pro">Confirmar nueva contraseña</string>
 
     <string name="profile_name">Nombre</string>
-    <string name="profile_surname">Apellido</string>">
-    <string name="profile_email">Email</string>">
-    <string name="profile_alias">Alias</string>">
-    <string name="profile_cvu">CVU/CBU"</string>">
+    <string name="profile_surname">Apellido</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_alias">Alias</string>
+    <string name="profile_cvu">CVU/CBU</string>
 
     <string name="card_type_label">Tipo de tarjeta</string>
 
     <string name="no_cards_message">No hay tarjetas</string>
+
+    <string name="recharge_title">Cargar dinero</string>
+    <string name="recharge_amount_label">Monto</string>
+    <string name="select_card_label">Seleccionar tarjeta</string>
+    <string name="recharge_confirm_button">Confirmar</string>
+    <string name="recharge_with_card_button">Cargar dinero con tarjeta</string>
 
 </resources>

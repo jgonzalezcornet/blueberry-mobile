@@ -68,7 +68,7 @@ fun AliasCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = if (isBalanceVisible) balance else "*****",
+                        text = if (isBalanceVisible) "\$${balance}" else "*****",
                         style = TextStyle(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,

@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +28,6 @@ fun ProfileCard(
     alias: String,
     cbu: String,
     onChangeAliasClick: () -> Unit,
-    onChangePasswordClick: () -> Unit,
     onLogout: () -> Unit
 ) {
     Card (
@@ -47,20 +45,10 @@ fun ProfileCard(
                 .fillMaxWidth()
                 .padding(16.dp)
                 .background(color = Color.White, shape = RoundedCornerShape(12.dp))
-                .padding(16.dp), 
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // Header with the title
-            Text(
-                text = stringResource(R.string.profile_title),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             // Information display
             ProfileInfoRow(label = stringResource(R.string.profile_name), value = firstName)
@@ -75,11 +63,6 @@ fun ProfileCard(
             CustomButton(
                 text = stringResource(R.string.change_alias),
                 onClick = onChangeAliasClick
-            )
-
-            CustomButton(
-                text = stringResource(R.string.change_password),
-                onClick = onChangePasswordClick
             )
 
             CustomButton(
@@ -136,5 +119,5 @@ fun obfuscateEmail(email: String): String {
 @PreviewScreenSizes
 @Composable
 fun ProfileCardPreview() {
-    ProfileCard("Juan Ignacio Lategana", "45748655", "j@lategana.com", "jua.blueberry", "313123213123", {}, {}, {})
+    ProfileCard("Juan Ignacio Lategana", "45748655", "j@lategana.com", "jua.blueberry", "313123213123", {}, {})
 }

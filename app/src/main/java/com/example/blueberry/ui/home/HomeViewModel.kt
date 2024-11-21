@@ -16,7 +16,9 @@ import com.example.blueberry.data.repository.WalletRepository
 import com.example.blueberry.data.repository.PaymentRepository
 import com.example.blueberry.data.network.model.NetworkAlias
 import com.example.blueberry.SessionManager
+import com.example.blueberry.data.model.Balance
 import com.example.blueberry.data.model.Payment
+import com.example.blueberry.data.model.Recharge
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -97,6 +99,11 @@ class HomeViewModel(
 
     fun updateAlias(alias: String) = runOnViewModelScope(
         { walletRepository.updateAlias(NetworkAlias(alias)) },
+        { state, _ -> state.copy() }
+    )
+
+    fun recharge(amount: Recharge) = runOnViewModelScope(
+        { walletRepository.recharge(amount) },
         { state, _ -> state.copy() }
     )
 

@@ -26,6 +26,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.ui.home.HomeViewModel
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.unit.dp
+import com.example.blueberry.data.model.Balance
+import com.example.blueberry.data.model.Recharge
+import com.example.blueberry.ui.components.RechargeCard
 
 @Composable
 fun AliasScreen(
@@ -35,6 +40,7 @@ fun AliasScreen(
 ) {
     val uiState = viewModel.uiState
     var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
+    var rechargeModalOpen by rememberSaveable { mutableStateOf(false) }
     var refreshTrigger by rememberSaveable { mutableStateOf(0) }
 
     LaunchedEffect(refreshTrigger) {
@@ -55,7 +61,8 @@ fun AliasScreen(
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Button(
                 onClick = { changeAliasModalOpen = true },
@@ -68,6 +75,18 @@ fun AliasScreen(
                     color = Color.White
                 )
             }
+
+            Button(
+                onClick = { rechargeModalOpen = true },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.recharge_with_card_button),
+                    color = Color.White
+                )
+            }
         }
         if(changeAliasModalOpen){
             ChangeAliasCard(
@@ -75,6 +94,18 @@ fun AliasScreen(
                 onConfirm = { newAlias ->
                     viewModel.updateAlias(newAlias)
                     changeAliasModalOpen = false
+                    refreshTrigger += 1
+                }
+            )
+        }
+
+        if(rechargeModalOpen) {
+            RechargeCard(
+                availableCards = viewModel.uiState.cards ?: emptyList(),
+                onClose = { rechargeModalOpen = false },
+                onConfirm = { amount ->
+                    viewModel.recharge(Recharge(amount.toDouble()))
+                    rechargeModalOpen = false
                     refreshTrigger += 1
                 }
             )
