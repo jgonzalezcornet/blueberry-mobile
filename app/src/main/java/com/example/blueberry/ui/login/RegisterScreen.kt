@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,8 +32,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.RegisterCard
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 import com.example.blueberry.utils.checkPassword
 import com.example.blueberry.utils.checkPasswordMismatch
@@ -45,7 +47,6 @@ fun RegisterScreen(
     onNavigateToSecurityInfo: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         var showErrorDialog by remember { mutableStateOf(false) }
         var errorMessage by remember { mutableStateOf("") }
         val context = LocalContext.current
@@ -76,7 +77,13 @@ fun RegisterScreen(
         }
 
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
+                .padding(horizontal = getPadding())
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             RegisterCard(
@@ -143,7 +150,7 @@ fun RegisterScreen(
                 )
             }
         }
-    }
+
 }
 
 @PreviewScreenSizes

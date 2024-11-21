@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -25,10 +27,10 @@ import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Card
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.cards.CardListCard
 import com.example.blueberry.ui.components.cards.EliminateCard
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 
 @Composable
@@ -38,7 +40,6 @@ fun CardsScreen(
     onAddCardClick: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         LaunchedEffect(Unit) {
             viewModel.getCards()
         }
@@ -47,7 +48,13 @@ fun CardsScreen(
         val uiState = viewModel.uiState
 
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
+                .padding(horizontal = getPadding())
         ) {
             ScreenTitle(
                 title = stringResource(R.string.cards_title),
@@ -91,7 +98,7 @@ fun CardsScreen(
                 }
             }
         }
-    }
+
 }
 
 @PreviewScreenSizes

@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -27,9 +30,9 @@ import com.example.blueberry.R
 import com.example.blueberry.data.model.Recharge
 import com.example.blueberry.ui.components.AliasCard
 import com.example.blueberry.ui.components.ChangeAliasCard
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.RechargeCard
 import com.example.blueberry.ui.components.ScreenTitle
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 
 @Composable
@@ -38,7 +41,6 @@ fun AliasScreen(
     onBackNavigation: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         val uiState = viewModel.uiState
         var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
         var rechargeModalOpen by rememberSaveable { mutableStateOf(false) }
@@ -49,7 +51,13 @@ fun AliasScreen(
         }
 
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .padding(horizontal = getPadding())
+                .fillMaxSize()
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
         ) {
             ScreenTitle(
                 title = stringResource(R.string.alias_title),
@@ -62,7 +70,9 @@ fun AliasScreen(
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = getPadding()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
@@ -112,7 +122,7 @@ fun AliasScreen(
                 )
             }
         }
-    }
+
 }
 
 @PreviewScreenSizes

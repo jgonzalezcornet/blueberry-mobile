@@ -2,12 +2,15 @@ package com.example.blueberry.ui.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.blueberry.PreviewScreenSizes
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.RecoverCard
+import com.example.blueberry.ui.components.getPadding
 
 @Composable
 fun RecoverScreen(
@@ -15,9 +18,15 @@ fun RecoverScreen(
     onCancel: () -> Unit = {},
     onRecoverSuccess: () -> Unit = {}
 ) {
-    PaddedContent {
+
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
+                .padding(horizontal = getPadding())
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             RecoverCard(
@@ -25,7 +34,7 @@ fun RecoverScreen(
                 onRecoverSuccess = onRecoverSuccess
             )
         }
-    }
+
 }
 
 

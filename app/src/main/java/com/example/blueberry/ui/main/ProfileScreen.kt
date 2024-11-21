@@ -2,6 +2,9 @@ package com.example.blueberry.ui.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,8 +19,8 @@ import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.ChangeAliasCard
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.ScreenTitle
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 import com.example.profile.ui.components.ProfileCard
 
@@ -28,7 +31,6 @@ fun ProfileScreen(
     onLogout: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         val uiState = viewModel.uiState
 
         var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
@@ -41,7 +43,12 @@ fun ProfileScreen(
 
 
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState())
+                .padding(horizontal = getPadding())
         ) {
             ScreenTitle(
                 title = stringResource(R.string.profile_title),
@@ -71,7 +78,6 @@ fun ProfileScreen(
                 )
             }
         }
-    }
 }
 
 @PreviewScreenSizes

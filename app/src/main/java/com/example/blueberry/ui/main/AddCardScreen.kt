@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -37,9 +39,9 @@ import com.example.blueberry.MyApplication
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Card
 import com.example.blueberry.data.model.CardType
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.cards.BigCard
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 import com.example.blueberry.utils.formatDate
 
@@ -51,7 +53,6 @@ fun AddCardScreen(
     onAddCardSuccess: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         var cardNumber by remember { mutableStateOf("") }
         var cardHolderName by remember { mutableStateOf("") }
         var expiryMonth by remember { mutableStateOf("") }
@@ -64,7 +65,13 @@ fun AddCardScreen(
         val formattedExpiryDate = formatDate(expiryMonth, expiryYear)
 
         Column(
-            modifier = modifier.fillMaxSize().padding(16.dp)
+            modifier = modifier
+                .fillMaxSize()
+                .padding(horizontal = getPadding())
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
         ) {
             ScreenTitle(
                 title = stringResource(R.string.add_card_title),
@@ -82,13 +89,15 @@ fun AddCardScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Card(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -233,7 +242,7 @@ fun AddCardScreen(
                 }
             }
         }
-    }
+
 }
 
 @Preview(showBackground = true)

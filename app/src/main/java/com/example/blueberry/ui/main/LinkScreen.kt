@@ -2,6 +2,9 @@ package com.example.blueberry.ui.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,20 +16,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.LinkCard
 import com.example.blueberry.ui.components.LinkGeneratedCard
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.ScreenTitle
+import com.example.blueberry.ui.components.getPadding
 
 @Composable
 fun LinkScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {}
 ) {
-    PaddedContent {
         var linkModalOpen by rememberSaveable { mutableStateOf(false) }
         var amount by rememberSaveable { mutableStateOf("") }
 
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
+                .padding(horizontal = getPadding())
         ) {
             ScreenTitle(
                 title = stringResource(R.string.link_screen_title),
@@ -45,7 +53,6 @@ fun LinkScreen(
                 )
             }
         }
-    }
 }
 
 @Preview(showBackground = true)

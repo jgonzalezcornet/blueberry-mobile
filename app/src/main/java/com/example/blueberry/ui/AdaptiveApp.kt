@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -65,88 +66,6 @@ import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Composable
-fun AdaptiveApp() {
-    val currentDestination = rememberSaveable { mutableStateOf(AppDestinations.LOGIN) }
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    val items = listOf(
-        Triple(Icons.Rounded.Home, R.string.home_title, AppDestinations.HOME),
-        Triple(Icons.Rounded.AccountBalance, R.string.transfer_title, AppDestinations.TRANSFER),
-        Triple(Icons.Rounded.Paid, R.string.alias_title, AppDestinations.ALIAS),
-        Triple(Icons.Rounded.History, R.string.activity_title, AppDestinations.ACTIVITY),
-        Triple(Icons.Rounded.CreditCard, R.string.cards_title, AppDestinations.CARDS),
-        Triple(Icons.Rounded.Link, R.string.link_title, AppDestinations.LINK),
-        Triple(Icons.Rounded.Person, R.string.profile_title, AppDestinations.PROFILE)
-    )
-
-    if (isTablet() && currentDestination.value !in listOf(
-            AppDestinations.LOGIN,
-            AppDestinations.REGISTER,
-            AppDestinations.RECOVER,
-            AppDestinations.RECOVER_CODE,
-            AppDestinations.TERMS,
-            AppDestinations.SECURITY
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            NavigationRail(
-                modifier = Modifier
-                    .fillMaxHeight(),
-                containerColor = MaterialTheme.colorScheme.background
-            ) {
-                RailItems(
-                    currentDestination = currentDestination.value,
-                    items = items,
-                    onDestinationSelected = { currentDestination.value = it }
-                )
-            }
-
-            AppContent(currentDestination, drawerState, scope)
-        }
-    } else {
-        ModalNavigationDrawer(
-            drawerState = drawerState,
-            drawerContent = {
-                ModalDrawerSheet(
-                    drawerContainerColor = MaterialTheme.colorScheme.background
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                    ) {
-                        IconButton(
-                            onClick = { scope.launch { drawerState.close() } },
-                            modifier = Modifier.align(Alignment.TopEnd)
-                        ) {
-                            Icon(
-                                Icons.Rounded.Close,
-                                contentDescription = stringResource(R.string.close_menu_button_description),
-                                tint = Color.Black
-                            )
-                        }
-                    }
-
-                    DrawerItems(
-                        currentDestination = currentDestination.value,
-                        items = items,
-                        onDestinationSelected = {
-                            currentDestination.value = it
-                            scope.launch { drawerState.close() }
-                        }
-                    )
-                }
-            }
-        ) {
-            AppContent(currentDestination, drawerState, scope)
-        }
-    }
-}
 
 @Composable
 fun DrawerItems(
@@ -208,102 +127,194 @@ fun RailItems(
 fun AppContent(
     currentDestination: MutableState<AppDestinations>,
     drawerState: DrawerState,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    paddingValues: androidx.compose.foundation.layout.PaddingValues = androidx.compose.foundation.layout.PaddingValues()
 ) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Transparent)) {
+    when (currentDestination.value) {
+        AppDestinations.LOGIN -> LoginScreen(
+            modifier = Modifier.padding(paddingValues),
+            onNavigateToRegister = { currentDestination.value = AppDestinations.REGISTER },
+            onLoginSuccess = { currentDestination.value = AppDestinations.HOME },
+            onForgotPassword = { currentDestination.value = AppDestinations.RECOVER }
+        )
+        AppDestinations.REGISTER -> RegisterScreen(
+            modifier = Modifier.padding(paddingValues),
+            onNavigateBack = { currentDestination.value = AppDestinations.LOGIN },
+            onRegisterSuccess = { currentDestination.value = AppDestinations.VALIDATE }
+        )
+        AppDestinations.RECOVER -> RecoverScreen(
+            modifier = Modifier.padding(paddingValues),
+            onCancel = { currentDestination.value = AppDestinations.LOGIN },
+            onRecoverSuccess = { currentDestination.value = AppDestinations.RECOVER_CODE }
+        )
+        AppDestinations.RECOVER_CODE -> RecoverCodeScreen(
+            modifier = Modifier.padding(paddingValues),
+            onCancel = { currentDestination.value = AppDestinations.LOGIN },
+            onRecoverCodeSuccess = { currentDestination.value = AppDestinations.LOGIN }
+        )
+        AppDestinations.TERMS -> TermsScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.LOGIN }
+        )
+        AppDestinations.SECURITY -> SecurityInfoScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.LOGIN }
+        )
+        AppDestinations.HOME -> HomeScreen(
+            modifier = Modifier.padding(paddingValues),
+            onInsertMoneyClick = { currentDestination.value = AppDestinations.ALIAS },
+            onChargeMoneyClick = { currentDestination.value = AppDestinations.LINK },
+            onTransferMoneyClick = { currentDestination.value = AppDestinations.TRANSFER },
+            onActivityClick = { currentDestination.value = AppDestinations.ACTIVITY },
+            onCardsClick = { currentDestination.value = AppDestinations.CARDS }
+        )
+        AppDestinations.PROFILE -> ProfileScreen(
+            modifier = Modifier.padding(paddingValues),
+            onLogout = { currentDestination.value = AppDestinations.LOGIN },
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+        )
+        AppDestinations.ACTIVITY -> ActivityScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+        )
+        AppDestinations.CARDS -> CardsScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onAddCardClick = { currentDestination.value = AppDestinations.ADD_CARD }
+        )
+        AppDestinations.ADD_CARD -> AddCardScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.CARDS }
+        )
+        AppDestinations.ALIAS -> AliasScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+        )
+        AppDestinations.LINK -> LinkScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+        )
+        AppDestinations.TRANSFER -> TransferScreen(
+            modifier = Modifier.padding(paddingValues),
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+        )
+
+        AppDestinations.VALIDATE -> ValidateScreen(
+            modifier = Modifier.padding(paddingValues),
+            onCancel =  { currentDestination.value = AppDestinations.REGISTER },
+            onValidateSuccess = { currentDestination.value = AppDestinations.LOGIN }
+        )
+    }
+}
+
+@Composable
+fun AdaptiveApp() {
+    val currentDestination = rememberSaveable { mutableStateOf(AppDestinations.LOGIN) }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    val items = listOf(
+        Triple(Icons.Rounded.Home, R.string.home_title, AppDestinations.HOME),
+        Triple(Icons.Rounded.AccountBalance, R.string.transfer_title, AppDestinations.TRANSFER),
+        Triple(Icons.Rounded.Paid, R.string.alias_title, AppDestinations.ALIAS),
+        Triple(Icons.Rounded.History, R.string.activity_title, AppDestinations.ACTIVITY),
+        Triple(Icons.Rounded.CreditCard, R.string.cards_title, AppDestinations.CARDS),
+        Triple(Icons.Rounded.Link, R.string.link_title, AppDestinations.LINK),
+        Triple(Icons.Rounded.Person, R.string.profile_title, AppDestinations.PROFILE)
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Transparent)
+    ) {
         Scaffold(
             topBar = {
-                TopBar(
-                    isUserLoggedIn = currentDestination.value !in listOf(
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    TopBar(
+                        isUserLoggedIn = currentDestination.value !in listOf(
+                            AppDestinations.LOGIN,
+                            AppDestinations.REGISTER,
+                            AppDestinations.RECOVER,
+                            AppDestinations.RECOVER_CODE,
+                            AppDestinations.TERMS,
+                            AppDestinations.SECURITY
+                        ),
+                        openModalNavigation = { scope.launch { drawerState.open() } },
+
+                        )
+                }
+            },
+            containerColor = Color.Transparent
+        ) { paddingValues ->
+                if (isTablet() && currentDestination.value !in listOf(
                         AppDestinations.LOGIN,
                         AppDestinations.REGISTER,
                         AppDestinations.RECOVER,
                         AppDestinations.RECOVER_CODE,
                         AppDestinations.TERMS,
                         AppDestinations.SECURITY
-                    ),
-                    openModalNavigation = { scope.launch { drawerState.open() } }
-                )
-            },
-            containerColor = Color.Transparent
-        ) { paddingValues ->
-            when (currentDestination.value) {
-                AppDestinations.LOGIN -> LoginScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onNavigateToRegister = { currentDestination.value = AppDestinations.REGISTER },
-                    onLoginSuccess = { currentDestination.value = AppDestinations.HOME },
-                    onForgotPassword = { currentDestination.value = AppDestinations.RECOVER }
-                )
-                AppDestinations.REGISTER -> RegisterScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onNavigateBack = { currentDestination.value = AppDestinations.LOGIN },
-                    onRegisterSuccess = { currentDestination.value = AppDestinations.LOGIN }
-                )
-                AppDestinations.RECOVER -> RecoverScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onCancel = { currentDestination.value = AppDestinations.LOGIN },
-                    onRecoverSuccess = { currentDestination.value = AppDestinations.RECOVER_CODE }
-                )
-                AppDestinations.RECOVER_CODE -> RecoverCodeScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onCancel = { currentDestination.value = AppDestinations.LOGIN },
-                    onRecoverCodeSuccess = { currentDestination.value = AppDestinations.LOGIN }
-                )
-                AppDestinations.TERMS -> TermsScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.LOGIN }
-                )
-                AppDestinations.SECURITY -> SecurityInfoScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.LOGIN }
-                )
-                AppDestinations.HOME -> HomeScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onInsertMoneyClick = { currentDestination.value = AppDestinations.ALIAS },
-                    onChargeMoneyClick = { currentDestination.value = AppDestinations.LINK },
-                    onTransferMoneyClick = { currentDestination.value = AppDestinations.TRANSFER },
-                    onActivityClick = { currentDestination.value = AppDestinations.ACTIVITY },
-                    onCardsClick = { currentDestination.value = AppDestinations.CARDS }
-                )
-                AppDestinations.PROFILE -> ProfileScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onLogout = { currentDestination.value = AppDestinations.LOGIN },
-                    onBackNavigation = { currentDestination.value = AppDestinations.HOME }
-                )
-                AppDestinations.ACTIVITY -> ActivityScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.HOME }
-                )
-                AppDestinations.CARDS -> CardsScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.HOME },
-                    onAddCardClick = { currentDestination.value = AppDestinations.ADD_CARD }
-                )
-                AppDestinations.ADD_CARD -> AddCardScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.CARDS }
-                )
-                AppDestinations.ALIAS -> AliasScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.HOME }
-                )
-                AppDestinations.LINK -> LinkScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.HOME }
-                )
-                AppDestinations.TRANSFER -> TransferScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onBackNavigation = { currentDestination.value = AppDestinations.HOME }
-                )
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues)
+                    ) {
+                        NavigationRail(
+                            modifier = Modifier
+                                .fillMaxHeight(),
+                            containerColor = MaterialTheme.colorScheme.background
+                        ) {
+                            RailItems(
+                                currentDestination = currentDestination.value,
+                                items = items,
+                                onDestinationSelected = { currentDestination.value = it }
+                            )
+                        }
 
-                AppDestinations.VALIDATE -> ValidateScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    onCancel =  { currentDestination.value = AppDestinations.REGISTER },
-                    onValidateSuccess = { currentDestination.value = AppDestinations.LOGIN }
-                )
+                        AppContent(currentDestination, drawerState, scope)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                } else {
+                    ModalNavigationDrawer(
+                        drawerState = drawerState,
+                        drawerContent = {
+                            ModalDrawerSheet(
+                                drawerContainerColor = MaterialTheme.colorScheme.background
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                ) {
+                                    IconButton(
+                                        onClick = { scope.launch { drawerState.close() } },
+                                        modifier = Modifier.align(Alignment.TopEnd)
+                                    ) {
+                                        Icon(
+                                            Icons.Rounded.Close,
+                                            contentDescription = stringResource(R.string.close_menu_button_description),
+                                            tint = Color.Black
+                                        )
+                                    }
+                                }
+
+                                DrawerItems(
+                                    currentDestination = currentDestination.value,
+                                    items = items,
+                                    onDestinationSelected = {
+                                        currentDestination.value = it
+                                        scope.launch { drawerState.close() }
+                                    }
+                                )
+                            }
+                        }
+                    ) {
+                        AppContent(currentDestination, drawerState, scope, paddingValues)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                }
             }
         }
-    }
+
 }

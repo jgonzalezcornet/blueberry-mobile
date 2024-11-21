@@ -1,27 +1,15 @@
 package com.example.blueberry.ui.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PaddedContent(content: @Composable () -> Unit) {
-    val horizontalPadding = if (isTablet()) 128.dp else 16.dp
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = horizontalPadding)
-    ) {
-        content()
-    }
+fun getPadding(): Dp {
+    return (if (isTablet()) 128.dp else 16.dp)
 }
-
 @Composable
 fun isTablet(): Boolean {
     val configuration = LocalConfiguration.current

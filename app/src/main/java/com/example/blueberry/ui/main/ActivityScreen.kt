@@ -2,16 +2,17 @@ package com.example.blueberry.ui.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.activity.ActivityItem
 import com.example.blueberry.ui.components.activity.ActivityListCard
 import com.example.blueberry.ui.components.activity.ActivityType
+import com.example.blueberry.ui.components.getPadding
 import java.sql.Date
 
 @Composable
@@ -19,7 +20,6 @@ fun ActivityScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {}
 ) {
-    PaddedContent {
         val activities = listOf(
             ActivityItem(Date(2023 - 1900, 11, 15), ActivityType.SENT, "Carlos Mendoza", 4500.0),
             ActivityItem(Date(2024 - 1900, 3, 10), ActivityType.RECEIVED, "Ana Ramirez", 3200.0),
@@ -55,7 +55,9 @@ fun ActivityScreen(
         )
 
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
+                .padding(horizontal = getPadding()),
         ) {
             ScreenTitle(
                 title = stringResource(R.string.activity_title),
@@ -63,7 +65,7 @@ fun ActivityScreen(
             )
             ActivityListCard(activities)
         }
-    }
+
 }
 
 @Preview(showBackground = true)

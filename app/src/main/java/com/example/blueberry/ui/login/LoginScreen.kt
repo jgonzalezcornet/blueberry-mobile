@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.ui.components.LoginCard
-import com.example.blueberry.ui.components.PaddedContent
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 
 @Composable
@@ -36,9 +38,14 @@ fun LoginScreen(
     onNavigateToSecurityInfo: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
+                .padding(horizontal = getPadding()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LoginCard(
@@ -53,7 +60,7 @@ fun LoginScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(horizontal = getPadding()),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -93,7 +100,7 @@ fun LoginScreen(
                 )
             }
         }
-    }
+
 }
 
 @PreviewScreenSizes

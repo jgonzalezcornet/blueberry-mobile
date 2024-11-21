@@ -3,7 +3,10 @@ package com.example.blueberry.ui.main
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -12,9 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
-import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.activity.ActivityItem
 import com.example.blueberry.ui.components.activity.ActivityType
+import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.components.home.BalanceCard
 import com.example.blueberry.ui.components.home.CardListHome
 import com.example.blueberry.ui.components.home.HomeButtons
@@ -31,7 +34,6 @@ fun HomeScreen(
     onCardsClick: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    PaddedContent {
         LaunchedEffect(Unit) {
             viewModel.getCards()
             viewModel.getWalletDetails()
@@ -48,6 +50,11 @@ fun HomeScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .verticalScroll(
+                    enabled = true,
+                    state = rememberScrollState()
+                )
+                .padding(horizontal = getPadding())
         ) {
             Spacer(Modifier.width(8.dp))
             BalanceCard(
@@ -66,7 +73,6 @@ fun HomeScreen(
                 cards = uiState.cards,
                 onClick = onCardsClick
             )
-        }
     }
 }
 
