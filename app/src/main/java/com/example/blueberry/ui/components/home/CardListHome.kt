@@ -1,24 +1,27 @@
 package com.example.blueberry.ui.components.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.blueberry.R
+import com.example.blueberry.data.model.Card
 import com.example.blueberry.ui.components.cards.CardCard
-import com.example.blueberry.ui.components.cards.CardItem
 
 @Composable
 fun CardListHome(
-    cards: List<CardItem>,
+    cards: List<Card>?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
@@ -29,48 +32,47 @@ fun CardListHome(
             .padding(16.dp)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)) {
-        LazyColumn(
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
+                .padding(16.dp)
         ) {
-            items(cards) { card ->
-                CardCard(
-                    cardItem = card,
-                    onCardClick = onClick
-                )
+            Text(
+                text = stringResource(R.string.cards_title),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 1.dp)
+            )
+
+            if (cards.isNullOrEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.no_cards_message),
+                        color = Color.Gray,
+                        fontSize = 16.sp
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    items(cards) { card ->
+                        CardCard(
+                            card = card,
+                            onCardClick = onClick
+                        )
+                    }
+                }
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardListCardPreview() {
-    val sampleCards = listOf(
-        CardItem(
-            cardNumber = "4111111111111111",
-            cardHolderName = "Manuel Ahumada",
-            expiryMonth = "12",
-            expiryYear = "24",
-            cvv = "123"
-        ),
-        CardItem(
-            cardNumber = "5105105105105100",
-            cardHolderName = "Nicolas Priotto",
-            expiryMonth = "06",
-            expiryYear = "25",
-            cvv = "456"
-        ),
-        CardItem(
-            cardNumber = "371449635398431",
-            cardHolderName = "Josefina Gonzalez",
-            expiryMonth = "09",
-            expiryYear = "26",
-            cvv = "789"
-        )
-    )
-
-    CardListHome(cards = sampleCards)
 }

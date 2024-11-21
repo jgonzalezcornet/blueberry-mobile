@@ -9,7 +9,7 @@
     <string name="register_name_label">Nombre</string>
     <string name="register_lastname_label">Apellido</string>
     <string name="register_email_label">Correo electrónico</string>
-    <string name="register_dni_label">DNI</string>
+    <string name="register_birth_date_label">Fecha de nacimiento</string>
     <string name="register_password_label">Contraseña</string>
     <string name="register_confirm_password_label">Confirmar contraseña</string>
     <string name="register_password_rules">
@@ -75,7 +75,9 @@
     <string name="cvu_cbu">CVU/CBU</string>
     <string name="payment_link">Link de pago</string>
     <string name="amount_label">Monto</string>
+    <string name="description_label">Descripción</string>
     <string name="continue_button">Continuar</string>
+    <string name="transfer_email_label">Correo electrónico del destinatario</string>
     <string name="enter_data">Ingrese los datos</string>
     <string name="enter_alias_title">Ingrese el alias</string>
     <string name="enter_cvu_title">Ingrese el CVU/CBU</string>
@@ -106,7 +108,7 @@
 
     <string name="change_password_title">Cambiar Contraseña</string>
     <string name="current_password_placeholder">Ingrese su actual contraseña</string>
-        <string name="new_password_placeholder">Ingrese su nueva contraseña</string>
+    <string name="new_password_placeholder">Ingrese su nueva contraseña</string>
     <string name="confirm_new_password_placeholder">Confirme su nueva contraseña</string>
     <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
     <string name="password_mismatch_error">Las contraseñas no coinciden.</string>
@@ -120,14 +122,23 @@
 
     <string name="recover_password_code_message">Ingrese el código enviado a su correo electrónico para recuperar su contraseña</string>
     <string name="new_password_code_message">Ingrese su nueva contraseña</string>
+    <string name="validate_email_message">Ingrese el código enviado a su correo electrónico para validar su cuenta</string>
     <string name="code_label">Código</string>
     <string name="recover_password_code_title">Recuperar Contraseña</string>
+    <string name="validate_email_title">Validar Email</string>
     <string name="register_new_password_label">Nueva contraseña</string>
     <string name="register_new_password_confirm_label">Confirmar nueva contraseña</string>
 
     <string name="pro">Confirmar nueva contraseña</string>
 
     <string name="profile_name">Nombre</string>
+    <string name="profile_surname">Apellido</string>">
+    <string name="profile_email">Email</string>">
+    <string name="profile_alias">Alias</string>">
+    <string name="profile_cvu">CVU/CBU"</string>">
 
+    <string name="card_type_label">Tipo de tarjeta</string>
+
+    <string name="no_cards_message">No hay tarjetas</string>
 
 </resources>

@@ -14,25 +14,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
-import com.example.blueberry.ui.components.cards.CardItem
 import com.example.blueberry.ui.components.cards.CompleteCardCard
 import androidx.compose.material3.MaterialTheme
+import com.example.blueberry.data.model.Card
 
 @Composable
 fun PayTransferCard(
     modifier: Modifier = Modifier,
-    transferType: String,
     destination: String,
     amount: Int,
-    availableCards: List<CardItem>,
+    availableCards: List<Card>,
     onCancel: () -> Unit = {},
-    onPay: (paymentMethod: String) -> Unit = {}
+    onPay: (paymentMethod: String, cardId: Int) -> Unit
 ) {
     var selectedPaymentMethod by remember { mutableStateOf<String?>(null) }
+    var selectedCardId by remember { mutableStateOf(0) }
     var currentPage by remember { mutableStateOf(0) }
 
     Card(
@@ -65,7 +64,7 @@ fun PayTransferCard(
                     color = Color.Gray
                 )
                 Text(
-                    text = "$transferType: $destination",
+                    text = "Email: $destination",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -106,6 +105,7 @@ fun PayTransferCard(
                             .clickable {
                                 currentPage = 0
                                 selectedPaymentMethod = "account_balance"
+                                selectedCardId = 0
                             },
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
@@ -133,7 +133,8 @@ fun PayTransferCard(
                             .width(300.dp)
                             .clickable {
                                 currentPage = index + 1
-                                selectedPaymentMethod = card.cardNumber
+                                selectedPaymentMethod = card.number
+                                selectedCardId = card.id!!
                             }
                     ) {
                         CompleteCardCard(
@@ -180,7 +181,12 @@ fun PayTransferCard(
 
                 Button(
                     onClick = { 
-                        selectedPaymentMethod?.let { onPay(it) }
+                        selectedPaymentMethod?.let {
+                            onPay(
+                                if(it == "account_balance") "BALANCE" else "CARD",
+                                selectedCardId
+                            )
+                        }
                     },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
@@ -195,22 +201,4 @@ fun PayTransferCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PayTransferCardPreview() {
-    PayTransferCard(
-        transferType = "Alias",
-        destination = "ejemplo.alias",
-        amount = 10000,
-        availableCards = listOf(
-            CardItem(
-                cardNumber = "4111111111111111",
-                cardHolderName = "Manuel Ahumada",
-                expiryMonth = "12",
-                expiryYear = "24",
-                cvv = "123"
-            )
-        )
-    )
-}
 

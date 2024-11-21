@@ -21,13 +21,25 @@ import com.example.blueberry.ui.components.AliasCard
 import com.example.blueberry.ui.components.ChangeAliasCard
 import com.example.blueberry.ui.components.ScreenTitle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
+import com.example.blueberry.ui.home.HomeViewModel
 
 @Composable
 fun AliasScreen(
     modifier: Modifier = Modifier,
-    onBackNavigation: () -> Unit = {}
+    onBackNavigation: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+    val uiState = viewModel.uiState
     var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
+    var refreshTrigger by rememberSaveable { mutableStateOf(0) }
+
+    LaunchedEffect(refreshTrigger) {
+        viewModel.getWalletDetails()
+    }
 
     Column(
         modifier = modifier.fillMaxSize()
@@ -36,7 +48,11 @@ fun AliasScreen(
             title = stringResource(R.string.alias_title),
             onBackNavigation = onBackNavigation
         )
-        AliasCard()
+        AliasCard(
+            balance = uiState.details?.balance.toString(),
+            alias = uiState.details?.alias ?: "",
+            cbu = uiState.details?.cbu ?: ""
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
@@ -55,7 +71,12 @@ fun AliasScreen(
         }
         if(changeAliasModalOpen){
             ChangeAliasCard(
-                onClose = { changeAliasModalOpen = false }
+                onClose = { changeAliasModalOpen = false },
+                onConfirm = { newAlias ->
+                    viewModel.updateAlias(newAlias)
+                    changeAliasModalOpen = false
+                    refreshTrigger += 1
+                }
             )
         }
     }

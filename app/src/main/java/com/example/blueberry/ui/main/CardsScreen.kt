@@ -20,42 +20,29 @@ import androidx.compose.ui.unit.dp
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.ScreenTitle
-import com.example.blueberry.ui.components.cards.CardItem
 import com.example.blueberry.ui.components.cards.CardListCard
 import com.example.blueberry.ui.components.cards.EliminateCard
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
+import com.example.blueberry.data.model.Card
+import com.example.blueberry.ui.home.HomeViewModel
 
 @Composable
 fun CardsScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {},
-    onAddCardClick: () -> Unit = {}
+    onAddCardClick: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    var selectedCard by rememberSaveable { mutableStateOf<CardItem?>(null) }
-    // Lista de ejemplo de tarjetas
-    val sampleCards = listOf(
-        CardItem(
-            cardNumber = "4111111111111111",
-            cardHolderName = "Manuel Ahumada",
-            expiryMonth = "12",
-            expiryYear = "24",
-            cvv = "123"
-        ),
-        CardItem(
-            cardNumber = "5105105105105100",
-            cardHolderName = "Nicolas Priotto",
-            expiryMonth = "06",
-            expiryYear = "25",
-            cvv = "456"
-        ),
-        CardItem(
-            cardNumber = "371449635398431",
-            cardHolderName = "Josefina Gonzalez",
-            expiryMonth = "09",
-            expiryYear = "26",
-            cvv = "789"
-        )
-    )
+    LaunchedEffect(Unit) {
+        viewModel.getCards()
+    }
+
+    var selectedCard by rememberSaveable { mutableStateOf<Card?>(null) }
+    val uiState = viewModel.uiState
 
     Column(
         modifier = modifier.fillMaxSize()
@@ -66,7 +53,7 @@ fun CardsScreen(
         )
         
         CardListCard(
-            cards = sampleCards,
+            cards = uiState.cards,
             onCardClick = { card ->
                 selectedCard = card
             }
@@ -77,7 +64,7 @@ fun CardsScreen(
                 cardItem = card,
                 onClose = { selectedCard = null },
                 onDelete = { cardToDelete ->
-                    // Aquí iría la lógica para eliminar la tarjeta
+                    viewModel.deleteCard(cardToDelete.id!!)
                     selectedCard = null
                 }
             )

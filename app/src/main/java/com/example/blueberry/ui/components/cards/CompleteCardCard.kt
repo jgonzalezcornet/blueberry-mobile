@@ -11,15 +11,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
+import com.example.blueberry.data.model.Card
 
 @Composable
 fun CompleteCardCard(
     modifier: Modifier = Modifier,
-    cardItem: CardItem,
+    cardItem: Card,
     showFullNumber: Boolean = false
 ) {
     Card(
@@ -28,7 +28,7 @@ fun CompleteCardCard(
             .fillMaxWidth()
             .height(180.dp)
             .padding(12.dp),
-        colors = CardDefaults.cardColors(containerColor = cardItem.cardType.backgroundColor)
+        colors = CardDefaults.cardColors(containerColor = cardItem.brand.backgroundColor)
     ) {
         Column(
             modifier = Modifier
@@ -36,9 +36,9 @@ fun CompleteCardCard(
                 .padding(20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            if (cardItem.cardType.logo != 0) {
+            if (cardItem.brand.logo != 0) {
                 Icon(
-                    painter = painterResource(cardItem.cardType.logo),
+                    painter = painterResource(cardItem.brand.logo),
                     contentDescription = stringResource(R.string.card_logo_description),
                     tint = Color.Unspecified,
                     modifier = Modifier
@@ -49,7 +49,7 @@ fun CompleteCardCard(
 
             Text(
                 text = if (showFullNumber) {
-                    cardItem.cardNumber.chunked(4).joinToString(" ")
+                    cardItem.number.chunked(4).joinToString(" ")
                 } else {
                     "**** **** **** ${cardItem.lastFourDigits}"
                 },
@@ -75,7 +75,7 @@ fun CompleteCardCard(
                         )
                     )
                     Text(
-                        text = cardItem.cardHolderName.uppercase(),
+                        text = cardItem.fullName.uppercase(),
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 14.sp,
@@ -93,7 +93,7 @@ fun CompleteCardCard(
                         )
                     )
                     Text(
-                        text = "${cardItem.expiryMonth}/${cardItem.expiryYear}",
+                        text = cardItem.expirationDate,
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 14.sp,
@@ -106,33 +106,5 @@ fun CompleteCardCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CompleteCardCardPreview() {
-    CompleteCardCard(
-        cardItem = CardItem(
-            cardNumber = "4111111111111111",
-            cardHolderName = "Manuel Ahumada",
-            expiryMonth = "12",
-            expiryYear = "24",
-            cvv = "123"
-        ),
-        showFullNumber = false
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun CompleteCardCardFullNumberPreview() {
-    CompleteCardCard(
-        cardItem = CardItem(
-            cardNumber = "4111111111111111",
-            cardHolderName = "Manuel Ahumada",
-            expiryMonth = "12",
-            expiryYear = "24",
-            cvv = "123"
-        ),
-        showFullNumber = true
-    )
-}
 

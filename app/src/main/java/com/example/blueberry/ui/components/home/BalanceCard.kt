@@ -39,8 +39,7 @@ import com.example.blueberry.R
 @Composable
 fun BalanceCard(
     modifier: Modifier = Modifier,
-    balance: String = "$ 14.017,57"
-
+    balance: String
 ) {
     var isBalanceVisible by remember { mutableStateOf(true) }
     Box(
@@ -96,8 +95,3 @@ fun BalanceCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun BalanceCardPreview() {
-    BalanceCard()
-}

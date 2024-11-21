@@ -68,7 +68,10 @@ fun LinkCard(
                     Spacer(modifier = Modifier.width(8.dp))
                     OutlinedTextField(
                         value = amount,
-                        onValueChange = { amount = it },
+                        onValueChange = { if (it.all { char -> char.isDigit() }) {
+                            amount = it
+                        }
+                    },
                         label = { Text(stringResource(R.string.link_label)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true

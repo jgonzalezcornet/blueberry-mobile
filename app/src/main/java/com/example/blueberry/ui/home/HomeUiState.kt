@@ -3,6 +3,7 @@ package com.example.blueberry.ui.home
 import com.example.blueberry.data.model.Card
 import com.example.blueberry.data.model.Error
 import com.example.blueberry.data.model.User
+import com.example.blueberry.data.model.WalletDetails
 
 data class HomeUiState(
     val isAuthenticated: Boolean = false,
@@ -10,7 +11,8 @@ data class HomeUiState(
     val currentUser: User? = null,
     val cards: List<Card>? = null,
     val currentCard: Card? = null,
-    val error: Error? = null
+    val error: Error? = null,
+    val details: WalletDetails? = null
 )
 
 val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated

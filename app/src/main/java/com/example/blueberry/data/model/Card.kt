@@ -15,6 +15,9 @@ class Card(
     var createdAt: Date? = null,
     var updatedAt: Date? = null
 ) {
+    val brand: CardBrand = CardBrand.fromCardNumber(number)
+    val lastFourDigits: String = number.takeLast(4)
+    
     fun asNetworkModel(): NetworkCard {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
 

@@ -1,10 +1,10 @@
-package com.example.blueberry.ui.components.cards
+package com.example.blueberry.data.model
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import com.example.blueberry.R
 
-enum class CardType(
+enum class CardBrand(
     val backgroundColor: Color,
     @DrawableRes val logo: Int
 ) {
@@ -14,7 +14,7 @@ enum class CardType(
     OTHER(Color.Gray, R.drawable.unknown);
 
     companion object {
-        fun fromCardNumber(cardNumber: String): CardType {
+        fun fromCardNumber(cardNumber: String): CardBrand {
             return when {
                 cardNumber.startsWith("4") -> VISA
                 cardNumber.startsWith("51") || cardNumber.startsWith("55") -> MASTERCARD

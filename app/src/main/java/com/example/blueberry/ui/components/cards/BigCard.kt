@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
+import com.example.blueberry.data.model.CardBrand
 
 @Composable
 fun BigCard(
@@ -26,7 +27,7 @@ fun BigCard(
     cvv: String,
     modifier: Modifier = Modifier
 ) {
-    val cardType = CardType.fromCardNumber(cardNumber)
+    val cardType = CardBrand.Companion.fromCardNumber(cardNumber)
 
     Card(
         shape = RoundedCornerShape(16.dp),

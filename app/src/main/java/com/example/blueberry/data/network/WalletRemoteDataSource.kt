@@ -1,7 +1,9 @@
 package com.example.blueberry.data.network
 
 import com.example.blueberry.data.network.api.WalletApiService
+import com.example.blueberry.data.network.model.NetworkAlias
 import com.example.blueberry.data.network.model.NetworkCard
+import com.example.blueberry.data.network.model.NetworkWalletDetails
 
 class WalletRemoteDataSource(
     private val walletApiService: WalletApiService
@@ -23,5 +25,19 @@ class WalletRemoteDataSource(
         handleApiResponse {
             walletApiService.deleteCard(cardId)
         }
+
     }
+
+    suspend fun getWalletDetails(): NetworkWalletDetails {
+        return handleApiResponse {
+            walletApiService.getWalletDetails()
+        }
+    }
+
+    suspend fun updateAlias(alias: NetworkAlias) {
+        handleApiResponse {
+            walletApiService.updateAlias(alias)
+        }
+    }
+
 }

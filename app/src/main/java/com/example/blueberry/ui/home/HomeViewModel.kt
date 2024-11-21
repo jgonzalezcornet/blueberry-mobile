@@ -13,18 +13,27 @@ import com.example.blueberry.data.model.Card
 import com.example.blueberry.data.model.Error
 import com.example.blueberry.data.repository.UserRepository
 import com.example.blueberry.data.repository.WalletRepository
+import com.example.blueberry.data.repository.PaymentRepository
+import com.example.blueberry.data.network.model.NetworkAlias
 import com.example.blueberry.SessionManager
+import com.example.blueberry.data.model.Payment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     sessionManager: SessionManager,
     private val userRepository: UserRepository,
-    private val walletRepository: WalletRepository
+    private val walletRepository: WalletRepository,
+    private val paymentRepository: PaymentRepository
 ) : ViewModel() {
 
     var uiState by mutableStateOf(HomeUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
+
+    fun register(firstName: String, lastName: String, birthDate: String, email: String, password: String) = runOnViewModelScope(
+        { userRepository.register(firstName, lastName, birthDate, email, password) },
+        { state, _ -> state.copy() }
+    )
 
     fun login(username: String, password: String) = runOnViewModelScope(
         { userRepository.login(username, password) },
@@ -41,6 +50,12 @@ class HomeViewModel(
                 cards = null
             )
         }
+
+    )
+
+    fun verify(code: String) = runOnViewModelScope(
+        { userRepository.verify(code) },
+        { state, _ -> state.copy() }
     )
 
     fun getCurrentUser() = runOnViewModelScope(
@@ -73,6 +88,21 @@ class HomeViewModel(
                 cards = null
             )
         }
+    )
+
+    fun getWalletDetails() = runOnViewModelScope(
+        { walletRepository.getWalletDetails() },
+        { state, response -> state.copy(details = response) }
+    )
+
+    fun updateAlias(alias: String) = runOnViewModelScope(
+        { walletRepository.updateAlias(NetworkAlias(alias)) },
+        { state, _ -> state.copy() }
+    )
+
+    fun makePayment(payment: Payment) = runOnViewModelScope(
+        { paymentRepository.makePayment(payment) },
+        { state, response -> state.copy() }
     )
 
     private fun <R> runOnViewModelScope(
@@ -109,7 +139,8 @@ class HomeViewModel(
                 return HomeViewModel(
                     application.sessionManager,
                     application.userRepository,
-                    application.walletRepository) as T
+                    application.walletRepository,
+                    application.paymentRepository) as T
             }
         }
     }

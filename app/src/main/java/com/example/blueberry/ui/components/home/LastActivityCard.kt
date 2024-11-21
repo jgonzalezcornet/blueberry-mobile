@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.activity.ActivityCard
 import com.example.blueberry.ui.components.activity.ActivityItem
@@ -38,6 +39,7 @@ fun LastActivityCard(
             Text(
                 text = stringResource(R.string.last_activity_string),
                 fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 1.dp)
             )
             ActivityCard(activity)

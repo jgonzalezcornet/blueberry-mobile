@@ -19,12 +19,13 @@ import com.example.blueberry.R
 
 @Composable
 fun RegisterCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRegister: (String, String, String, String, String, String) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var dni by remember { mutableStateOf("") }
+    var birthDate by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
@@ -77,9 +78,9 @@ fun RegisterCard(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
-                    value = dni,
-                    onValueChange = { dni = it },
-                    label = { Text(stringResource(R.string.register_dni_label)) },
+                    value = birthDate,
+                    onValueChange = { birthDate = it },
+                    label = { Text(stringResource(R.string.register_birth_date_label)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -110,7 +111,7 @@ fun RegisterCard(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { /* Acción de registro */ },
+                    onClick = { onRegister(name, lastName, email, birthDate, password, confirmPassword) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
@@ -129,5 +130,5 @@ fun RegisterCard(
 @PreviewScreenSizes
 @Composable
 fun RegisterCardPreview() {
-    RegisterCard()
+    RegisterCard(onRegister = { _, _, _, _, _, _ -> })
 }

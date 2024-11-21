@@ -34,5 +34,6 @@ enum class AppDestinations (
     RECOVER(R.string.recover_title, Icons.Rounded.Create, R.string.recover_title),
     RECOVER_CODE(R.string.recover_password_code_title, Icons.Rounded.Album, R.string.recover_password_code_title),
     TERMS(R.string.terms_and_conditions, Icons.Rounded.AccountBalance, R.string.terms_and_conditions),
-    SECURITY(R.string.security_info, Icons.Rounded.AccountBalance, R.string.security_info)
+    SECURITY(R.string.security_info, Icons.Rounded.AccountBalance, R.string.security_info),
+    VALIDATE(R.string.validate_email_title, Icons.Rounded.AccountBalance, R.string.validate_email_title)
 }

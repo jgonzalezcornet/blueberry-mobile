@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
 
@@ -28,7 +27,7 @@ import androidx.compose.material3.MaterialTheme
 fun LoginCard(
     modifier: Modifier = Modifier,
     onForgotPassword: () -> Unit = {},
-    onLoginSuccess: () -> Unit = {}
+    onLogin: (String, String) -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -88,7 +87,7 @@ fun LoginCard(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { onLoginSuccess() },
+                    onClick = { onLogin(email, password) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
@@ -103,11 +102,11 @@ fun LoginCard(
         }
     }
 }
-
+/*
 @PreviewScreenSizes
 @Composable
 fun LoginCardPreview() {
     LoginCard()
 }
-
+*/
 

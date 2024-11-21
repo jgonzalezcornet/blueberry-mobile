@@ -46,6 +46,7 @@ import com.example.blueberry.ui.login.RecoverScreen
 import com.example.blueberry.ui.login.RegisterScreen
 import com.example.blueberry.ui.login.SecurityInfoScreen
 import com.example.blueberry.ui.login.TermsScreen
+import com.example.blueberry.ui.login.ValidateScreen
 import com.example.blueberry.ui.main.ActivityScreen
 import com.example.blueberry.ui.main.AddCardScreen
 import com.example.blueberry.ui.main.AliasScreen
@@ -59,7 +60,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AdaptiveApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME ) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -284,7 +285,7 @@ fun AdaptiveApp() {
                             currentDestination = AppDestinations.LOGIN
                         },
                         onRegisterSuccess = {
-                            currentDestination = AppDestinations.LOGIN
+                            currentDestination = AppDestinations.VALIDATE
                         }
                     )
                     AppDestinations.RECOVER -> RecoverScreen(
@@ -306,6 +307,12 @@ fun AdaptiveApp() {
                     AppDestinations.SECURITY -> SecurityInfoScreen(
                         modifier = Modifier.padding(paddingValues),
                         onBackNavigation = { currentDestination = AppDestinations.LOGIN }
+                    )
+
+                    AppDestinations.VALIDATE -> ValidateScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onCancel =  { currentDestination = AppDestinations.REGISTER },
+                        onValidateSuccess = { currentDestination = AppDestinations.LOGIN }
                     )
 
                     AppDestinations.HOME -> HomeScreen(
@@ -336,6 +343,9 @@ fun AdaptiveApp() {
                         modifier = Modifier.padding(paddingValues),
                         onBackNavigation = {
                             currentDestination = AppDestinations.CARDS
+                        },
+                        onAddCardSuccess = {
+                            currentDestination = AppDestinations.CARDS
                         }
                     )
                     AppDestinations.ALIAS -> AliasScreen(
@@ -348,7 +358,8 @@ fun AdaptiveApp() {
                     )
                     AppDestinations.TRANSFER -> TransferScreen(
                         modifier = Modifier.padding(paddingValues),
-                        onBackNavigation = { currentDestination = AppDestinations.HOME }
+                        onBackNavigation = { currentDestination = AppDestinations.TRANSFER },
+                        onTransferSuccess = { currentDestination = AppDestinations.HOME }
                     )
                 }
             }

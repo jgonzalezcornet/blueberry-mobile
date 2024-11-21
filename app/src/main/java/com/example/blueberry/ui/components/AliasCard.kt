@@ -25,17 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
-
 
 @Composable
 fun AliasCard(
     modifier: Modifier = Modifier,
-    balance: String = "$ 14.017,57",
-    cbu: String = "2000000000500001234",
-    alias: String = "jlategana.blueberry"
+    balance: String,
+    cbu: String,
+    alias: String
 ) {
     var isBalanceVisible by remember { mutableStateOf(true) }
     val context = LocalContext.current
@@ -56,7 +54,6 @@ fun AliasCard(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // Título
                 Text(
                     text = stringResource(R.string.balance_title),
                     style = TextStyle(
@@ -66,7 +63,6 @@ fun AliasCard(
                     )
                 )
 
-                // Balance y botón para ocultar/mostrar
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
@@ -90,7 +86,6 @@ fun AliasCard(
                     )
                 }
 
-                // Descripción
                 Text(
                     text = stringResource(R.string.balance_description),
                     style = TextStyle(fontSize = 14.sp, color = Color.Gray)
@@ -98,7 +93,6 @@ fun AliasCard(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // CVU
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
@@ -120,7 +114,6 @@ fun AliasCard(
                     Text(text = cbu)
                 }
 
-                // Alias
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
@@ -151,10 +144,4 @@ fun copyToClipboard(context: Context, text: String, message: String) {
     val clip = android.content.ClipData.newPlainText("Copied Text", text)
     clipboard?.setPrimaryClip(clip)
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AliasCardPreview() {
-    AliasCard()
 }

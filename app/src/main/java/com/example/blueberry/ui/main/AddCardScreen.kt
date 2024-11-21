@@ -12,28 +12,36 @@ import androidx.compose.ui.unit.dp
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.ScreenTitle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
 import com.example.blueberry.ui.components.cards.BigCard
+import com.example.blueberry.ui.home.HomeViewModel
+import com.example.blueberry.data.model.Card
+import com.example.blueberry.data.model.CardType
+import com.example.blueberry.utils.formatDate
 
 
 @Composable
 fun AddCardScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {},
-    onAddCardSuccess: () -> Unit = {}
+    onAddCardSuccess: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
     var cardNumber by remember { mutableStateOf("") }
     var cardHolderName by remember { mutableStateOf("") }
     var expiryMonth by remember { mutableStateOf("") }
     var expiryYear by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
+    var cardType by remember { mutableStateOf(CardType.CREDIT) }
     var showBack by remember { mutableStateOf(false) }
 
     val formattedCardNumber = cardNumber.chunked(4).joinToString(" ")
-    val formattedExpiryDate = if (expiryMonth.isNotEmpty() || expiryYear.isNotEmpty()) {
-        "${expiryMonth.take(2)}/${expiryYear.take(2)}"
-    } else ""
+    val formattedExpiryDate = formatDate(expiryMonth, expiryYear)
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp)
@@ -64,6 +72,42 @@ fun AddCardScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.card_type_label),
+                        color = Color.Gray
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Débito",
+                            color = if (cardType == CardType.DEBIT) MaterialTheme.colorScheme.primary else Color.Gray
+                        )
+                        Switch(
+                            checked = cardType == CardType.CREDIT,
+                            onCheckedChange = { isCredit ->
+                                cardType = if (isCredit) CardType.CREDIT else CardType.DEBIT
+                            },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                                uncheckedThumbColor = MaterialTheme.colorScheme.primary,
+                                uncheckedTrackColor = MaterialTheme.colorScheme.primaryContainer
+                            )
+                        )
+                        Text(
+                            text = "Crédito",
+                            color = if (cardType == CardType.CREDIT) MaterialTheme.colorScheme.primary else Color.Gray
+                        )
+                    }
+                }
+
                 OutlinedTextField(
                     value = cardNumber,
                     onValueChange = {
@@ -138,7 +182,10 @@ fun AddCardScreen(
                 )
 
                 Button(
-                    onClick = onAddCardSuccess,
+                    onClick = {
+                        viewModel.addCard(Card(null, cardNumber, formattedExpiryDate, cardHolderName, cvv, cardType, null, null))
+                        onAddCardSuccess()
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     enabled = cardNumber.length == 16 &&

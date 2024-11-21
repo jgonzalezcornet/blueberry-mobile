@@ -23,14 +23,14 @@ import androidx.compose.ui.res.stringResource
 
 @Composable
 fun ProfileCard(
-    name: String,
-    dni: String,
+    firstName: String,
+    lastName: String,
     email: String,
     alias: String,
     cbu: String,
     onChangeAliasClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
-    onLogoutClick: () -> Unit
+    onLogout: () -> Unit
 ) {
     Card (
         modifier = Modifier
@@ -47,7 +47,7 @@ fun ProfileCard(
                 .fillMaxWidth()
                 .padding(16.dp)
                 .background(color = Color.White, shape = RoundedCornerShape(12.dp))
-                .padding(16.dp), // Inner padding for spacing
+                .padding(16.dp), 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -63,28 +63,28 @@ fun ProfileCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             // Information display
-            ProfileInfoRow(label = stringResource(R.string.profile_name), value = name)
-            ProfileInfoRow(label = "DNI", value = dni)
-            ProfileInfoRow(label = "Email", value = obfuscateEmail(email))
-            ProfileInfoRow(label = "Alias", value = alias)
-            ProfileInfoRow(label = "CVU", value = cbu)
+            ProfileInfoRow(label = stringResource(R.string.profile_name), value = firstName)
+            ProfileInfoRow(label = stringResource(R.string.profile_surname), value = lastName)
+            ProfileInfoRow(label = stringResource(R.string.profile_email), value = obfuscateEmail(email))
+            ProfileInfoRow(label = stringResource(R.string.profile_alias), value = alias)
+            ProfileInfoRow(label = stringResource(R.string.profile_cvu), value = cbu)
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Buttons
             CustomButton(
-                text = "Cambiar Alias",
+                text = stringResource(R.string.change_alias),
                 onClick = onChangeAliasClick
             )
 
             CustomButton(
-                text = "Cambiar Contraseña",
+                text = stringResource(R.string.change_password),
                 onClick = onChangePasswordClick
             )
 
             CustomButton(
-                text = "Cerrar Sesión",
-                onClick = onLogoutClick
+                text = stringResource(R.string.logout),
+                onClick = { onLogout() }
             )
         }
     }

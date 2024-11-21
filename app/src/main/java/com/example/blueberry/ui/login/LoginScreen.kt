@@ -20,6 +20,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.text.style.TextDecoration
+import com.example.blueberry.ui.home.HomeViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
+import com.example.blueberry.MyApplication
 
 @Composable
 fun LoginScreen(
@@ -28,15 +32,19 @@ fun LoginScreen(
     onForgotPassword: () -> Unit = {},
     onLoginSuccess: () -> Unit = {},
     onNavigateToTerms: () -> Unit = {},
-    onNavigateToSecurityInfo: () -> Unit = {}
+    onNavigateToSecurityInfo: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginCard(
-            onLoginSuccess = onLoginSuccess,
-            onForgotPassword = onForgotPassword
+            onForgotPassword = onForgotPassword,
+            onLogin = { email, password ->
+                viewModel.login(email, password)
+                onLoginSuccess()
+            }
         )
 
 

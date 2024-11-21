@@ -11,13 +11,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.blueberry.data.model.Card
 
 @Composable
 fun CardCard(
-    cardItem: CardItem,
+    card: Card,
     modifier: Modifier = Modifier,
     onCardClick: () -> Unit = {}
 ) {
@@ -28,7 +28,7 @@ fun CardCard(
             .height(80.dp)
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable { onCardClick() },
-        colors = CardDefaults.cardColors(containerColor = cardItem.cardType.backgroundColor)
+        colors = CardDefaults.cardColors(containerColor = card.brand.backgroundColor)
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -41,7 +41,7 @@ fun CardCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "**** ${cardItem.lastFourDigits}",
+                    text = "**** ${card.lastFourDigits}",
                     style = TextStyle(
                         color = Color.White,
                         fontSize = 20.sp,
@@ -49,9 +49,9 @@ fun CardCard(
                     ),
                     modifier = Modifier.weight(1f)
                 )
-                if (cardItem.cardType.logo != 0) {
+                if (card.brand.logo != 0) {
                     Icon(
-                        painter = painterResource(cardItem.cardType.logo),
+                        painter = painterResource(card.brand.logo),
                         contentDescription = "Card Logo",
                         tint = Color.Unspecified,
                         modifier = Modifier.size(40.dp)
@@ -60,18 +60,4 @@ fun CardCard(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardCardPreview() {
-    CardCard(
-        cardItem = CardItem(
-            cardNumber = "4111111111117778",
-            cardHolderName = "Manuel Ahumada",
-            expiryMonth = "12",
-            expiryYear = "24",
-            cvv = "123"
-        )
-    )
 }

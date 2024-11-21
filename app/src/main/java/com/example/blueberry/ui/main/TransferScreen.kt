@@ -16,17 +16,29 @@ import androidx.compose.ui.graphics.Color
 import com.example.blueberry.ui.components.PayTransferCard
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.TransferCard
-import com.example.blueberry.ui.components.cards.CardItem
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
+import com.example.blueberry.ui.home.HomeViewModel
+import androidx.compose.runtime.LaunchedEffect
+import com.example.blueberry.data.model.Payment
 
 @Composable
 fun TransferScreen(
     modifier: Modifier = Modifier,
-    onBackNavigation: () -> Unit = {}
+    onBackNavigation: () -> Unit = {},
+    onTransferSuccess: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.getCards()
+    }
+
     var transferStage by remember { mutableStateOf(0) }
-    var transferType by remember { mutableStateOf("") }
     var destination by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    val uiState = viewModel.uiState
 
     Column(
         modifier = modifier.fillMaxSize().background(Color.Transparent)
@@ -38,9 +50,9 @@ fun TransferScreen(
             )
 
             TransferCard(
-                onTransferConfirmed = { type, dest, amt -> 
-                    transferType = type
+                onTransferConfirmed = { dest, amt, desc ->
                     destination = dest
+                    description = desc
                     amount = amt
                     transferStage = 1
                 }
@@ -48,18 +60,19 @@ fun TransferScreen(
         } else if(transferStage == 1){
             PayTransferCard(
                 onCancel = { transferStage = 0 },
-                transferType = transferType,
                 destination = destination,
                 amount = amount.toIntOrNull() ?: 0,
-                availableCards = listOf(
-                    CardItem(
-                        cardNumber = "4111111111111111",
-                        cardHolderName = "Manuel Ahumada",
-                        expiryMonth = "12",
-                        expiryYear = "24",
-                        cvv = "123"
-                    )
-                )
+                availableCards = uiState.cards ?: listOf(),
+                onPay = { method, cardId ->
+                    viewModel.makePayment(Payment(
+                        amount = amount.toDouble(),
+                        description = description,
+                        type = method,
+                        cardId = cardId,
+                        receiverEmail = "johndoe@email.com"
+                    ))
+                    onTransferSuccess()
+                }
             )
         }
     }

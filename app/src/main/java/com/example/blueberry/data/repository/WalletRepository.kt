@@ -1,7 +1,9 @@
 package com.example.blueberry.data.repository
 
 import com.example.blueberry.data.model.Card
+import com.example.blueberry.data.model.WalletDetails
 import com.example.blueberry.data.network.WalletRemoteDataSource
+import com.example.blueberry.data.network.model.NetworkAlias
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -25,7 +27,7 @@ class WalletRepository(
         return cardsMutex.withLock { this.cards }
     }
 
-    suspend fun addCard(card: Card) : Card {
+    suspend fun addCard(card: Card): Card {
         val newCard = remoteDataSource.addCard(card.asNetworkModel()).asModel()
         cardsMutex.withLock {
             this.cards = emptyList()
@@ -38,5 +40,15 @@ class WalletRepository(
         cardsMutex.withLock {
             this.cards = emptyList()
         }
+
     }
+
+    suspend fun getWalletDetails(): WalletDetails {
+        return remoteDataSource.getWalletDetails().asModel()
+    }
+
+    suspend fun updateAlias(alias: NetworkAlias) {
+        remoteDataSource.updateAlias(alias)
+    }
+
 }

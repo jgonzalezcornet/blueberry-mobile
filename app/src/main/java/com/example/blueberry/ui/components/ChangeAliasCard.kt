@@ -72,7 +72,10 @@ fun ChangeAliasCard(
 
                 OutlinedTextField(
                     value = newAlias,
-                    onValueChange = { newAlias = it },
+                    onValueChange = { it -> if (it.all { char -> char.isLetterOrDigit() || char == '.' }) {
+                        newAlias = it
+                    }
+                    },
                     placeholder = { Text(stringResource(R.string.change_alias_placeholder)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
