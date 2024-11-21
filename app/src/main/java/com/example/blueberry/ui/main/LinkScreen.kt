@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.LinkCard
 import com.example.blueberry.ui.components.LinkGeneratedCard
+import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.ScreenTitle
 
 @Composable
@@ -20,27 +21,29 @@ fun LinkScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {}
 ) {
-    var linkModalOpen by rememberSaveable { mutableStateOf(false) }
-    var amount by rememberSaveable { mutableStateOf("") }
+    PaddedContent {
+        var linkModalOpen by rememberSaveable { mutableStateOf(false) }
+        var amount by rememberSaveable { mutableStateOf("") }
 
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        ScreenTitle(
-            title = stringResource(R.string.link_screen_title),
-            onBackNavigation = onBackNavigation
-        )
-        LinkCard(
-            onGenerateLink = { newAmount ->
-                amount = newAmount
-                linkModalOpen = true 
-            }
-        )
-        if(linkModalOpen){
-            LinkGeneratedCard(
-                amount = amount,
-                onClose = { linkModalOpen = false }
+        Column(
+            modifier = modifier.fillMaxSize()
+        ) {
+            ScreenTitle(
+                title = stringResource(R.string.link_screen_title),
+                onBackNavigation = onBackNavigation
             )
+            LinkCard(
+                onGenerateLink = { newAmount ->
+                    amount = newAmount
+                    linkModalOpen = true
+                }
+            )
+            if (linkModalOpen) {
+                LinkGeneratedCard(
+                    amount = amount,
+                    onClose = { linkModalOpen = false }
+                )
+            }
         }
     }
 }

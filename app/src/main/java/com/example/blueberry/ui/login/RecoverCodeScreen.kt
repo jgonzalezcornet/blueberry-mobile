@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.blueberry.PreviewScreenSizes
+import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.home.RecoverPasswordCodeCard
 
 @Composable
@@ -14,14 +15,16 @@ fun RecoverCodeScreen(
     onCancel: () -> Unit = {},
     onRecoverCodeSuccess: () -> Unit = {}
 ) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        RecoverPasswordCodeCard(
-            onCancel = onCancel,
-            onRecoverCodeSuccess = onRecoverCodeSuccess
-        )
+    PaddedContent {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            RecoverPasswordCodeCard(
+                onCancel = onCancel,
+                onRecoverCodeSuccess = onRecoverCodeSuccess
+            )
+        }
     }
 }
 

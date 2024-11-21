@@ -21,17 +21,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
+import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.RegisterCard
 import com.example.blueberry.ui.home.HomeViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.ui.platform.LocalContext
-import com.example.blueberry.MyApplication
 import com.example.blueberry.utils.checkPassword
 import com.example.blueberry.utils.checkPasswordMismatch
 
@@ -44,99 +45,103 @@ fun RegisterScreen(
     onNavigateToSecurityInfo: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    var showErrorDialog by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf("") }
-    val context = LocalContext.current
+    PaddedContent {
+        var showErrorDialog by remember { mutableStateOf(false) }
+        var errorMessage by remember { mutableStateOf("") }
+        val context = LocalContext.current
 
-    if (showErrorDialog) {
-        AlertDialog(
-            onDismissRequest = { showErrorDialog = false },
-            title = {
-                Text(
-                    text = "Error",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.Red
-                )
-            },
-            text = {
-                Text(
-                    text = errorMessage,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { showErrorDialog = false }) {
-                    Text("Aceptar")
-                }
-            },
-            containerColor = Color.White
-        )
-    }
-
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        RegisterCard(
-            onRegister = { name, lastName, email, birthDate, password, confirmPassword ->
-                when {
-                    !checkPassword(password) -> {
-                        errorMessage = context.getString(R.string.password_invalid_message)
-                        showErrorDialog = true
+        if (showErrorDialog) {
+            AlertDialog(
+                onDismissRequest = { showErrorDialog = false },
+                title = {
+                    Text(
+                        text = "Error",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.Red
+                    )
+                },
+                text = {
+                    Text(
+                        text = errorMessage,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = { showErrorDialog = false }) {
+                        Text("Aceptar")
                     }
-                    !checkPasswordMismatch(password, confirmPassword) -> {
-                        errorMessage = context.getString(R.string.password_mismatch_error)
-                        showErrorDialog = true
-                    }
-                    else -> {
-                        viewModel.register(name, lastName, birthDate, email, password)
-                        onRegisterSuccess()
-                    }
-                }
-            }
-        )
-        
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(R.string.have_account),
-                color = Color.Black,
-                fontSize = 14.sp
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = stringResource(R.string.login_title),
-                color = MaterialTheme.colorScheme.primary,
-                fontSize = 14.sp,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable { onNavigateBack() }
+                },
+                containerColor = Color.White
             )
         }
-        
+
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(R.string.terms_and_conditions),
-                color = Color.Gray.copy(alpha = 0.6f),
-                fontSize = 12.sp,
-                modifier = Modifier.clickable { onNavigateToTerms() }
+            RegisterCard(
+                onRegister = { name, lastName, email, birthDate, password, confirmPassword ->
+                    when {
+                        !checkPassword(password) -> {
+                            errorMessage = context.getString(R.string.password_invalid_message)
+                            showErrorDialog = true
+                        }
+
+                        !checkPasswordMismatch(password, confirmPassword) -> {
+                            errorMessage = context.getString(R.string.password_mismatch_error)
+                            showErrorDialog = true
+                        }
+
+                        else -> {
+                            viewModel.register(name, lastName, birthDate, email, password)
+                            onRegisterSuccess()
+                        }
+                    }
+                }
             )
-            Text(
-                text = stringResource(R.string.security_info),
-                color = Color.Gray.copy(alpha = 0.6f),
-                fontSize = 12.sp,
-                modifier = Modifier.clickable { onNavigateToSecurityInfo() }
-            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.have_account),
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = stringResource(R.string.login_title),
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 14.sp,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable { onNavigateBack() }
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.terms_and_conditions),
+                    color = Color.Gray.copy(alpha = 0.6f),
+                    fontSize = 12.sp,
+                    modifier = Modifier.clickable { onNavigateToTerms() }
+                )
+                Text(
+                    text = stringResource(R.string.security_info),
+                    color = Color.Gray.copy(alpha = 0.6f),
+                    fontSize = 12.sp,
+                    modifier = Modifier.clickable { onNavigateToSecurityInfo() }
+                )
+            }
         }
     }
 }

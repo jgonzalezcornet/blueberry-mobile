@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
+import com.example.blueberry.ui.components.PaddedContent
 import com.example.blueberry.ui.components.activity.ActivityItem
 import com.example.blueberry.ui.components.activity.ActivityType
 import com.example.blueberry.ui.components.home.BalanceCard
@@ -30,35 +31,42 @@ fun HomeScreen(
     onCardsClick: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getCards()
-        viewModel.getWalletDetails()
-    }
+    PaddedContent {
+        LaunchedEffect(Unit) {
+            viewModel.getCards()
+            viewModel.getWalletDetails()
+        }
 
-    val uiState = viewModel.uiState
-    val activity = ActivityItem(java.sql.Date(2024 - 1900, 10, 19), ActivityType.SENT, "Nicolás Priotto", 3000.0)
+        val uiState = viewModel.uiState
+        val activity = ActivityItem(
+            java.sql.Date(2024 - 1900, 10, 19),
+            ActivityType.SENT,
+            "Nicolás Priotto",
+            3000.0
+        )
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
-        Spacer(Modifier.width(8.dp))
-        BalanceCard(
-            balance = uiState.details?.balance.toString()
-        )
-        HomeButtons(
-            onInsertMoneyClick = onInsertMoneyClick,
-            onTransferMoneyClick = onTransferMoneyClick,
-            onChargeMoneyClick = onChargeMoneyClick
-        )
-        LastActivityCard(
-            activity = activity,
-            onClick = onActivityClick,
-        )
-        CardListHome(
-            cards = uiState.cards,
-            onClick = onCardsClick
-        )
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+        ) {
+            Spacer(Modifier.width(8.dp))
+            BalanceCard(
+                balance = uiState.details?.balance.toString()
+            )
+            HomeButtons(
+                onInsertMoneyClick = onInsertMoneyClick,
+                onTransferMoneyClick = onTransferMoneyClick,
+                onChargeMoneyClick = onChargeMoneyClick
+            )
+            LastActivityCard(
+                activity = activity,
+                onClick = onActivityClick,
+            )
+            CardListHome(
+                cards = uiState.cards,
+                onClick = onCardsClick
+            )
+        }
     }
 }
 
