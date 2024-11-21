@@ -20,7 +20,6 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.Paid
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -63,7 +62,6 @@ import com.example.blueberry.ui.main.LinkScreen
 import com.example.blueberry.ui.main.ProfileScreen
 import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -126,8 +124,6 @@ fun RailItems(
 @Composable
 fun AppContent(
     currentDestination: MutableState<AppDestinations>,
-    drawerState: DrawerState,
-    scope: CoroutineScope,
     paddingValues: androidx.compose.foundation.layout.PaddingValues = androidx.compose.foundation.layout.PaddingValues()
 ) {
     when (currentDestination.value) {
@@ -272,7 +268,7 @@ fun AdaptiveApp() {
                             )
                         }
 
-                        AppContent(currentDestination, drawerState, scope)
+                        AppContent(currentDestination)
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 } else {
@@ -310,7 +306,7 @@ fun AdaptiveApp() {
                             }
                         }
                     ) {
-                        AppContent(currentDestination, drawerState, scope, paddingValues)
+                        AppContent(currentDestination, paddingValues)
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
