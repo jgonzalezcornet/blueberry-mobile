@@ -8,7 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,7 +30,6 @@ fun RegisterCard(
 
     Box(
         modifier = modifier
-            .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -114,7 +113,7 @@ fun RegisterCard(
                     onClick = { /* Acción de registro */ },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.primary_blue)
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(

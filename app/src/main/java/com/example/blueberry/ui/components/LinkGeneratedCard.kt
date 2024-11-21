@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.SecondaryPink
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun LinkGeneratedCard(
@@ -79,7 +79,7 @@ fun LinkGeneratedCard(
                         Icon(
                             imageVector = Icons.Outlined.ContentCopy,
                             contentDescription = stringResource(R.string.copy_button),
-                            tint = SecondaryPink,
+                            tint = MaterialTheme.colorScheme.tertiary,
                             modifier = Modifier.clickable {
                                 copyToClipboard(context, link, context.getString(R.string.link_copied_message))
                             }

@@ -13,13 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
+
 
 @Composable
 fun ChangeAliasCard(
@@ -67,7 +67,6 @@ fun ChangeAliasCard(
                     text = stringResource(R.string.change_alias_description),
                     fontSize = 14.sp,
                     color = Color.Gray,
-                    textAlign = TextAlign.Justify,
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -82,7 +81,7 @@ fun ChangeAliasCard(
                 Button(
                     onClick = { if (newAlias.isNotEmpty()) onConfirm(newAlias) },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Text(
                         text = stringResource(R.string.confirm_button),

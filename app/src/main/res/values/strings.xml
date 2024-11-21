@@ -98,6 +98,36 @@
     <string name="transfer_money">Transferir</string>
     <string name="last_activity_string">Última Actividad</string>
 
+    <string name="no_account_text">¿No tienes una cuenta?</string>
+    <string name="register_link">Registrarse</string>
+    <string name="terms_and_conditions">Términos y Condiciones</string>
+    <string name="security_info">Información de Seguridad</string>
+    <string name="have_account">¿Ya tienes una cuenta?</string>
+
+    <string name="change_password_title">Cambiar Contraseña</string>
+    <string name="current_password_placeholder">Ingrese su actual contraseña</string>
+        <string name="new_password_placeholder">Ingrese su nueva contraseña</string>
+    <string name="confirm_new_password_placeholder">Confirme su nueva contraseña</string>
+    <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
+    <string name="password_mismatch_error">Las contraseñas no coinciden.</string>
+
+
+    <string name="recover_title">Recuperar contraseña</string>
+    <string name="recover_info">Ingrese su correo electronico para recibir un link a un formulario para recuperar su contraseña.</string>
+    <string name="recover_email_label">Correo electrónico</string>
+    <string name="recover_button">Enviar</string>
+    <string name="recover_cancel_button">Cancelar</string>
+
+    <string name="recover_password_code_message">Ingrese el código enviado a su correo electrónico para recuperar su contraseña</string>
+    <string name="new_password_code_message">Ingrese su nueva contraseña</string>
+    <string name="code_label">Código</string>
+    <string name="recover_password_code_title">Recuperar Contraseña</string>
+    <string name="register_new_password_label">Nueva contraseña</string>
+    <string name="register_new_password_confirm_label">Confirmar nueva contraseña</string>
+
+    <string name="pro">Confirmar nueva contraseña</string>
+
+    <string name="profile_name">Nombre</string>
 
 
 </resources>

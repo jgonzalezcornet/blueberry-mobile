@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +63,7 @@ fun TopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = PrimaryBlue
+            containerColor = MaterialTheme.colorScheme.primary
         )
     )
 }

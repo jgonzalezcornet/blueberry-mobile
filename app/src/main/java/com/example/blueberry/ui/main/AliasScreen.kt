@@ -20,7 +20,7 @@ import com.example.blueberry.R
 import com.example.blueberry.ui.components.AliasCard
 import com.example.blueberry.ui.components.ChangeAliasCard
 import com.example.blueberry.ui.components.ScreenTitle
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun AliasScreen(
@@ -44,7 +44,7 @@ fun AliasScreen(
             Button(
                 onClick = { changeAliasModalOpen = true },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue // Set the background color here
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(

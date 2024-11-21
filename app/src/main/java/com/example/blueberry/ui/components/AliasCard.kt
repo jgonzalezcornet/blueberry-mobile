@@ -27,7 +27,8 @@ import androidx.core.content.ContextCompat
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.SecondaryPink
+import androidx.compose.material3.MaterialTheme
+
 
 @Composable
 fun AliasCard(
@@ -110,7 +111,7 @@ fun AliasCard(
                     Icon(
                         imageVector = Icons.Outlined.ContentCopy,
                         contentDescription = stringResource(R.string.copy_cbu),
-                        tint = SecondaryPink,
+                        tint = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier
                         .clickable { copyToClipboard(context, cbu, "CVU copiado")}
                         .size(16.dp)
@@ -132,7 +133,7 @@ fun AliasCard(
                     Icon(
                         imageVector = Icons.Outlined.ContentCopy,
                         contentDescription = stringResource(R.string.copy_alias),
-                        tint = SecondaryPink,
+                        tint = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier
                         .clickable { copyToClipboard(context, alias, "Alias copiado") }
                         .size(16.dp)

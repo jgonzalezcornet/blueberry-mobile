@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun LinkCard(
@@ -83,7 +83,7 @@ fun LinkCard(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryBlue
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(

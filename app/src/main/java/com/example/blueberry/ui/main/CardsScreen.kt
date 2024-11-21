@@ -23,7 +23,7 @@ import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.cards.CardItem
 import com.example.blueberry.ui.components.cards.CardListCard
 import com.example.blueberry.ui.components.cards.EliminateCard
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun CardsScreen(
@@ -92,7 +92,7 @@ fun CardsScreen(
             Button(
                 onClick = onAddCardClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(

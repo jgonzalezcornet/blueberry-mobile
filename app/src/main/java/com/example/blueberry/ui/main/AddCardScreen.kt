@@ -11,7 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.ScreenTitle
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.blueberry.ui.components.cards.BigCard
@@ -140,7 +140,7 @@ fun AddCardScreen(
                 Button(
                     onClick = onAddCardSuccess,
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     enabled = cardNumber.length == 16 &&
                             cardHolderName.isNotEmpty() &&
                             expiryMonth.length == 2 &&

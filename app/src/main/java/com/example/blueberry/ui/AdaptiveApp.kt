@@ -41,7 +41,11 @@ import androidx.compose.ui.unit.dp
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.TopBar
 import com.example.blueberry.ui.login.LoginScreen
+import com.example.blueberry.ui.login.RecoverCodeScreen
+import com.example.blueberry.ui.login.RecoverScreen
 import com.example.blueberry.ui.login.RegisterScreen
+import com.example.blueberry.ui.login.SecurityInfoScreen
+import com.example.blueberry.ui.login.TermsScreen
 import com.example.blueberry.ui.main.ActivityScreen
 import com.example.blueberry.ui.main.AddCardScreen
 import com.example.blueberry.ui.main.AliasScreen
@@ -255,7 +259,7 @@ fun AdaptiveApp() {
             Scaffold(
                 topBar = {
                     TopBar(
-                        isUserLoggedIn = currentDestination !in listOf(AppDestinations.LOGIN, AppDestinations.REGISTER),
+                        isUserLoggedIn = currentDestination !in listOf(AppDestinations.LOGIN, AppDestinations.REGISTER, AppDestinations.RECOVER, AppDestinations.RECOVER_CODE, AppDestinations.TERMS, AppDestinations.SECURITY),
                         openModalNavigation = { scope.launch { drawerState.open() } }
                     )
                 },
@@ -269,6 +273,9 @@ fun AdaptiveApp() {
                         },
                         onLoginSuccess = {
                             currentDestination = AppDestinations.HOME
+                        },
+                        onForgotPassword = {
+                            currentDestination = AppDestinations.RECOVER
                         }
                     )
                     AppDestinations.REGISTER -> RegisterScreen(
@@ -277,8 +284,28 @@ fun AdaptiveApp() {
                             currentDestination = AppDestinations.LOGIN
                         },
                         onRegisterSuccess = {
-                            currentDestination = AppDestinations.HOME
+                            currentDestination = AppDestinations.LOGIN
                         }
+                    )
+                    AppDestinations.RECOVER -> RecoverScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onCancel =  { currentDestination = AppDestinations.LOGIN },
+                        onRecoverSuccess = { currentDestination = AppDestinations.RECOVER_CODE }
+                    )
+                    AppDestinations.RECOVER_CODE -> RecoverCodeScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onCancel =  { currentDestination = AppDestinations.LOGIN },
+                        onRecoverCodeSuccess = { currentDestination = AppDestinations.LOGIN }
+                    )
+
+                    AppDestinations.TERMS -> TermsScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.LOGIN }
+                    )
+
+                    AppDestinations.SECURITY -> SecurityInfoScreen(
+                        modifier = Modifier.padding(paddingValues),
+                        onBackNavigation = { currentDestination = AppDestinations.LOGIN }
                     )
 
                     AppDestinations.HOME -> HomeScreen(
@@ -291,7 +318,8 @@ fun AdaptiveApp() {
                     )
 
                     AppDestinations.PROFILE -> ProfileScreen(
-                        modifier = Modifier.padding(paddingValues)
+                        modifier = Modifier.padding(paddingValues),
+                        onLogout = { currentDestination = AppDestinations.LOGIN }
                     )
                     AppDestinations.ACTIVITY -> ActivityScreen(
                         modifier = Modifier.padding(paddingValues),

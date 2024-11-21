@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun EliminateCard(
@@ -57,7 +57,7 @@ fun EliminateCard(
                 Button(
                     onClick = { onDelete(cardItem) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryBlue
+                        containerColor = MaterialTheme.colorScheme.primary
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {

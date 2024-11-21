@@ -28,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.PrimaryBlue
 
 @Composable
 fun HomeButtons(
@@ -76,7 +75,7 @@ fun ActionButton(
         Box(
             modifier = Modifier
                 .size(70.dp)
-                .background(color = PrimaryBlue, shape = CircleShape),
+                .background(color = MaterialTheme.colorScheme.primary, shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(

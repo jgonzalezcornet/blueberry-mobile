@@ -14,7 +14,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import com.example.blueberry.PreviewScreenSizes
+import com.example.blueberry.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun ProfileCard(
@@ -27,50 +32,61 @@ fun ProfileCard(
     onChangePasswordClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
-    Column(
+    Card (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
-            .background(color = Color.White, shape = RoundedCornerShape(12.dp))
-            .padding(16.dp), // Inner padding for spacing
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        // Header with the title
-        Text(
-            text = "Perfil de Usuario",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            textAlign = TextAlign.Center
+            .wrapContentHeight()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
         )
+        {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .background(color = Color.White, shape = RoundedCornerShape(12.dp))
+                .padding(16.dp), // Inner padding for spacing
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Header with the title
+            Text(
+                text = stringResource(R.string.profile_title),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        // Information display
-        ProfileInfoRow(label = "Nombre", value = name)
-        ProfileInfoRow(label = "DNI", value = dni)
-        ProfileInfoRow(label = "Email", value = obfuscateEmail(email))
-        ProfileInfoRow(label = "Alias", value = alias)
-        ProfileInfoRow(label = "CVU", value = cbu)
+            // Information display
+            ProfileInfoRow(label = stringResource(R.string.profile_name), value = name)
+            ProfileInfoRow(label = "DNI", value = dni)
+            ProfileInfoRow(label = "Email", value = obfuscateEmail(email))
+            ProfileInfoRow(label = "Alias", value = alias)
+            ProfileInfoRow(label = "CVU", value = cbu)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // Buttons
-        CustomButton(
-            text = "Cambiar Alias",
-            onClick = onChangeAliasClick
-        )
+            // Buttons
+            CustomButton(
+                text = "Cambiar Alias",
+                onClick = onChangeAliasClick
+            )
 
-        CustomButton(
-            text = "Cambiar Contraseña",
-            onClick = onChangePasswordClick
-        )
+            CustomButton(
+                text = "Cambiar Contraseña",
+                onClick = onChangePasswordClick
+            )
 
-        CustomButton(
-            text = "Cerrar Sesión",
-            onClick = onLogoutClick
-        )
+            CustomButton(
+                text = "Cerrar Sesión",
+                onClick = onLogoutClick
+            )
+        }
     }
 }
 
@@ -89,7 +105,7 @@ fun ProfileInfoRow(label: String, value: String) {
         Text(
             text = value,
             fontSize = 16.sp,
-            color = androidx.compose.material3.MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -101,7 +117,7 @@ fun CustomButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
     ) {
         Text(
             text = text,
@@ -115,4 +131,10 @@ fun obfuscateEmail(email: String): String {
     val username = email.substringBefore("@")
     val domain = email.substringAfter("@")
     return "${username.take(4)}****@$domain"
+}
+
+@PreviewScreenSizes
+@Composable
+fun ProfileCardPreview() {
+    ProfileCard("Juan Ignacio Lategana", "45748655", "j@lategana.com", "jua.blueberry", "313123213123", {}, {}, {})
 }

@@ -17,13 +17,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun TransferCard(
     modifier: Modifier = Modifier,
     onTransferConfirmed: (type: String, destination: String, amount: String) -> Unit = { _, _, _ -> }
-) {
+)  {
     var selectedOption by remember { mutableStateOf("Alias") }
     var amount by remember { mutableStateOf("") }
     var destinationInput by remember { mutableStateOf("") }
@@ -57,7 +57,7 @@ fun TransferCard(
                 Button(
                     onClick = { selectedOption = "Alias" },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedOption == "Alias") PrimaryBlue else Color.Gray
+                        containerColor = if (selectedOption == "Alias") MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 ) {
                     Text(
@@ -69,7 +69,7 @@ fun TransferCard(
                 Button(
                     onClick = { selectedOption = "CVU/CBU" },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedOption == "CVU/CBU") PrimaryBlue else Color.Gray
+                        containerColor = if (selectedOption == "CVU/CBU") MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 ) {
                     Text(
@@ -81,7 +81,7 @@ fun TransferCard(
                 Button(
                     onClick = { selectedOption = "Link de pago" },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedOption == "Link de pago") PrimaryBlue else Color.Gray
+                        containerColor = if (selectedOption == "Link de pago") MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 ) {
                     Text(
@@ -138,7 +138,7 @@ fun TransferCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 enabled = amount.isNotEmpty() && destinationInput.isNotEmpty()
             ) {
                 Text(

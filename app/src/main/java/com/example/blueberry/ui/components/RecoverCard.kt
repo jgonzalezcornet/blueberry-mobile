@@ -16,33 +16,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.clickable
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
 
 @Composable
-fun LoginCard(
+fun RecoverCard(
     modifier: Modifier = Modifier,
-    onForgotPassword: () -> Unit = {},
-    onLoginSuccess: () -> Unit = {}
+    onCancel: () -> Unit = {},
+    onRecoverSuccess: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
 
-    Box(
-        modifier = modifier
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
         Card(
             colors = CardDefaults.cardColors(containerColor = Color.White),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            modifier = Modifier.fillMaxWidth(0.9f)
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+
         ) {
             Column(
                 modifier = Modifier
@@ -51,63 +46,60 @@ fun LoginCard(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.login_title),
+                    text = stringResource(R.string.recover_title),
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.recover_info),
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = Color.Gray,
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text(stringResource(R.string.login_email_label)) },
+                    label = { Text(stringResource(R.string.recover_email_label)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text(stringResource(R.string.login_password_label)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.login_forgot_password),
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        textDecoration = TextDecoration.Underline,
-                        fontSize = 14.sp
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(end = 8.dp)
-                        .clickable { onForgotPassword() }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { onLoginSuccess() },
+                    onClick = { onRecoverSuccess() },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Text(
-                        text = stringResource(R.string.login_button),
+                        text = stringResource(R.string.recover_button),
+                        color = Color.White
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Button(
+                    onClick = { onCancel() },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Gray
+                    )
+                ) {
+                    Text(
+                        text = stringResource(R.string.recover_cancel_button),
                         color = Color.White
                     )
                 }
             }
         }
-    }
 }
 
 @PreviewScreenSizes
 @Composable
-fun LoginCardPreview() {
-    LoginCard()
+fun RecoverCardPreview() {
+    RecoverCard()
 }
-
-

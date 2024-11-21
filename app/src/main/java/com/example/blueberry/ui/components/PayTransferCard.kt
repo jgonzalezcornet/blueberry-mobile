@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
 import com.example.blueberry.ui.components.cards.CardItem
 import com.example.blueberry.ui.components.cards.CompleteCardCard
-import com.example.blueberry.ui.theme.PrimaryBlue
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun PayTransferCard(
@@ -109,7 +109,7 @@ fun PayTransferCard(
                             },
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = if (currentPage == 0) PrimaryBlue else Color.Gray
+                            containerColor = if (currentPage == 0) MaterialTheme.colorScheme.primary else Color.Gray
                         )
                     ) {
                         Box(
@@ -155,7 +155,7 @@ fun PayTransferCard(
                         modifier = Modifier
                             .size(8.dp)
                             .background(
-                                color = if (currentPage == index) PrimaryBlue else Color.LightGray,
+                                color = if (currentPage == index) MaterialTheme.colorScheme.primary else Color.LightGray,
                                 shape = CircleShape
                             )
                     )
@@ -184,7 +184,7 @@ fun PayTransferCard(
                     },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryBlue
+                        containerColor = MaterialTheme.colorScheme.primary
                     ),
                     enabled = selectedPaymentMethod != null
                 ) {
