@@ -123,9 +123,10 @@ class HomeViewModel(
         callback
     )
 
-    fun makePayment(payment: Payment) = runOnViewModelScope(
+    fun makePayment(payment: Payment, callback: () -> Unit) = runOnViewModelScope(
         { paymentRepository.makePayment(payment) },
-        { state, response -> state.copy() }
+        { state, response -> state.copy() },
+        callback
     )
 
     fun getPayments() = runOnViewModelScope(

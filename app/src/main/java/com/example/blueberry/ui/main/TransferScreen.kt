@@ -27,6 +27,7 @@ import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.TransferCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
+import com.example.blueberry.data.model.Error
 
 @Composable
 fun TransferScreen(
@@ -82,16 +83,20 @@ fun TransferScreen(
                 amount = amount.toIntOrNull() ?: 0,
                 availableCards = uiState.cards ?: listOf(),
                 onPay = { method, cardId ->
-                    viewModel.makePayment(
-                        Payment(
-                            amount = amount.toDouble(),
-                            description = description,
-                            type = method,
-                            cardId = cardId,
-                            receiverEmail = destination
+                    try {
+                        viewModel.makePayment(
+                            Payment(
+                                amount = amount.toDouble(),
+                                description = description,
+                                type = method,
+                                cardId = cardId,
+                                receiverEmail = destination
+                            ),
+                            onTransferSuccess
                         )
-                    )
-                    onTransferSuccess()
+                    } catch(e: Exception) {
+                        viewModel.setError(Error(400, e.message.toString()))
+                    }
                 }
             )
         }

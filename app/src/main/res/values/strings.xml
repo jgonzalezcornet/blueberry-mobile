@@ -117,7 +117,7 @@
     <string name="alias_copied">Alias copiado</string>
     <string name="change_alias">Cambiar alias</string>
     <string name="change_alias_title">Cambiar alias</string>
-    <string name="change_alias_description">Recordar que solo puede llevar letras y puntos. No incluir la ñ ni otros caracteres especiales.</string>
+    <string name="change_alias_description">Recordar que solo puede y debe llevar letras y puntos. No incluir la ñ ni otros caracteres especiales.</string>
     <string name="change_alias_placeholder">Ingrese el nuevo alias</string>
     <string name="recharge_title">Cargar dinero</string>
     <string name="recharge_amount_label">Monto</string>

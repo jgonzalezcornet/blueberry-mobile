@@ -25,7 +25,7 @@
     <string name="login_password_label">Password</string>
     <string name="login_forgot_password">Forgot your password?</string>
     <string name="login_button">Log in</string>
-    <string name="no_account_text">Don't have an account?</string>
+    <string name="no_account_text">Don\'t have an account?</string>
     <string name="register_link">Sign up</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="security_info">Security Information</string>
@@ -88,8 +88,8 @@
     <string name="card_holder_name_label">Cardholder Name</string>
     <string name="expiry_date_label">Expiry Date</string>
     <string name="card_logo_description">Card Logo</string>
-    <string name="card_holder_label">CARDHOLDER</string>
-    <string name="card_expiry_label">EXPIRY</string>
+    <string name="card_holder_label">CARDHOLDER NAME</string>
+    <string name="card_expiry_label">EXPIRY DATE</string>
     <string name="cvv_label">CVV</string>
     <string name="card_type_label">Card Type</string>
     <string name="no_cards_message">No cards</string>
@@ -117,7 +117,7 @@
     <string name="alias_copied">Alias copied</string>
     <string name="change_alias">Change Alias</string>
     <string name="change_alias_title">Change Alias</string>
-    <string name="change_alias_description">Remember it can only contain letters and dots. Do not include ñ or other special characters.</string>
+    <string name="change_alias_description">Remember it can only and must contain letters and dots. Do not include ñ or other special characters.</string>
     <string name="change_alias_placeholder">Enter new alias</string>
     <string name="recharge_title">Recharge Money</string>
     <string name="recharge_amount_label">Amount</string>
@@ -141,11 +141,11 @@
 
 <!-- randoms -->
     <string name="link_description">Link your external accounts and services</string>
-    <string name="date_format">d 'of' MMMM</string>
-    <string name="date_format_with_year">d 'of' MMMM, YYYY</string>
+    <string name="date_format">d \'of\' MMMM</string>
+    <string name="date_format_with_year">d \'of\' MMMM, YYYY</string>
     <string name="today_string">Today</string>
     <string name="enter_data">Enter data</string>
     <string name="destination_label">Destination</string>
     <string name="change_password">Change Password</string>
-   
+
 </resources>

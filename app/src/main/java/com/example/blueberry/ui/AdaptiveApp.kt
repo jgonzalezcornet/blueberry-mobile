@@ -215,6 +215,7 @@ fun AppContent(
         AppDestinations.TRANSFER -> TransferScreen(
             modifier = Modifier.padding(paddingValues),
             onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onTransferSuccess = { currentDestination.value = AppDestinations.HOME },
             onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
     }
