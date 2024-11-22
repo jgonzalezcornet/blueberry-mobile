@@ -15,8 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
-import com.example.blueberry.ui.components.activity.ActivityItem
-import com.example.blueberry.ui.components.activity.ActivityType
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.components.home.BalanceCard
 import com.example.blueberry.ui.components.home.CardListHome
@@ -32,8 +30,15 @@ fun HomeScreen(
     onChargeMoneyClick: () -> Unit = {},
     onActivityClick: () -> Unit = {},
     onCardsClick: () -> Unit = {},
+    onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+    val uiState = viewModel.uiState
+
+    if(!uiState.isAuthenticated){
+        onUnauthenticated()
+    }
+
     LaunchedEffect(Unit) {
         viewModel.getCards()
         viewModel.getWalletDetails()
@@ -41,7 +46,6 @@ fun HomeScreen(
         viewModel.getPayments()
     }
 
-    val uiState = viewModel.uiState
 
     Column(
         modifier = modifier

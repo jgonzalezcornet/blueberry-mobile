@@ -16,8 +16,3 @@ data class HomeUiState(
     val details: WalletDetails? = null,
     val activities: List<Activity>? = null
 )
-
-val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated
-val HomeUiState.canGetAllCards: Boolean get() = isAuthenticated
-val HomeUiState.canAddCard: Boolean get() = isAuthenticated
-val HomeUiState.canDeleteCard: Boolean get() = isAuthenticated && currentCard != null

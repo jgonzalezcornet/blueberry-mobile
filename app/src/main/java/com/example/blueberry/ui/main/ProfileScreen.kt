@@ -29,9 +29,14 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {},
     onLogout: () -> Unit = {},
+    onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
         val uiState = viewModel.uiState
+
+        if(!uiState.isAuthenticated){
+            onUnauthenticated()
+        }
 
         var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
         var refreshTrigger by rememberSaveable { mutableStateOf(0) }

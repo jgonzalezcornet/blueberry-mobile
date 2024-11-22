@@ -51,8 +51,15 @@ fun AddCardScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {},
     onAddCardSuccess: () -> Unit = {},
+    onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+        val uiState = viewModel.uiState
+
+        if(!uiState.isAuthenticated){
+            onUnauthenticated()
+        }
+
         var cardNumber by remember { mutableStateOf("") }
         var cardHolderName by remember { mutableStateOf("") }
         var expiryMonth by remember { mutableStateOf("") }

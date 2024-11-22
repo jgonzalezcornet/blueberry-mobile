@@ -5,10 +5,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,11 +28,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
-import androidx.compose.material3.MaterialTheme
+
 
 @Composable
 fun RecoverPasswordCodeCard(
@@ -36,6 +43,8 @@ fun RecoverPasswordCodeCard(
     var code by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+    var newPasswordVisible by remember { mutableStateOf(false) }
 
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -84,14 +93,32 @@ fun RecoverPasswordCodeCard(
                 onValueChange = { password = it },
                 label = { Text(stringResource(R.string.register_new_password_label)) },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (passwordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
+                        )
+                    }
+                }
             )
             OutlinedTextField(
                 value = newPassword,
                 onValueChange = { newPassword = it },
                 label = { Text(stringResource(R.string.register_new_password_confirm_label)) },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                visualTransformation = if (newPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { newPasswordVisible = !newPasswordVisible }) {
+                        Icon(
+                            imageVector = if (newPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (newPasswordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
+                        )
+                    }
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button (

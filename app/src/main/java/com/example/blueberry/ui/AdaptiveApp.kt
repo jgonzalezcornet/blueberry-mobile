@@ -150,6 +150,11 @@ fun AppContent(
             onNavigateToTerms = { currentDestination.value  = AppDestinations.TERMS },
             onNavigateToSecurityInfo = { currentDestination.value = AppDestinations.SECURITY }
         )
+        AppDestinations.VALIDATE -> ValidateScreen(
+            modifier = Modifier.padding(paddingValues),
+            onCancel =  { currentDestination.value = AppDestinations.REGISTER },
+            onValidateSuccess = { currentDestination.value = AppDestinations.LOGIN }
+        )
         AppDestinations.RECOVER -> RecoverScreen(
             modifier = Modifier.padding(paddingValues),
             onCancel = { currentDestination.value = AppDestinations.LOGIN },
@@ -174,42 +179,45 @@ fun AppContent(
             onChargeMoneyClick = { currentDestination.value = AppDestinations.LINK },
             onTransferMoneyClick = { currentDestination.value = AppDestinations.TRANSFER },
             onActivityClick = { currentDestination.value = AppDestinations.ACTIVITY },
-            onCardsClick = { currentDestination.value = AppDestinations.CARDS }
+            onCardsClick = { currentDestination.value = AppDestinations.CARDS },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.PROFILE -> ProfileScreen(
             modifier = Modifier.padding(paddingValues),
             onLogout = { currentDestination.value = AppDestinations.LOGIN },
-            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.ACTIVITY -> ActivityScreen(
             modifier = Modifier.padding(paddingValues),
-            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.CARDS -> CardsScreen(
             modifier = Modifier.padding(paddingValues),
             onBackNavigation = { currentDestination.value = AppDestinations.HOME },
-            onAddCardClick = { currentDestination.value = AppDestinations.ADD_CARD }
+            onAddCardClick = { currentDestination.value = AppDestinations.ADD_CARD },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.ADD_CARD -> AddCardScreen(
             modifier = Modifier.padding(paddingValues),
-            onBackNavigation = { currentDestination.value = AppDestinations.CARDS }
+            onBackNavigation = { currentDestination.value = AppDestinations.CARDS },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.ALIAS -> AliasScreen(
             modifier = Modifier.padding(paddingValues),
-            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.LINK -> LinkScreen(
             modifier = Modifier.padding(paddingValues),
-            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.TRANSFER -> TransferScreen(
             modifier = Modifier.padding(paddingValues),
-            onBackNavigation = { currentDestination.value = AppDestinations.HOME }
-        )
-        AppDestinations.VALIDATE -> ValidateScreen(
-            modifier = Modifier.padding(paddingValues),
-            onCancel =  { currentDestination.value = AppDestinations.REGISTER },
-            onValidateSuccess = { currentDestination.value = AppDestinations.LOGIN }
+            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
+            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
     }
 }

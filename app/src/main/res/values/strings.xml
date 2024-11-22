@@ -149,4 +149,7 @@
 
     <string name="activity_balance_type">Dinero en cuenta</string>
     <string name="activity_card_type">Tarjeta</string>
+
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="hide_password">Ocultar contraseña</string>
 </resources>

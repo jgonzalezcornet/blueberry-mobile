@@ -33,8 +33,14 @@ fun TransferScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {},
     onTransferSuccess: () -> Unit = {},
+    onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+    val uiState = viewModel.uiState
+    if(!uiState.isAuthenticated){
+        onUnauthenticated()
+    }
+
     LaunchedEffect(Unit) {
         viewModel.getCards()
     }
@@ -43,7 +49,6 @@ fun TransferScreen(
     var destination by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    val uiState = viewModel.uiState
 
     Column(
         modifier = modifier

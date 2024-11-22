@@ -18,12 +18,24 @@ import com.example.blueberry.ui.components.LinkCard
 import com.example.blueberry.ui.components.LinkGeneratedCard
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.getPadding
+import com.example.blueberry.ui.home.HomeViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun LinkScreen(
     modifier: Modifier = Modifier,
-    onBackNavigation: () -> Unit = {}
+    onUnauthenticated: () -> Unit = {},
+    onBackNavigation: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+        val uiState = viewModel.uiState
+
+        if(!uiState.isAuthenticated){
+            onUnauthenticated()
+        }
+
         var linkModalOpen by rememberSaveable { mutableStateOf(false) }
         var amount by rememberSaveable { mutableStateOf("") }
 

@@ -22,6 +22,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
 
 @Composable
 fun LoginCard(
@@ -31,6 +38,7 @@ fun LoginCard(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -70,7 +78,16 @@ fun LoginCard(
                     onValueChange = { password = it },
                     label = { Text(stringResource(R.string.login_password_label)) },
                     modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                    singleLine = true,
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            Icon(
+                                imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+                            )
+                        }
+                    }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(

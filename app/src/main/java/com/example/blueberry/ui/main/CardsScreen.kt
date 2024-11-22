@@ -38,15 +38,21 @@ fun CardsScreen(
     modifier: Modifier = Modifier,
     onBackNavigation: () -> Unit = {},
     onAddCardClick: () -> Unit = {},
+    onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+        val uiState = viewModel.uiState
+        
+        if(!uiState.isAuthenticated){
+            onUnauthenticated()
+        }    
+    
         LaunchedEffect(Unit) {
             viewModel.getCards()
         }
 
         var selectedCard by rememberSaveable { mutableStateOf<Card?>(null) }
-        val uiState = viewModel.uiState
-
+    
         Column(
             modifier = modifier
                 .fillMaxSize()
