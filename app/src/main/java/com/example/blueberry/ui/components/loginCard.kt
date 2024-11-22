@@ -34,12 +34,13 @@ import androidx.compose.material3.Icon
 fun LoginCard(
     modifier: Modifier = Modifier,
     onForgotPassword: () -> Unit = {},
-    onLogin: (String, String) -> Unit
+    onLogin: () -> Unit,
+    onValueChange: (String, String) -> Unit,
+    email: String,
+    password: String,
+    passwordVisible: String,
+    onChangePasswordVisibility: (String) -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-
     Box(
         modifier = modifier
             .padding(16.dp),
@@ -68,7 +69,7 @@ fun LoginCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = { onValueChange("email", it) },
                     label = {
                         Text(
                             stringResource(R.string.login_email_label),
@@ -81,7 +82,7 @@ fun LoginCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = { onValueChange("password", it) },
                     label = {
                         Text(
                             stringResource(R.string.login_password_label),
@@ -90,12 +91,12 @@ fun LoginCard(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (passwordVisible == "true") VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        IconButton(onClick = { onChangePasswordVisibility(if (passwordVisible == "true") "false" else "true") }) {
                             Icon(
-                                imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                imageVector = if (passwordVisible == "true") Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (passwordVisible == "true") "Ocultar contraseña" else "Mostrar contraseña",
                                 tint = Color.Gray
                             )
                         }
@@ -116,7 +117,7 @@ fun LoginCard(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { onLogin(email, password) },
+                    onClick = onLogin,
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
@@ -131,11 +132,3 @@ fun LoginCard(
         }
     }
 }
-/*
-@PreviewScreenSizes
-@Composable
-fun LoginCardPreview() {
-    LoginCard()
-}
-*/
-

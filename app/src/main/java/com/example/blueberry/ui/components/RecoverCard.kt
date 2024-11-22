@@ -18,17 +18,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun RecoverCard(
-    modifier: Modifier = Modifier,
     onCancel: () -> Unit = {},
-    onRecover: (String) -> Unit
+    onRecover: (String) -> Unit,
+    email: String,
+    onValueChange: (String, String) -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
 
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -63,7 +62,7 @@ fun RecoverCard(
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = { onValueChange("email", it) },
                 label = {
                     Text(
                         stringResource(R.string.recover_email_label),

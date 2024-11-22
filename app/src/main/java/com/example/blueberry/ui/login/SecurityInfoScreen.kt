@@ -34,10 +34,3 @@ fun SecurityInfoScreen(
         }
 
 }
-
-@PreviewScreenSizes
-@Composable
-fun SecurityInfoScreenPreview() {
-    SecurityInfoScreen()
-}
-

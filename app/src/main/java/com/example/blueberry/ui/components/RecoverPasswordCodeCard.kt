@@ -18,10 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,13 +34,16 @@ import com.example.blueberry.R
 @Composable
 fun RecoverPasswordCodeCard(
     onCancel: () -> Unit = {},
-    onRecoverCode: (String, String, String) -> Unit
+    onRecoverCode: (String, String, String) -> Unit,
+    code: String,
+    newPassword: String,
+    confirmNewPassword: String,
+    onValueChange: (String, String) -> Unit,
+    newPasswordVisible: String,
+    confirmNewPasswordVisible: String,
+    onChangeNewPasswordVisibility: (String) -> Unit,
+    onChangeConfirmNewPasswordVisibility: (String) -> Unit,
 ) {
-    var code by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var newPassword by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-    var newPasswordVisible by remember { mutableStateOf(false) }
 
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -75,7 +74,7 @@ fun RecoverPasswordCodeCard(
             )
             OutlinedTextField(
                 value = code,
-                onValueChange = { code = it },
+                onValueChange = { onValueChange("code", it) },
                 label = {
                     Text(
                         stringResource(R.string.code_label),
@@ -95,8 +94,8 @@ fun RecoverPasswordCodeCard(
                     .align(Alignment.Start)
             )
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = newPassword,
+                onValueChange = { onValueChange("newPassword", it) },
                 label = {
                     Text(
                         stringResource(R.string.register_new_password_label),
@@ -105,20 +104,20 @@ fun RecoverPasswordCodeCard(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(
-                            imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (passwordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password),
-                            tint = Color.Gray
-                        )
+                visualTransformation = if (newPasswordVisible == "true") VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { onChangeNewPasswordVisibility(if (newPasswordVisible == "true") "false" else "true") }) {
+                            Icon(
+                                imageVector = if (newPasswordVisible == "true") Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (newPasswordVisible == "true") "Ocultar contraseña" else "Mostrar contraseña",
+                                tint = Color.Gray
+                            )
+                        }
                     }
-                }
             )
             OutlinedTextField(
-                value = newPassword,
-                onValueChange = { newPassword = it },
+                value = confirmNewPassword,
+                onValueChange = { onValueChange("confirmNewPassword", it) },
                 label = {
                     Text(
                         stringResource(R.string.register_new_password_confirm_label),
@@ -127,12 +126,12 @@ fun RecoverPasswordCodeCard(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                visualTransformation = if (newPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                visualTransformation = if (confirmNewPasswordVisible == "true") VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
-                    IconButton(onClick = { newPasswordVisible = !newPasswordVisible }) {
+                    IconButton(onClick = { onChangeConfirmNewPasswordVisibility( if(confirmNewPasswordVisible == "true") "false" else "true") }) {
                         Icon(
-                            imageVector = if (newPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (newPasswordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password),
+                            imageVector = if (confirmNewPasswordVisible == "true") Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (confirmNewPasswordVisible == "true") stringResource(R.string.hide_password) else stringResource(R.string.show_password),
                             tint = Color.Gray
                         )
                     }
@@ -140,7 +139,7 @@ fun RecoverPasswordCodeCard(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button (
-        onClick = { onRecoverCode(code, password, newPassword) },
+        onClick = { onRecoverCode(code, newPassword, confirmNewPassword) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary

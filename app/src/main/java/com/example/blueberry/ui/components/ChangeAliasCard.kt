@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -25,9 +24,10 @@ import androidx.compose.material3.MaterialTheme
 fun ChangeAliasCard(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
-    onConfirm: (String) -> Unit = {}
+    onConfirm: (String) -> Unit = {},
+    newAlias: String,
+    onValueChange: (String, String) -> Unit
 ) {
-    var newAlias by remember { mutableStateOf("") }
 
     Dialog(onDismissRequest = { onClose() }) {
         Card(
@@ -73,10 +73,15 @@ fun ChangeAliasCard(
                 OutlinedTextField(
                     value = newAlias,
                     onValueChange = { it -> if (it.all { char -> char.isLetterOrDigit() || char == '.' }) {
-                        newAlias = it
+                        onValueChange("newAlias", it)
                     }
                     },
-                    placeholder = { Text(stringResource(R.string.change_alias_placeholder)) },
+                    placeholder = {
+                        Text(
+                            stringResource(R.string.change_alias_placeholder),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -95,10 +100,4 @@ fun ChangeAliasCard(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ChangeAliasCardPreview() {
-    ChangeAliasCard()
 }

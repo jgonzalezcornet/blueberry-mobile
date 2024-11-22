@@ -20,7 +20,6 @@ import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Paid
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,7 +63,7 @@ import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.launch
 import androidx.compose.material3.NavigationDrawerItemDefaults
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.NavigationRailItemDefaults
 import java.util.Stack
 import androidx.compose.runtime.LaunchedEffect
 import com.example.blueberry.ui.components.ErrorHandler
@@ -109,20 +108,30 @@ fun RailItems(
         items(items.size) { index ->
             val (icon, labelResId, destination) = items[index]
             NavigationRailItem(
-                icon = { Icon(icon, contentDescription = stringResource(labelResId)) },
+                icon = {
+                    Icon(
+                        icon,
+                        contentDescription = stringResource(labelResId),
+                        tint = Color.Black
+                    )
+                },
                 label = {
                     Text(
                         text = stringResource(labelResId),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                         maxLines = 5,
                         softWrap = true,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = Color.Black
                     )
                 },
                 selected = currentDestination == destination,
                 onClick = { onDestinationSelected(destination) },
                 modifier = Modifier
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 16.dp),
+                colors = NavigationRailItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.secondary
+                )
             )
         }
     }
@@ -143,7 +152,8 @@ fun AppContent(
             onLoginSuccess = { currentDestination.value = AppDestinations.HOME },
             onForgotPassword = { currentDestination.value = AppDestinations.RECOVER },
             onNavigateToTerms = { currentDestination.value  = AppDestinations.TERMS },
-            onNavigateToSecurityInfo = { currentDestination.value = AppDestinations.SECURITY }
+            onNavigateToSecurityInfo = { currentDestination.value = AppDestinations.SECURITY },
+            onNavigateToValidate = { currentDestination.value = AppDestinations.VALIDATE }
         )
         AppDestinations.REGISTER -> RegisterScreen(
             modifier = Modifier.padding(paddingValues),
@@ -232,6 +242,24 @@ fun AdaptiveApp() {
         routeStack.push(currentDestination.value)
     }
 
+    val noNavRoutes = listOf(
+        AppDestinations.LOGIN,
+        AppDestinations.REGISTER,
+        AppDestinations.VALIDATE,
+        AppDestinations.RECOVER,
+        AppDestinations.RECOVER_CODE,
+        AppDestinations.TERMS,
+        AppDestinations.SECURITY
+    )
+
+    LaunchedEffect(drawerState) {
+        if(drawerState.isOpen && currentDestination.value in noNavRoutes){
+            scope.launch {
+                drawerState.close()
+            }
+        }
+    }
+
     LaunchedEffect(currentDestination.value) {
         if(currentDestination.value == AppDestinations.HOME && routeStack.peek() == AppDestinations.LOGIN){
             routeStack.clear()
@@ -266,6 +294,7 @@ fun AdaptiveApp() {
                         isUserLoggedIn = currentDestination.value !in listOf(
                             AppDestinations.LOGIN,
                             AppDestinations.REGISTER,
+                            AppDestinations.VALIDATE,
                             AppDestinations.RECOVER,
                             AppDestinations.RECOVER_CODE,
                             AppDestinations.TERMS,
@@ -281,6 +310,7 @@ fun AdaptiveApp() {
                 if (isTablet() && currentDestination.value !in listOf(
                         AppDestinations.LOGIN,
                         AppDestinations.REGISTER,
+                        AppDestinations.VALIDATE,
                         AppDestinations.RECOVER,
                         AppDestinations.RECOVER_CODE,
                         AppDestinations.TERMS,

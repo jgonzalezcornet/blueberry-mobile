@@ -1,5 +1,6 @@
 package com.example.blueberry.ui.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +43,18 @@ fun CardsScreen(
     onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        val uiState = viewModel.uiState
+    val uiState = viewModel.uiState
+
+    var initialized by rememberSaveable(key = "initialized_key_cards") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            Log.w("SKIBIDIIIIIII", initialized.toString())
+            initialized = true
+            viewModel.initializeForm()
+            viewModel.setFormValue("selectedCard", "")
+        }
+    }
         
         if(!uiState.isAuthenticated && !uiState.isFetching){
             onUnauthenticated()
@@ -53,8 +65,6 @@ fun CardsScreen(
         LaunchedEffect(updateTrigger) {
             viewModel.getCards()
         }
-
-        var selectedCard by rememberSaveable { mutableStateOf<Card?>(null) }
 
         Column(
             modifier = modifier
@@ -73,25 +83,28 @@ fun CardsScreen(
             CardListCard(
                 cards = uiState.cards,
                 onCardClick = { card ->
-                    selectedCard = card
+                    viewModel.setFormValue("selectedCard", card.id.toString())
                 }
             )
 
-            selectedCard?.let { card ->
-                EliminateCard(
-                    cardItem = card,
-                    onClose = { selectedCard = null },
-                    onDelete = { cardToDelete ->
-                        try {
-                            viewModel.deleteCard(cardToDelete.id!!, {
-                                selectedCard = null
-                                updateTrigger += 1  
-                            })
-                        } catch(e: Exception) {
-                            viewModel.setError(Error(400, e.message.toString()))
+            if(uiState.form?.get("selectedCard") != ""){
+                var card = uiState.cards?.find { it.id.toString() == uiState.form?.get("selectedCard") }
+                if(card != null){
+                    EliminateCard(
+                        cardItem = card,
+                        onClose = { viewModel.setFormValue("selectedCard", "") },
+                        onDelete = { cardToDelete ->
+                            try {
+                                viewModel.deleteCard(cardToDelete.id!!, {
+                                    viewModel.setFormValue("selectedCard", "")
+                                    updateTrigger += 1
+                                })
+                            } catch(e: Exception) {
+                                viewModel.setError(Error(400, e.message.toString()))
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
 
             Column(

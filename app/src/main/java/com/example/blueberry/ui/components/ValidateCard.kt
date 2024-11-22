@@ -13,15 +13,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 
 @Composable
 fun ValidateCard(
     onCancel: () -> Unit = {},
-    onValidate: (String) -> Unit
+    onValidate: (String) -> Unit,
+    code: String,
+    onValueChange: (String, String) -> Unit
 ) {
-    var code by remember { mutableStateOf("") }
 
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -55,8 +55,13 @@ fun ValidateCard(
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
                 value = code,
-                onValueChange = { code = it },
-                label = { Text(stringResource(R.string.code_label)) },
+                onValueChange = { onValueChange("code", it) },
+                label = {
+                    Text(
+                        stringResource(R.string.code_label),
+                        color = Color.Gray
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -69,7 +74,7 @@ fun ValidateCard(
                 )
             ) {
                 Text(
-                    text = "Validar",
+                    text = stringResource(R.string.validate_register),
                     color = Color.White
                 )
             }

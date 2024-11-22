@@ -42,108 +42,125 @@ fun AliasScreen(
     onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        val uiState = viewModel.uiState
-        val context = LocalContext.current
+    val uiState = viewModel.uiState
 
-        if(!uiState.isAuthenticated && !uiState.isFetching){
-            onUnauthenticated()
+    var initialized by rememberSaveable(key = "initialized_key_alias") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            initialized = true
+            viewModel.initializeForm()
+            viewModel.setFormValue("changeAliasModalOpen", "false")
+            viewModel.setFormValue("rechargeModalOpen", "false")
+            viewModel.setFormValue("balanceVisible", "false")
         }
+    }
 
-        var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
-        var rechargeModalOpen by rememberSaveable { mutableStateOf(false) }
-        var refreshTrigger by rememberSaveable { mutableStateOf(0) }
+    val context = LocalContext.current
 
-        LaunchedEffect(refreshTrigger) {
-            viewModel.getWalletDetails()
-        }
+    if(!uiState.isAuthenticated && !uiState.isFetching){
+        onUnauthenticated()
+    }
 
+    var refreshTrigger by rememberSaveable { mutableStateOf(0) }
+
+    LaunchedEffect(refreshTrigger) {
+        viewModel.getWalletDetails()
+    }
+
+    Column(
+        modifier = modifier
+            .padding(horizontal = getPadding())
+            .fillMaxSize()
+            .verticalScroll(
+                enabled = true,
+                state = rememberScrollState()
+            )
+    ) {
+        ScreenTitle(
+            title = stringResource(R.string.alias_title),
+            onBackNavigation = onBackNavigation
+        )
+        AliasCard(
+            balance = uiState.details?.balance.toString(),
+            alias = uiState.details?.alias ?: "",
+            cbu = uiState.details?.cbu ?: "",
+            balanceVisible = uiState.form?.get("balanceVisible") ?: "false",
+            onChangeBalanceVisibility = { value -> viewModel.setFormValue("balanceVisible", value) }
+        )
         Column(
-            modifier = modifier
-                .padding(horizontal = getPadding())
-                .fillMaxSize()
-                .verticalScroll(
-                    enabled = true,
-                    state = rememberScrollState()
-                )
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            ScreenTitle(
-                title = stringResource(R.string.alias_title),
-                onBackNavigation = onBackNavigation
-            )
-            AliasCard(
-                balance = uiState.details?.balance.toString(),
-                alias = uiState.details?.alias ?: "",
-                cbu = uiState.details?.cbu ?: ""
-            )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+            Button(
+                onClick = { viewModel.setFormValue("changeAliasModalOpen", "true") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Button(
-                    onClick = { changeAliasModalOpen = true },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.change_alias),
-                        color = Color.White
-                    )
-                }
-
-                Button(
-                    onClick = { rechargeModalOpen = true },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.recharge_with_card_button),
-                        color = Color.White
-                    )
-                }
+                Text(
+                    text = stringResource(R.string.change_alias),
+                    color = Color.White
+                )
             }
-            if (changeAliasModalOpen) {
-                ChangeAliasCard(
-                    onClose = { changeAliasModalOpen = false },
-                    onConfirm = { newAlias ->
+
+            Button(
+                onClick = { viewModel.setFormValue("rechargeModalOpen", "true") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.recharge_with_card_button),
+                    color = Color.White
+                )
+            }
+        }
+        if (uiState.form?.get("changeAliasModalOpen") == "true") {
+            ChangeAliasCard(
+                onClose = { viewModel.setFormValue("changeAliasModalOpen", "false") },
+                onConfirm = {
+                    try {
+                        viewModel.updateAlias(uiState.form?.get("newAlias") ?: "", {
+                            viewModel.setFormValue("changeAliasModalOpen", "false")
+                            refreshTrigger += 1
+                        })
+                    } catch(e: Exception) {
+                        viewModel.setError(Error(400, e.message.toString()))
+                    }
+                },
+                newAlias = uiState.form?.get("newAlias") ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+            )
+        }
+
+        if (uiState.form?.get("rechargeModalOpen") == "true") {
+            RechargeCard(
+                availableCards = viewModel.uiState.cards ?: emptyList(),
+                onClose = { viewModel.setFormValue("rechargeModalOpen", "false") },
+                amount = uiState.form?.get("amount") ?: "",
+                selectedCard = uiState.form?.get("selectedCard") ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+                onConfirm = {
+                    if(uiState.form?.get("selectedCard") == null || uiState.form?.get("amount") == null){
+                        viewModel.setError(Error(400, context.getString(R.string.no_selected_option_error)))
+                    } else {
                         try {
-                            viewModel.updateAlias(newAlias, {
-                                changeAliasModalOpen = false
+                            viewModel.recharge(Recharge(uiState.form?.get("amount")!!.toDoubleOrNull() ?: 0.0), {
+                                viewModel.setFormValue("rechargeModalOpen", "false")
                                 refreshTrigger += 1
                             })
                         } catch(e: Exception) {
                             viewModel.setError(Error(400, e.message.toString()))
                         }
                     }
-                )
-            }
-
-            if (rechargeModalOpen) {
-                RechargeCard(
-                    availableCards = viewModel.uiState.cards ?: emptyList(),
-                    onClose = { rechargeModalOpen = false },
-                    onConfirm = { amount, selectedCard ->
-                        if(selectedCard == null){
-                            viewModel.setError(Error(400, context.getString(R.string.no_selected_option_error)))
-                        } else {
-                            try {
-                                viewModel.recharge(Recharge(amount.toDouble()), {
-                                    rechargeModalOpen = false
-                                    refreshTrigger += 1
-                                })
-                            } catch(e: Exception) {
-                                viewModel.setError(Error(400, e.message.toString()))
-                            }
-                        }
-                    }
-                )
-            }
+                }
+            )
         }
-
+    }
 }

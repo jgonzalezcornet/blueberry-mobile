@@ -1,5 +1,6 @@
 package com.example.blueberry.ui.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,7 +17,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.ChangeAliasCard
@@ -33,67 +33,72 @@ fun ProfileScreen(
     onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        val uiState = viewModel.uiState
+    val uiState = viewModel.uiState
 
-        if(!uiState.isAuthenticated && !uiState.isFetching){
-            onUnauthenticated()
+    var initialized by rememberSaveable(key = "initialized_key_profile") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            initialized = true
+            viewModel.initializeForm()
+            viewModel.setFormValue("changeAliasModalOpen", "false")
         }
+    }
 
-        var changeAliasModalOpen by rememberSaveable { mutableStateOf(false) }
-        var refreshTrigger by rememberSaveable { mutableStateOf(0) }
+    if(!uiState.isAuthenticated && !uiState.isFetching){
+        onUnauthenticated()
+    }
 
-        LaunchedEffect(refreshTrigger) {
-            viewModel.getCurrentUser()
-            viewModel.getWalletDetails()
-        }
+    var refreshTrigger by rememberSaveable { mutableStateOf(0) }
+
+    LaunchedEffect(refreshTrigger) {
+        viewModel.getCurrentUser()
+        viewModel.getWalletDetails()
+    }
 
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(
-                    enabled = true,
-                    state = rememberScrollState())
-                .padding(horizontal = getPadding())
-        ) {
-            ScreenTitle(
-                title = stringResource(R.string.profile_title),
-                onBackNavigation = onBackNavigation
-            )
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(
+                enabled = true,
+                state = rememberScrollState())
+            .padding(horizontal = getPadding())
+    ) {
+        ScreenTitle(
+            title = stringResource(R.string.profile_title),
+            onBackNavigation = onBackNavigation
+        )
 
-            ProfileCard(
-                firstName = uiState.currentUser?.firstName ?: "",
-                lastName = uiState.currentUser?.lastName ?: "",
-                email = uiState.currentUser?.email ?: "",
-                alias = uiState.details?.alias ?: "",
-                cbu = uiState.details?.cbu ?: "",
-                onChangeAliasClick = { changeAliasModalOpen = true },
-                onLogout = {
-                    viewModel.logout()
-                    onLogout()
-                }
-            )
-            if (changeAliasModalOpen) {
-                ChangeAliasCard(
-                    onClose = { changeAliasModalOpen = false },
-                    onConfirm = { newAlias ->
-                        try {
-                            viewModel.updateAlias(newAlias, {
-                                changeAliasModalOpen = false
-                                refreshTrigger += 1
-                            })
-                        } catch(e: Exception) {
-                            viewModel.setError(Error(400, e.message.toString()))
-                        }
-                    }
-                )
+        ProfileCard(
+            firstName = uiState.currentUser?.firstName ?: "",
+            lastName = uiState.currentUser?.lastName ?: "",
+            email = uiState.currentUser?.email ?: "",
+            alias = uiState.details?.alias ?: "",
+            cbu = uiState.details?.cbu ?: "",
+            onChangeAliasClick = { viewModel.setFormValue("changeAliasModalOpen", "true") },
+            onLogout = {
+                viewModel.logout()
+                onLogout()
             }
+        )
+
+        if (uiState.form?.get("changeAliasModalOpen") == "true") {
+            ChangeAliasCard(
+                onClose = { viewModel.setFormValue("changeAliasModalOpen", "false") },
+                onConfirm = {
+                    try {
+                        viewModel.updateAlias(uiState.form?.get("newAlias") ?: "", {
+                            viewModel.setFormValue("changeAliasModalOpen", "false")
+                            refreshTrigger += 1
+                        })
+                    } catch(e: Exception) {
+                        viewModel.setError(Error(400, e.message.toString()))
+                    }
+                },
+                newAlias = uiState.form?.get("newAlias") ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+            )
         }
+    }
 }
-
-@PreviewScreenSizes
-@Composable
-fun ProfileScreenPreview() {
-    ProfileScreen()
-}
-

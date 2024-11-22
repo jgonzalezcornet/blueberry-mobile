@@ -20,7 +20,7 @@ import com.example.blueberry.data.model.CardBrand
 
 @Composable
 fun BigCard(
-    showBack: Boolean,
+    showBack: String,
     cardNumber: String,
     cardHolderName: String,
     expiryDate: String,
@@ -36,12 +36,12 @@ fun BigCard(
             .height(200.dp)
             .padding(16.dp)
             .graphicsLayer {
-                rotationY = if (showBack) 180f else 0f
+                rotationY = if (showBack == "true") 180f else 0f
                 cameraDistance = 12f * density
             },
         colors = CardDefaults.cardColors(containerColor = cardType.backgroundColor)
     ) {
-        if (showBack) {
+        if (showBack == "true") {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -139,28 +139,4 @@ fun BigCard(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BigCardPreview() {
-    BigCard(
-        showBack = false,
-        cardNumber = "4111111111111111",
-        cardHolderName = "Manuel Ahumada",
-        expiryDate = "12/24",
-        cvv = "123"
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BigCardBackPreview() {
-    BigCard(
-        showBack = true,
-        cardNumber = "4111111111111111",
-        cardHolderName = "Manuel Ahumada",
-        expiryDate = "12/24",
-        cvv = "123"
-    )
 }

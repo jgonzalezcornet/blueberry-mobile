@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
@@ -21,11 +20,12 @@ import androidx.compose.material3.MaterialTheme
 @Composable
 fun TransferCard(
     modifier: Modifier = Modifier,
-    onTransferConfirmed: (destination: String, amount: String, description: String) -> Unit = { _, _, _ -> }
-)  {
-    var amount by remember { mutableStateOf("") }
-    var destinationInput by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    onTransferConfirmed: () -> Unit,
+    amount: String,
+    destination: String,
+    description: String,
+    onValueChange: (String, String) -> Unit
+) {
 
     Card(
         modifier = modifier
@@ -42,8 +42,8 @@ fun TransferCard(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             OutlinedTextField(
-                value = destinationInput,
-                onValueChange = { destinationInput = it },
+                value = destination,
+                onValueChange = { onValueChange("destination", it) },
                 label = { 
                     Text(
                         stringResource(R.string.transfer_email_label),
@@ -53,7 +53,7 @@ fun TransferCard(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Email,
-                        contentDescription = "Correo electronico",
+                        contentDescription = stringResource(R.string.email_icon_descriptor),
                         tint = Color.Gray,
                         modifier = Modifier.padding(start = 4.dp)
                     )
@@ -66,7 +66,7 @@ fun TransferCard(
 
             OutlinedTextField(
                 value = amount,
-                onValueChange = { amount = it },
+                onValueChange = { onValueChange("amount", it) },
                 label = {
                     Text(
                         stringResource(id = R.string.amount_label),
@@ -76,7 +76,7 @@ fun TransferCard(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.AttachMoney,
-                        contentDescription = "Monto",
+                        contentDescription = stringResource(R.string.monto_icon_descriptor),
                         tint = Color.Gray,
                         modifier = Modifier.padding(start = 4.dp)
                     )
@@ -90,7 +90,7 @@ fun TransferCard(
 
             OutlinedTextField(
                 value = description,
-                onValueChange = { description = it },
+                onValueChange = { onValueChange("description", it) },
                 label = {
                     Text(
                         stringResource(id = R.string.description_label),
@@ -100,7 +100,7 @@ fun TransferCard(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Description,
-                        contentDescription = "Descripcion",
+                        contentDescription = stringResource(R.string.description_icon_descriptor),
                         tint = Color.Gray,
                         modifier = Modifier.padding(start = 4.dp)
                     )
@@ -113,15 +113,15 @@ fun TransferCard(
 
             Button(
                 onClick = { 
-                    if (amount.isNotEmpty() && destinationInput.isNotEmpty()) {
-                        onTransferConfirmed(destinationInput, amount, description)
+                    if (amount.isNotEmpty() && destination.isNotEmpty()) {
+                        onTransferConfirmed()
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                enabled = amount.isNotEmpty() && destinationInput.isNotEmpty()
+                enabled = amount.isNotEmpty() && destination.isNotEmpty()
             ) {
                 Text(
                     text = stringResource(id = R.string.continue_button),

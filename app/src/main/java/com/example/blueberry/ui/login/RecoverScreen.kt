@@ -6,6 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,6 +29,17 @@ fun RecoverScreen(
     onRecoverSuccess: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+    val uiState = viewModel.uiState
+
+    var initialized by rememberSaveable(key = "initialized_key_recover") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            initialized = true
+            viewModel.initializeForm()
+        }
+    }
+
     Column(
         modifier = modifier
             .verticalScroll(
@@ -42,14 +58,9 @@ fun RecoverScreen(
                 } catch(e: Exception) {
                     viewModel.setError(Error(400, e.message.toString()))
                 }
-            }
+            },
+            onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+            email = uiState.form?.get("email") ?: ""
         )
     }
-}
-
-
-@PreviewScreenSizes
-@Composable
-fun RecoverScreenPreview() {
-    RecoverScreen()
 }

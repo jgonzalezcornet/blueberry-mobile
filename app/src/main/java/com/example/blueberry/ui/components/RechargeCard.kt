@@ -28,10 +28,12 @@ fun RechargeCard(
     modifier: Modifier = Modifier,
     availableCards: List<Card>,
     onClose: () -> Unit = {},
-    onConfirm: (amount: String, selectedCard: Card?) -> Unit
+    onConfirm: () -> Unit,
+    amount: String,
+    selectedCard: String,
+    onValueChange: (String, String) -> Unit
 ) {
-    var amount by remember { mutableStateOf("") }
-    var selectedCard by remember { mutableStateOf<Card?>(null) }
+
     var currentPage by remember { mutableStateOf(0) }
 
     Dialog(onDismissRequest = { onClose() }) {
@@ -70,7 +72,10 @@ fun RechargeCard(
 
                 OutlinedTextField(
                     value = amount,
-                    onValueChange = { if (it.all { char -> char.isDigit() }) amount = it },
+                    onValueChange = {
+                        if (it.all { char -> char.isDigit() })
+                            onValueChange("amount", it)
+                    },
                     label = { Text(stringResource(R.string.recharge_amount_label)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
@@ -94,7 +99,7 @@ fun RechargeCard(
                                 .fillMaxWidth(0.9f)
                                 .clickable {
                                     currentPage = index
-                                    selectedCard = card
+                                    onValueChange("selectedCard", card.id.toString())
                                 }
                         ) {
                             CompleteCardCard(
@@ -124,12 +129,10 @@ fun RechargeCard(
                 }
 
                 Button(
-                    onClick = { 
-                        onConfirm(amount, selectedCard)
-                    },
+                    onClick = onConfirm,
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    enabled = amount.isNotEmpty() && selectedCard != null
+                    enabled = amount.isNotEmpty() && selectedCard != ""
                 ) {
                     Text(
                         text = stringResource(R.string.recharge_confirm_button),

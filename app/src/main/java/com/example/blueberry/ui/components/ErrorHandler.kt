@@ -7,6 +7,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -28,7 +29,7 @@ fun ErrorDialog (
         onDismissRequest = onClose,
         title = {
             Text(
-                text = "${stringResource(R.string.error_dialog_title)}: ${error?.code}",
+                text = "${stringResource(R.string.error_dialog_title)}: ${error.code}",
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.Red
             )
@@ -54,19 +55,21 @@ fun ErrorHandler (
 ) {
     val uiState = viewModel.uiState
     var showDialog by rememberSaveable { mutableStateOf<Boolean>(false) }
-    var error by rememberSaveable { mutableStateOf<Error?>(null) }
+    var errorCode by rememberSaveable { mutableIntStateOf(0) }
+    var errorMessage by rememberSaveable { mutableStateOf<String>("") }
 
     LaunchedEffect(uiState.error) {
-        if(uiState.error != null){
+        if(uiState.error != null && showDialog == false){
             showDialog = true
-            error = uiState.error
+            errorCode = uiState.error.code ?: 0
+            errorMessage = uiState.error.message
             viewModel.clearError()
         }
     }
 
-    if(showDialog && error != null) {
+    if(showDialog && errorCode != 0 && errorMessage != "") {
         ErrorDialog(
-            error = error!!,
+            error = Error(errorCode, errorMessage),
             onClose = { showDialog = false }
         )
     }

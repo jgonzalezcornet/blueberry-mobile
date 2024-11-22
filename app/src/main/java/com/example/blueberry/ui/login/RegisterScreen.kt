@@ -11,14 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,16 +31,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
-import com.example.blueberry.data.DataSourceException
 import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.RegisterCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 import com.example.blueberry.utils.checkPassword
 import com.example.blueberry.utils.checkPasswordMismatch
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import javax.sql.DataSource
+
 
 @Composable
 fun RegisterScreen(
@@ -53,6 +49,19 @@ fun RegisterScreen(
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
         val context = LocalContext.current
+
+        val uiState = viewModel.uiState
+
+        var initialized by rememberSaveable(key = "initialized_key_register") { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            if(!initialized){
+                initialized = true
+                viewModel.initializeForm()
+                viewModel.setFormValue("passwordVisible", "false")
+                viewModel.setFormValue("confirmPasswordVisible", "false")
+            }
+        }
 
         Column(
             modifier = modifier
@@ -83,7 +92,20 @@ fun RegisterScreen(
                             }
                         }
                     }
-                }
+                },
+                name = uiState.form?.get("name") ?: "",
+                lastName = uiState.form?.get("lastName") ?: "",
+                email = uiState.form?.get("email") ?: "",
+                birthDate = uiState.form?.get("birthDate") ?: "",
+                birthMonth = uiState.form?.get("birthMonth") ?: "",
+                birthYear = uiState.form?.get("birthYear") ?: "",
+                password = uiState.form?.get("password") ?: "",
+                confirmPassword = uiState.form?.get("confirmPassword") ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+                passwordVisible = uiState.form?.get("passwordVisible") ?: "false",
+                confirmPasswordVisible = uiState.form?.get("confirmPasswordVisible") ?: "false",
+                onChangePasswordVisibility = { value -> viewModel.setFormValue("passwordVisible", value) },
+                onChangeConfirmPasswordVisibility = { value -> viewModel.setFormValue("confirmPasswordVisible", value) },
             )
 
             Row(
@@ -131,10 +153,3 @@ fun RegisterScreen(
         }
 
 }
-
-@PreviewScreenSizes
-@Composable
-fun RegisterScreenPreview() {
-    RegisterScreen()
-}
-

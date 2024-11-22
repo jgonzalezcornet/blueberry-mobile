@@ -9,6 +9,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +39,16 @@ fun HomeScreen(
 ) {
     val uiState = viewModel.uiState
 
+    var initialized by rememberSaveable(key = "initialized_key_home") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            initialized = true
+            viewModel.initializeForm()
+            viewModel.setFormValue("balanceVisible", "false")
+        }
+    }
+
     if(!uiState.isAuthenticated && !uiState.isFetching){
         onUnauthenticated()
     }
@@ -60,7 +74,9 @@ fun HomeScreen(
     ) {
         Spacer(Modifier.width(8.dp))
         BalanceCard(
-            balance = uiState.details?.balance.toString()
+            balance = uiState.details?.balance.toString(),
+            balanceVisible = uiState.form?.get("balanceVisible") ?: "false",
+            onChangeBalanceVisibility = { value -> viewModel.setFormValue("balanceVisible", value) }
         )
         HomeButtons(
             onInsertMoneyClick = onInsertMoneyClick,
@@ -77,11 +93,4 @@ fun HomeScreen(
             onClick = onCardsClick
         )
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
 }

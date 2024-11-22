@@ -48,10 +48,3 @@ fun ActivityScreen(
         }
 
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ActivityScreenPreview() {
-    ActivityScreen()
-}
-

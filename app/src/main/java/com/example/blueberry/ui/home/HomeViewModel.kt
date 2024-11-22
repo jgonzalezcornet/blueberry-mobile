@@ -16,7 +16,6 @@ import com.example.blueberry.data.repository.WalletRepository
 import com.example.blueberry.data.repository.PaymentRepository
 import com.example.blueberry.data.network.model.NetworkAlias
 import com.example.blueberry.SessionManager
-import com.example.blueberry.data.model.Balance
 import com.example.blueberry.data.model.Payment
 import com.example.blueberry.data.model.Recharge
 import kotlinx.coroutines.Job
@@ -57,9 +56,10 @@ class HomeViewModel(
         }
     )
 
-    fun verify(code: String) = runOnViewModelScope(
+    fun verify(code: String, callback: () -> Unit) = runOnViewModelScope(
         { userRepository.verify(code) },
-        { state, _ -> state.copy() }
+        { state, _ -> state.copy() },
+        callback
     )
 
     fun getCurrentUser() = runOnViewModelScope(
@@ -127,7 +127,7 @@ class HomeViewModel(
 
     fun makePayment(payment: Payment, callback: () -> Unit) = runOnViewModelScope(
         { paymentRepository.makePayment(payment) },
-        { state, response -> state.copy() },
+        { state, _ -> state.copy() },
         callback
     )
 
@@ -144,6 +144,16 @@ class HomeViewModel(
     fun setError(error: Error) = runOnViewModelScope(
         { },
         { state, _ -> state.copy(error = error) }
+    )
+
+    fun initializeForm() = runOnViewModelScope(
+        { },
+        { state, _ -> state.copy(form = HashMap<String, String>()) }
+    )
+
+    fun setFormValue(key: String, value: String) = runOnViewModelScope(
+        { },
+        { state, _ -> state.copy( form = state.form?.plus(Pair(key, value)) ) }
     )
 
     private fun <R> runOnViewModelScope(

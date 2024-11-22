@@ -34,11 +34,3 @@ fun TermsScreen(
         }
 
 }
-
-@PreviewScreenSizes
-@Composable
-fun TermsScreenPreview() {
-    TermsScreen()
-}
-
-

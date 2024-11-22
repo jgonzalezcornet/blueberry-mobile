@@ -22,25 +22,27 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
-
+import androidx.compose.ui.text.style.TextAlign
 
 
 @Composable
 fun RegisterCard(
     modifier: Modifier = Modifier,
-    onRegister: (String, String, String, String, String, String) -> Unit
+    onRegister: (String, String, String, String, String, String) -> Unit,
+    name: String,
+    lastName: String,
+    email: String,
+    birthDate: String,
+    birthMonth: String,
+    birthYear: String,
+    password: String,
+    confirmPassword: String,
+    onValueChange: (String, String) -> Unit,
+    passwordVisible: String,
+    confirmPasswordVisible: String,
+    onChangePasswordVisibility: (String) -> Unit,
+    onChangeConfirmPasswordVisibility: (String) -> Unit
 ) {
-    var name by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var birthDate by remember { mutableStateOf("") }
-    var birthMonth by remember { mutableStateOf("") }
-    var birthYear by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-    var confirmPasswordVisible by remember { mutableStateOf(false) }
-
     Box(
         modifier = modifier
             .padding(16.dp),
@@ -68,7 +70,7 @@ fun RegisterCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextField(
                     value = name,
-                    onValueChange = { name = it },
+                    onValueChange = { onValueChange("name", it) },
                     label = {
                         Text(
                             stringResource(R.string.register_name_label),
@@ -81,7 +83,7 @@ fun RegisterCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = lastName,
-                    onValueChange = { lastName = it },
+                    onValueChange = { onValueChange("lastName", it) },
                     label = {
                         Text(
                             stringResource(R.string.register_lastname_label),
@@ -94,7 +96,7 @@ fun RegisterCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = { onValueChange("email", it) },
                     label = {
                         Text(
                             stringResource(R.string.register_email_label),
@@ -107,7 +109,9 @@ fun RegisterCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     stringResource(R.string.register_birth_placeholder),
-                    color = Color.Gray
+                    color = Color.Gray,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Start
                 )
                 Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -117,7 +121,7 @@ fun RegisterCard(
                             value = birthDate,
                             onValueChange = {
                                 if (it.length <= 2) {
-                                    birthDate = it
+                                    onValueChange("birthDate", it)
                                 }
                             },
                             label = {
@@ -135,7 +139,7 @@ fun RegisterCard(
                             value = birthMonth,
                             onValueChange = {
                                 if (it.length <= 2) {
-                                    birthMonth = it
+                                    onValueChange("birthMonth", it)
                                 }
                             },
                             label = {
@@ -152,7 +156,7 @@ fun RegisterCard(
                             value = birthYear,
                             onValueChange = {
                                 if (it.length <= 4) {
-                                    birthYear = it
+                                    onValueChange("birthYear", it)
                                 }
                             },
                             label = {
@@ -169,7 +173,7 @@ fun RegisterCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = { onValueChange("password", it) },
                     label = {
                         Text(
                             stringResource(R.string.register_password_label),
@@ -178,12 +182,12 @@ fun RegisterCard(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (passwordVisible == "true") VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        IconButton(onClick = { onChangePasswordVisibility(if (passwordVisible == "true") "false" else "true") }) {
                             Icon(
-                                imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                imageVector = if (passwordVisible == "true") Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (passwordVisible == "true") "Ocultar contraseña" else "Mostrar contraseña",
                                 tint = Color.Gray
                             )
                         }
@@ -192,7 +196,7 @@ fun RegisterCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = confirmPassword,
-                    onValueChange = { confirmPassword = it },
+                    onValueChange = { onValueChange("confirmPassword", it) },
                     label = {
                         Text(
                             stringResource(R.string.register_confirm_password_label),
@@ -201,12 +205,12 @@ fun RegisterCard(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (confirmPasswordVisible == "true") VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
-                        IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
+                        IconButton(onClick = { onChangeConfirmPasswordVisibility(if (confirmPasswordVisible == "true") "false" else "true") }) {
                             Icon(
-                                imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                contentDescription = if (confirmPasswordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                imageVector = if (confirmPasswordVisible == "true") Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = if (confirmPasswordVisible == "true") "Ocultar contraseña" else "Mostrar contraseña",
                                 tint = Color.Gray
                             )
                         }

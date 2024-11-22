@@ -21,9 +21,11 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +43,7 @@ import com.example.blueberry.data.model.Card
 import com.example.blueberry.data.model.CardType
 import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.ScreenTitle
+import com.example.blueberry.ui.components.cards.AddCardCard
 import com.example.blueberry.ui.components.cards.BigCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
@@ -55,22 +58,24 @@ fun AddCardScreen(
     onUnauthenticated: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        val uiState = viewModel.uiState
+    val uiState = viewModel.uiState
+
+    var initialized by rememberSaveable(key = "initialized_key_add_card") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            initialized = true
+            viewModel.initializeForm()
+            viewModel.setFormValue("showBack", "false")
+        }
+    }
 
         if(!uiState.isAuthenticated && !uiState.isFetching){
             onUnauthenticated()
         }
 
-        var cardNumber by remember { mutableStateOf("") }
-        var cardHolderName by remember { mutableStateOf("") }
-        var expiryMonth by remember { mutableStateOf("") }
-        var expiryYear by remember { mutableStateOf("") }
-        var cvv by remember { mutableStateOf("") }
-        var cardType by remember { mutableStateOf(CardType.CREDIT) }
-        var showBack by remember { mutableStateOf(false) }
 
-        val formattedCardNumber = cardNumber.chunked(4).joinToString(" ")
-        val formattedExpiryDate = formatDate(expiryMonth, expiryYear)
+        val formattedCardNumber = uiState.form?.get("cardNumber")?.chunked(4)?.joinToString(" ")
 
         Column(
             modifier = modifier
@@ -87,178 +92,39 @@ fun AddCardScreen(
             )
 
             BigCard(
-                showBack = showBack,
-                cardNumber = formattedCardNumber,
-                cardHolderName = cardHolderName,
-                expiryDate = formattedExpiryDate,
-                cvv = cvv
+                showBack = uiState.form?.get("showBack") ?: "false",
+                cardNumber = formattedCardNumber ?: "",
+                cardHolderName = uiState.form?.get("cardHolderName") ?: "",
+                expiryDate = formatDate(uiState.form?.get("expiryMonth") ?: "", uiState.form?.get("expiryYear") ?: ""),
+                cvv = uiState.form?.get("cvv") ?: ""
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(R.string.card_type_label),
-                            color = Color.Gray
+            AddCardCard(
+                cardNumber = uiState.form?.get("cardNumber") ?: "",
+                cardHolderName = uiState.form?.get("cardHolderName") ?: "",
+                expiryMonth = uiState.form?.get("expiryMonth") ?: "",
+                expiryYear = uiState.form?.get("expiryYear") ?: "",
+                cvv = uiState.form?.get("cvv") ?: "",
+                cardType = uiState.form?.get("cardType") ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+                onAddCard = {
+                    try {
+                        viewModel.addCard(
+                            Card(
+                                number = uiState.form?.get("cardNumber") ?: "",
+                                fullName = uiState.form?.get("cardHolderName") ?: "",
+                                expirationDate = formatDate(uiState.form?.get("expiryMonth") ?: "", uiState.form?.get("expiryYear") ?: ""),
+                                cvv = uiState.form?.get("cvv") ?: "",
+                                type = when(uiState.form?.get("cardType") ?: "") { "CREDIT" -> CardType.CREDIT else -> CardType.DEBIT },
+                            ), onAddCardSuccess
                         )
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Text(
-                                text = "Débito",
-                                color = if (cardType == CardType.DEBIT) MaterialTheme.colorScheme.primary else Color.Gray
-                            )
-                            Switch(
-                                checked = cardType == CardType.CREDIT,
-                                onCheckedChange = { isCredit ->
-                                    cardType = if (isCredit) CardType.CREDIT else CardType.DEBIT
-                                },
-                                colors = SwitchDefaults.colors(
-                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                    uncheckedThumbColor = MaterialTheme.colorScheme.primary,
-                                    uncheckedTrackColor = MaterialTheme.colorScheme.primaryContainer
-                                )
-                            )
-                            Text(
-                                text = "Crédito",
-                                color = if (cardType == CardType.CREDIT) MaterialTheme.colorScheme.primary else Color.Gray
-                            )
-                        }
-                    }
-
-                    OutlinedTextField(
-                        value = cardNumber,
-                        onValueChange = {
-                            if (it.length <= 16 && it.all { char -> char.isDigit() }) {
-                                cardNumber = it
-                            }
-                        },
-                        label = { Text(stringResource(R.string.card_number_label)) },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
-                    )
-
-                    OutlinedTextField(
-                        value = cardHolderName,
-                        onValueChange = {
-                            if (it.all { char -> char.isLetter() || char.isWhitespace() }) {
-                                cardHolderName = it.uppercase()
-                            }
-                        },
-                        label = { Text(stringResource(R.string.card_holder_name_label)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        OutlinedTextField(
-                            value = expiryMonth,
-                            onValueChange = {
-                                if (it.length <= 2 && it.all { char -> char.isDigit() }) {
-                                    expiryMonth = it
-                                }
-                            },
-                            label = { Text("MM") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            modifier = Modifier.weight(1f),
-                            singleLine = true
-                        )
-
-                        OutlinedTextField(
-                            value = expiryYear,
-                            onValueChange = {
-                                if (it.length <= 2 && it.all { char -> char.isDigit() }) {
-                                    expiryYear = it
-                                }
-                            },
-                            label = { Text("AA") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            modifier = Modifier.weight(1f),
-                            singleLine = true
-                        )
-                    }
-
-                    OutlinedTextField(
-                        value = cvv,
-                        onValueChange = {
-                            if (it.length <= 3 && it.all { char -> char.isDigit() }) {
-                                cvv = it
-                            }
-                        },
-                        label = { Text(stringResource(R.string.cvv_label)) },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .onFocusChanged { focusState ->
-                                showBack = focusState.isFocused
-                            },
-                        singleLine = true
-                    )
-
-                    Button(
-                        onClick = {
-                            try {
-                                viewModel.addCard(
-                                    Card(
-                                        null,
-                                        cardNumber,
-                                        formattedExpiryDate,
-                                        cardHolderName,
-                                        cvv,
-                                        cardType,
-                                        null,
-                                        null
-                                    ),
-                                    onAddCardSuccess
-                                )
-                            } catch(e: Exception) {
-                                viewModel.setError(Error(400, e.message.toString()))
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                        enabled = cardNumber.length == 16 &&
-                                cardHolderName.isNotEmpty() &&
-                                expiryMonth.length == 2 &&
-                                expiryYear.length == 2 &&
-                                cvv.length == 3
-                    ) {
-                        Text(
-                            text = stringResource(R.string.add_card_button),
-                            color = Color.White
-                        )
+                    } catch(e: Exception) {
+                        viewModel.setError(Error(400, e.message.toString()))
                     }
                 }
-            }
+            )
         }
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AddCardScreenPreview() {
-    AddCardScreen()
 }

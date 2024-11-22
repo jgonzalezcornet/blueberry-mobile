@@ -29,6 +29,8 @@
     <string name="register_link">Registrarse</string>
     <string name="terms_and_conditions">Términos y Condiciones</string>
     <string name="security_info">Información de Seguridad</string>
+    <string name="no_validation_text">¿No has validado tu cuenta?</string>
+    <string name="validate_link">Validar</string>
 
 <!-- register -->
     <string name="register_title">Crea tu cuenta</string>
@@ -50,6 +52,7 @@
     <string name="have_account">¿Ya tienes una cuenta?</string>
     <string name='register_year_placeholder'>AAAA</string>
     <string name='register_birth_placeholder'>Fecha de nacimiento</string>
+    <string name='validate_register'>Validar</string>
 
 <!-- recuperar contraseña -->
     <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
@@ -95,6 +98,7 @@
     <string name="cvv_label">CVV</string>
     <string name="card_type_label">Tipo de tarjeta</string>
     <string name="no_cards_message">No hay tarjetas</string>
+    <string name="year_input_cards">AA</string>
 
 <!-- perfil -->
     <string name="profile_title">Perfil</string>
@@ -126,6 +130,9 @@
     <string name="select_card_label">Seleccionar tarjeta</string>
     <string name="recharge_confirm_button">Confirmar</string>
     <string name="recharge_with_card_button">Cargar dinero con tarjeta</string>
+    <string name="show_balance">Mostrar dinero</string>
+    <string name="hide_balance">Ocultar dinero</string>
+
 
 <!-- transferir -->
     <string name="transfer_title">Transferir</string>
@@ -140,6 +147,9 @@
     <string name="select_payment_method">Seleccionar método de pago</string>
     <string name="account_balance">Dinero en cuenta</string>
     <string name="pay_button">Pagar</string>
+    <string name="email_icon_descriptor">Correo electrónico</string>
+    <string name="monto_icon_descriptor">Monto</string>
+    <string name="description_icon_descriptor">Descripción</string>
 
 <!-- randoms -->
     <string name="link_description">Vincula tus cuentas y servicios externos</string>

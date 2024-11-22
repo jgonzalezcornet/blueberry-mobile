@@ -28,10 +28,10 @@ fun PayTransferCard(
     amount: Int,
     availableCards: List<Card>,
     onCancel: () -> Unit = {},
-    onPay: (paymentMethod: String, cardId: Int) -> Unit
+    onPay: () -> Unit,
+    selectedPaymentMethod: String,
+    onValueChange: (String, String) -> Unit
 ) {
-    var selectedPaymentMethod by remember { mutableStateOf<String?>(null) }
-    var selectedCardId by remember { mutableStateOf(0) }
     var currentPage by remember { mutableStateOf(0) }
 
     Card(
@@ -107,8 +107,8 @@ fun PayTransferCard(
                             .height(180.dp)
                             .clickable {
                                 currentPage = 0
-                                selectedPaymentMethod = "account_balance"
-                                selectedCardId = 0
+                                onValueChange("selectedPaymentMethod", "account_balance")
+                                onValueChange("selectedCardId", "0")
                             },
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
@@ -136,8 +136,8 @@ fun PayTransferCard(
                             .width(300.dp)
                             .clickable {
                                 currentPage = index + 1
-                                selectedPaymentMethod = card.number
-                                selectedCardId = card.id!!
+                                onValueChange("selectedCardId", card.id.toString())
+                                onValueChange("selectedPaymentMethod", card.number)
                             }
                     ) {
                         CompleteCardCard(
@@ -187,18 +187,13 @@ fun PayTransferCard(
 
                 Button(
                     onClick = { 
-                        selectedPaymentMethod?.let {
-                            onPay(
-                                if(it == "account_balance") "BALANCE" else "CARD",
-                                selectedCardId
-                            )
-                        }
+                        onPay()
                     },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
-                    enabled = selectedPaymentMethod != null
+                    enabled = selectedPaymentMethod != ""
                 ) {
                     Text(
                         text = stringResource(R.string.pay_button),

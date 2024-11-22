@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Payment
 import com.example.blueberry.ui.components.PayTransferCard
@@ -38,6 +37,17 @@ fun TransferScreen(
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
     val uiState = viewModel.uiState
+
+    var initialized by rememberSaveable(key = "initialized_key_transfer") { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if(!initialized){
+            initialized = true
+            viewModel.initializeForm()
+            viewModel.setFormValue("transferStage", "0")
+        }
+    }
+
     if(!uiState.isAuthenticated && !uiState.isFetching){
         onUnauthenticated()
     }
@@ -45,11 +55,6 @@ fun TransferScreen(
     LaunchedEffect(Unit) {
         viewModel.getCards()
     }
-
-    var transferStage by remember { mutableStateOf(0) }
-    var destination by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -62,35 +67,37 @@ fun TransferScreen(
             .padding(horizontal = getPadding())
             .fillMaxWidth(),
     ) {
-        if (transferStage == 0) {
+        if (uiState.form?.get("transferStage") == "0") {
             ScreenTitle(
                 title = stringResource(R.string.transfer_title),
                 onBackNavigation = onBackNavigation
             )
 
             TransferCard(
-                onTransferConfirmed = { dest, amt, desc ->
-                    destination = dest
-                    description = desc
-                    amount = amt
-                    transferStage = 1
-                }
+                onTransferConfirmed = { viewModel.setFormValue("transferStage", "1") },
+                destination = uiState.form["destination"] ?: "",
+                amount = uiState.form["amount"] ?: "",
+                description = uiState.form["description"] ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
             )
-        } else if (transferStage == 1) {
+        } else if (uiState.form?.get("transferStage") == "1") {
             PayTransferCard(
-                onCancel = { transferStage = 0 },
-                destination = destination,
-                amount = amount.toIntOrNull() ?: 0,
+                onCancel = { viewModel.setFormValue("transferStage", "0") },
+                destination = uiState.form["destination"] ?: "",
+                amount = uiState.form["amount"]?.toIntOrNull() ?: 0,
                 availableCards = uiState.cards ?: listOf(),
-                onPay = { method, cardId ->
+                selectedPaymentMethod = uiState.form["selectedPaymentMethod"] ?: "",
+                onValueChange = { key, value -> viewModel.setFormValue(key, value) },
+                onPay = {
                     try {
+                        val type = uiState.form["selectedPaymentMethod"] ?: ""
                         viewModel.makePayment(
                             Payment(
-                                amount = amount.toDouble(),
-                                description = description,
-                                type = method,
-                                cardId = cardId,
-                                receiverEmail = destination
+                                amount = uiState.form["amount"]?.toDoubleOrNull() ?: 0.0,
+                                description = uiState.form["description"] ?: "",
+                                type = when (type) { "account_balance" -> "BALANCE" else -> "CARD" },
+                                cardId = uiState.form["selectedCardId"]?.toIntOrNull() ?: 0,
+                                receiverEmail = uiState.form["destination"] ?: ""
                             ),
                             onTransferSuccess
                         )
@@ -101,10 +108,4 @@ fun TransferScreen(
             )
         }
     }
-}
-
-@PreviewScreenSizes
-@Composable
-fun TransferScreenPreview() {
-    TransferScreen()
 }

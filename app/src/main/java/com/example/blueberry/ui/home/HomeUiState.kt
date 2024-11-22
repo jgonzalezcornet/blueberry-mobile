@@ -14,5 +14,6 @@ data class HomeUiState(
     val currentCard: Card? = null,
     val error: Error? = null,
     val details: WalletDetails? = null,
-    val activities: List<Activity>? = null
+    val activities: List<Activity>? = null,
+    val form: Map<String, String>? = null
 )
