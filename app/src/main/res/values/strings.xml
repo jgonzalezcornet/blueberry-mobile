@@ -48,6 +48,8 @@
     <string name="register_button">Registrarse</string>
     <string name="validate_email_title">Validar Email</string>
     <string name="have_account">¿Ya tienes una cuenta?</string>
+    <string name='register_year_placeholder'>AAAA</string>
+    <string name='register_birth_placeholder'>Fecha de nacimiento</string>
 
 <!-- recuperar contraseña -->
     <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
@@ -147,5 +149,5 @@
     <string name="enter_data">Ingrese los datos</string>
     <string name="destination_label">Destino</string>
     <string name="change_password">Cambiar contraseña</string>
-   
+
 </resources>

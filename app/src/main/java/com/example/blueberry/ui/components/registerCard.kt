@@ -14,13 +14,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+
+
 
 @Composable
 fun RegisterCard(
@@ -31,6 +34,8 @@ fun RegisterCard(
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var birthDate by remember { mutableStateOf("") }
+    var birthMonth by remember { mutableStateOf("") }
+    var birthYear by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -100,18 +105,67 @@ fun RegisterCard(
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = birthDate,
-                    onValueChange = { birthDate = it },
-                    label = {
-                        Text(
-                            stringResource(R.string.register_birth_date_label),
-                            color = Color.Gray
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                Text(
+                    stringResource(R.string.register_birth_placeholder),
+                    color = Color.Gray
                 )
+                Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedTextField(
+                            value = birthDate,
+                            onValueChange = {
+                                if (it.length <= 2) {
+                                    birthDate = it
+                                }
+                            },
+                            label = {
+                                Text(
+                                    text = "DD",
+                                    color = Color.Gray
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier.weight(1f),
+                            singleLine = true
+                        )
+
+                        OutlinedTextField(
+                            value = birthMonth,
+                            onValueChange = {
+                                if (it.length <= 2) {
+                                    birthMonth = it
+                                }
+                            },
+                            label = {
+                                Text(
+                                    text = "MM",
+                                    color = Color.Gray
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier.weight(1f),
+                            singleLine = true
+                        )
+                        OutlinedTextField(
+                            value = birthYear,
+                            onValueChange = {
+                                if (it.length <= 4) {
+                                    birthYear = it
+                                }
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(R.string.register_year_placeholder),
+                                    color = Color.Gray
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier.weight(1f),
+                            singleLine = true
+                        )
+                    }
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = password,
@@ -169,7 +223,7 @@ fun RegisterCard(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { onRegister(name, lastName, email, birthDate, password, confirmPassword) },
+                    onClick = { onRegister(name, lastName, email, "${birthYear}-${birthMonth}-${birthDate}", password, confirmPassword) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary

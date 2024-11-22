@@ -48,6 +48,10 @@
     <string name="register_button">Sign up</string>
     <string name="validate_email_title">Validate Email</string>
     <string name="have_account">Already have an account?</string>
+    <string name='register_year_placeholder'>YYYY</string>
+    <string name='register_birth_placeholder'>Birth date</string>
+
+
 
 <!-- recover password -->
     <string name="password_invalid_message">The password must have at least 8 characters, one uppercase, one lowercase, a number, and a special character. It cannot include "ñ".</string>

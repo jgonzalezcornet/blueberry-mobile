@@ -28,6 +28,10 @@ import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.LoginCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
+import androidx.compose.ui.res.stringResource
+import com.example.blueberry.R
+
+
 
 @Composable
 fun LoginScreen(
@@ -69,13 +73,13 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "¿No tienes una cuenta?",
+                    text = stringResource(R.string.no_account_text),
                     color = Color.Black,
                     fontSize = 14.sp
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "Registrarse",
+                    text = stringResource(R.string.register_link),
                     color = MaterialTheme.colorScheme.primary,
                     fontSize = 14.sp,
                     textDecoration = TextDecoration.Underline,
@@ -91,13 +95,13 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text = "Términos y Condiciones",
+                    text = stringResource(R.string.terms_and_conditions),
                     color = Color.Gray,
                     fontSize = 12.sp,
                     modifier = Modifier.clickable { onNavigateToTerms() }
                 )
                 Text(
-                    text = "Información de Seguridad",
+                    text = stringResource(R.string.security_info),
                     color = Color.Gray,
                     fontSize = 12.sp,
                     modifier = Modifier.clickable { onNavigateToSecurityInfo() }

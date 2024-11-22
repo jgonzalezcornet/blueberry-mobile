@@ -84,7 +84,7 @@ class HomeViewModel(
         { state, response -> state.copy(cards = response) }
     )
 
-    fun addCard(card: Card) = runOnViewModelScope(
+    fun addCard(card: Card, callback: () -> Unit) = runOnViewModelScope(
         {
             walletRepository.addCard(card)
         },
@@ -93,17 +93,19 @@ class HomeViewModel(
                 currentCard = response,
                 cards = null
             )
-        }
+        },
+        callback
     )
 
-    fun deleteCard(cardId: Int) = runOnViewModelScope(
+    fun deleteCard(cardId: Int, callback: () -> Unit) = runOnViewModelScope(
         { walletRepository.deleteCard(cardId) },
         { state, _ ->
             state.copy(
                 currentCard = null,
                 cards = null
             )
-        }
+        },
+        callback
     )
 
     fun getWalletDetails() = runOnViewModelScope(

@@ -35,7 +35,7 @@ fun AliasCard(
     cbu: String,
     alias: String
 ) {
-    var isBalanceVisible by remember { mutableStateOf(true) }
+    var isBalanceVisible by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     Box(

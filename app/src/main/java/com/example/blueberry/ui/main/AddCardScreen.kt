@@ -39,6 +39,7 @@ import com.example.blueberry.MyApplication
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Card
 import com.example.blueberry.data.model.CardType
+import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.cards.BigCard
 import com.example.blueberry.ui.components.getPadding
@@ -219,19 +220,23 @@ fun AddCardScreen(
 
                     Button(
                         onClick = {
-                            viewModel.addCard(
-                                Card(
-                                    null,
-                                    cardNumber,
-                                    formattedExpiryDate,
-                                    cardHolderName,
-                                    cvv,
-                                    cardType,
-                                    null,
-                                    null
+                            try {
+                                viewModel.addCard(
+                                    Card(
+                                        null,
+                                        cardNumber,
+                                        formattedExpiryDate,
+                                        cardHolderName,
+                                        cvv,
+                                        cardType,
+                                        null,
+                                        null
+                                    ),
+                                    onAddCardSuccess
                                 )
-                            )
-                            onAddCardSuccess()
+                            } catch(e: Exception) {
+                                viewModel.setError(Error(400, e.message.toString()))
+                            }
                         },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),

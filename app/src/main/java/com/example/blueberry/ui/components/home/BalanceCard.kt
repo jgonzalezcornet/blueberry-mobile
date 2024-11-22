@@ -39,7 +39,7 @@ fun BalanceCard(
     modifier: Modifier = Modifier,
     balance: String
 ) {
-    var isBalanceVisible by remember { mutableStateOf(true) }
+    var isBalanceVisible by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .fillMaxWidth()

@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Card
+import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.cards.CardListCard
 import com.example.blueberry.ui.components.cards.EliminateCard
@@ -81,9 +82,14 @@ fun CardsScreen(
                     cardItem = card,
                     onClose = { selectedCard = null },
                     onDelete = { cardToDelete ->
-                        viewModel.deleteCard(cardToDelete.id!!)
-                        selectedCard = null
-                        updateTrigger += 1
+                        try {
+                            viewModel.deleteCard(cardToDelete.id!!, {
+                                selectedCard = null
+                                updateTrigger += 1  
+                            })
+                        } catch(e: Exception) {
+                            viewModel.setError(Error(400, e.message.toString()))
+                        }
                     }
                 )
             }
