@@ -35,11 +35,11 @@ fun HomeScreen(
 ) {
     val uiState = viewModel.uiState
 
-    if(!uiState.isAuthenticated){
+    if(!uiState.isAuthenticated && !uiState.isFetching){
         onUnauthenticated()
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(uiState.isAuthenticated) {
         viewModel.getCards()
         viewModel.getWalletDetails()
         viewModel.getCurrentUser()
@@ -66,7 +66,7 @@ fun HomeScreen(
             onChargeMoneyClick = onChargeMoneyClick
         )
         LastActivityCard(
-            activity = uiState.activities?.lastOrNull(),
+            activity = uiState.activities?.firstOrNull(),
             currentUser = uiState.currentUser,
             onClick = onActivityClick,
         )

@@ -67,7 +67,6 @@ import kotlinx.coroutines.launch
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import java.util.Stack
 import androidx.compose.runtime.LaunchedEffect
-import android.util.Log
 
 @Composable
 fun DrawerItems(
@@ -224,7 +223,7 @@ fun AppContent(
 
 @Composable
 fun AdaptiveApp() {
-    val currentDestination = rememberSaveable { mutableStateOf(AppDestinations.LOGIN) }
+    val currentDestination = rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val routeStack = rememberSaveable { Stack<AppDestinations>() }
@@ -246,8 +245,6 @@ fun AdaptiveApp() {
         currentDestination.value = routeStack.peek()
         routeStack.pop()
     }
-
-    Log.w("manu", routeStack.toString())
 
     val items = listOf(
         Triple(Icons.Rounded.Home, R.string.home_title, AppDestinations.HOME),

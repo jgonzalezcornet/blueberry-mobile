@@ -38,6 +38,8 @@ fun LoginScreen(
     onNavigateToSecurityInfo: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
+        var uiState = viewModel.uiState
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -51,8 +53,12 @@ fun LoginScreen(
             LoginCard(
                 onForgotPassword = onForgotPassword,
                 onLogin = { email, password ->
-                    viewModel.login(email, password)
-                    onLoginSuccess()
+                    try {
+                        viewModel.login(email, password)
+                        onLoginSuccess()
+                    } catch(e: Exception) {
+
+                    }
                 }
             )
 

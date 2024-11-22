@@ -44,7 +44,7 @@ fun AliasScreen(
 ) {
         val uiState = viewModel.uiState
 
-        if(!uiState.isAuthenticated){
+        if(!uiState.isAuthenticated && !uiState.isFetching){
             onUnauthenticated()
         }
 

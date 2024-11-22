@@ -45,7 +45,7 @@ fun ActivityListCard(
                 .padding(vertical = 8.dp)
         ) {
             if(activities != null && currentUser != null){
-                items(activities.reversed()) { activity ->
+                items(activities) { activity ->
                     ActivityCard(
                         activity = activity,
                         currentUser = currentUser,

@@ -65,7 +65,7 @@
     <string name="date_format">d \'de\' MMMM</string>
     <string name="date_format_with_year">d \'de\' MMMM, YYYY</string>
     <string name="today_string">Hoy</string>
-    <string name="add_card_button">+ Agregar tarjeta</string>
+    <string name="add_card_button">+ Agregar</string>
     <string name="card_number_label">Número de tarjeta</string>
     <string name="card_holder_name_label">Nombre del titular</string>
     <string name="expiry_date_label">Vencimiento</string>
@@ -85,7 +85,7 @@
     <string name="card_logo_description">Logo de la tarjeta</string>
     <string name="card_holder_label">TITULAR</string>
     <string name="card_expiry_label">VENCIMIENTO</string>
-    <string name="delete_card_button">Eliminar tarjeta</string>
+    <string name="delete_card_button">Eliminar</string>
     <string name="payment_details">Detalles del pago</string>
     <string name="destination_label">Destino</string>
     <string name="select_payment_method">Seleccionar método de pago</string>
