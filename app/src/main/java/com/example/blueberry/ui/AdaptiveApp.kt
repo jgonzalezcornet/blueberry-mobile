@@ -1,5 +1,6 @@
 package com.example.blueberry.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -64,7 +65,9 @@ import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.launch
 import androidx.compose.material3.NavigationDrawerItemDefaults
-
+import java.util.Stack
+import androidx.compose.runtime.LaunchedEffect
+import android.util.Log
 
 @Composable
 fun DrawerItems(
@@ -136,12 +139,16 @@ fun AppContent(
             modifier = Modifier.padding(paddingValues),
             onNavigateToRegister = { currentDestination.value = AppDestinations.REGISTER },
             onLoginSuccess = { currentDestination.value = AppDestinations.HOME },
-            onForgotPassword = { currentDestination.value = AppDestinations.RECOVER }
+            onForgotPassword = { currentDestination.value = AppDestinations.RECOVER },
+            onNavigateToTerms = { currentDestination.value  = AppDestinations.TERMS },
+            onNavigateToSecurityInfo = { currentDestination.value = AppDestinations.SECURITY }
         )
         AppDestinations.REGISTER -> RegisterScreen(
             modifier = Modifier.padding(paddingValues),
             onNavigateBack = { currentDestination.value = AppDestinations.LOGIN },
-            onRegisterSuccess = { currentDestination.value = AppDestinations.VALIDATE }
+            onRegisterSuccess = { currentDestination.value = AppDestinations.VALIDATE },
+            onNavigateToTerms = { currentDestination.value  = AppDestinations.TERMS },
+            onNavigateToSecurityInfo = { currentDestination.value = AppDestinations.SECURITY }
         )
         AppDestinations.RECOVER -> RecoverScreen(
             modifier = Modifier.padding(paddingValues),
@@ -199,7 +206,6 @@ fun AppContent(
             modifier = Modifier.padding(paddingValues),
             onBackNavigation = { currentDestination.value = AppDestinations.HOME }
         )
-
         AppDestinations.VALIDATE -> ValidateScreen(
             modifier = Modifier.padding(paddingValues),
             onCancel =  { currentDestination.value = AppDestinations.REGISTER },
@@ -213,6 +219,27 @@ fun AdaptiveApp() {
     val currentDestination = rememberSaveable { mutableStateOf(AppDestinations.LOGIN) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val routeStack = rememberSaveable { Stack<AppDestinations>() }
+
+    LaunchedEffect(Unit) {
+        routeStack.push(currentDestination.value)
+    }
+
+    LaunchedEffect(currentDestination.value) {
+        if(currentDestination.value == AppDestinations.HOME && routeStack.peek() == AppDestinations.LOGIN){
+            routeStack.clear()
+            routeStack.push(currentDestination.value)
+        }
+        routeStack.push(currentDestination.value)
+    }
+
+    BackHandler(enabled = routeStack.size > 1) {
+        routeStack.pop()
+        currentDestination.value = routeStack.peek()
+        routeStack.pop()
+    }
+
+    Log.w("manu", routeStack.toString())
 
     val items = listOf(
         Triple(Icons.Rounded.Home, R.string.home_title, AppDestinations.HOME),
