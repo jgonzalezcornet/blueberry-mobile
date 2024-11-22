@@ -16,8 +16,8 @@ class NetworkCard(
     var fullName: String,
     var cvv: String? = null,
     var type: String,
-    var createdAt: String?,
-    var updatedAt: String?
+    var createdAt: String? = null,
+    var updatedAt: String? = null
 ) {
     fun asModel(): Card {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))

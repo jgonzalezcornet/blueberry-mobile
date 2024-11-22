@@ -16,19 +16,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
+import com.example.blueberry.data.model.Activity
+import com.example.blueberry.data.model.User
 import com.example.blueberry.ui.components.activity.ActivityCard
 import com.example.blueberry.ui.components.activity.ActivityItem
 import com.example.blueberry.ui.components.activity.ActivityType
 
 @Composable
 fun LastActivityCard(
-    activity: ActivityItem,
+    activity: Activity?,
+    currentUser: User?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clickable { onClick() },
@@ -42,15 +45,12 @@ fun LastActivityCard(
                 fontSize = 20.sp,
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 1.dp)
             )
-            ActivityCard(activity)
+            if(activity != null && currentUser != null){
+                ActivityCard(
+                    activity = activity,
+                    currentUser = currentUser
+                )
+            }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LastActivityCardPreview() {
-    val activity = ActivityItem(java.sql.Date(2024 - 1900, 10, 19), ActivityType.SENT, "Nicolás Priotto", 3000.0)
-    LastActivityCard(activity = activity)
-
 }

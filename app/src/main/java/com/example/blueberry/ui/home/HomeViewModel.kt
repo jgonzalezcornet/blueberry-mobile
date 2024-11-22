@@ -113,6 +113,12 @@ class HomeViewModel(
         { state, response -> state.copy() }
     )
 
+    fun getPayments() = runOnViewModelScope(
+        { paymentRepository.getPayments() },
+        { state, response -> state.copy(activities = response.payments) }
+    )
+
+
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
         updateState: (HomeUiState, R) -> HomeUiState

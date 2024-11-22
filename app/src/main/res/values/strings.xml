@@ -147,4 +147,6 @@
     <string name="recharge_confirm_button">Confirmar</string>
     <string name="recharge_with_card_button">Cargar dinero con tarjeta</string>
 
+    <string name="activity_balance_type">Dinero en cuenta</string>
+    <string name="activity_card_type">Tarjeta</string>
 </resources>

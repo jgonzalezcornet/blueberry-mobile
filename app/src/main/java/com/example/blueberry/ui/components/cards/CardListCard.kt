@@ -45,12 +45,12 @@ fun CardListCard(
                 )
             }
         } else {
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                items(cards) { card ->
+                cards.forEach { card ->
                     CardCard(
                         card = card,
                         onCardClick = { onCardClick(card) }

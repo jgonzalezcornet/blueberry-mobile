@@ -9,6 +9,5 @@ enum class ActivityType(
     @DrawableRes val icon: Int
 ) {
     SENT(R.string.transfer_sent, R.drawable.transfericon),
-    RECEIVED(R.string.transfer_received, R.drawable.transfericon),
-    PAYMENT(R.string.payment_sent, R.drawable.paymenticon)
+    RECEIVED(R.string.transfer_received, R.drawable.transfericon);
 }

@@ -34,45 +34,42 @@ fun HomeScreen(
     onCardsClick: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        LaunchedEffect(Unit) {
-            viewModel.getCards()
-            viewModel.getWalletDetails()
-        }
+    LaunchedEffect(Unit) {
+        viewModel.getCards()
+        viewModel.getWalletDetails()
+        viewModel.getCurrentUser()
+        viewModel.getPayments()
+    }
 
-        val uiState = viewModel.uiState
-        val activity = ActivityItem(
-            java.sql.Date(2024 - 1900, 10, 19),
-            ActivityType.SENT,
-            "Nicolás Priotto",
-            3000.0
+    val uiState = viewModel.uiState
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = getPadding())
+            .verticalScroll(
+                enabled = true,
+                state = rememberScrollState()
+            )
+    ) {
+        Spacer(Modifier.width(8.dp))
+        BalanceCard(
+            balance = uiState.details?.balance.toString()
         )
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(
-                    enabled = true,
-                    state = rememberScrollState()
-                )
-                .padding(horizontal = getPadding())
-        ) {
-            Spacer(Modifier.width(8.dp))
-            BalanceCard(
-                balance = uiState.details?.balance.toString()
-            )
-            HomeButtons(
-                onInsertMoneyClick = onInsertMoneyClick,
-                onTransferMoneyClick = onTransferMoneyClick,
-                onChargeMoneyClick = onChargeMoneyClick
-            )
-            LastActivityCard(
-                activity = activity,
-                onClick = onActivityClick,
-            )
-            CardListHome(
-                cards = uiState.cards,
-                onClick = onCardsClick
-            )
+        HomeButtons(
+            onInsertMoneyClick = onInsertMoneyClick,
+            onTransferMoneyClick = onTransferMoneyClick,
+            onChargeMoneyClick = onChargeMoneyClick
+        )
+        LastActivityCard(
+            activity = uiState.activities?.lastOrNull(),
+            currentUser = uiState.currentUser,
+            onClick = onActivityClick,
+        )
+        CardListHome(
+            cards = uiState.cards,
+            onClick = onCardsClick
+        )
     }
 }
 

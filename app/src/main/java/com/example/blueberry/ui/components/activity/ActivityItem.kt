@@ -8,3 +8,4 @@ data class ActivityItem(
     val user: String,
     val amount: Double
 )
+
