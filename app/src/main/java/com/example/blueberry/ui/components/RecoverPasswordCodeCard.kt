@@ -38,7 +38,7 @@ import com.example.blueberry.R
 @Composable
 fun RecoverPasswordCodeCard(
     onCancel: () -> Unit = {},
-    onRecoverCode: (String, String) -> Unit
+    onRecoverCode: (String, String, String) -> Unit
 ) {
     var code by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -62,7 +62,8 @@ fun RecoverPasswordCodeCard(
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
-                )
+                ),
+                color = Color.Black
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -75,7 +76,12 @@ fun RecoverPasswordCodeCard(
             OutlinedTextField(
                 value = code,
                 onValueChange = { code = it },
-                label = { Text(stringResource(R.string.code_label)) },
+                label = {
+                    Text(
+                        stringResource(R.string.code_label),
+                        color = Color.Gray
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -91,7 +97,12 @@ fun RecoverPasswordCodeCard(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(stringResource(R.string.register_new_password_label)) },
+                label = {
+                    Text(
+                        stringResource(R.string.register_new_password_label),
+                        color = Color.Gray
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -99,7 +110,8 @@ fun RecoverPasswordCodeCard(
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(
                             imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (passwordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
+                            contentDescription = if (passwordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password),
+                            tint = Color.Gray
                         )
                     }
                 }
@@ -107,7 +119,12 @@ fun RecoverPasswordCodeCard(
             OutlinedTextField(
                 value = newPassword,
                 onValueChange = { newPassword = it },
-                label = { Text(stringResource(R.string.register_new_password_confirm_label)) },
+                label = {
+                    Text(
+                        stringResource(R.string.register_new_password_confirm_label),
+                        color = Color.Gray
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 visualTransformation = if (newPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -115,14 +132,15 @@ fun RecoverPasswordCodeCard(
                     IconButton(onClick = { newPasswordVisible = !newPasswordVisible }) {
                         Icon(
                             imageVector = if (newPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (newPasswordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
+                            contentDescription = if (newPasswordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password),
+                            tint = Color.Gray
                         )
                     }
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button (
-        onClick = { if(password == newPassword) onRecoverCode(code, password) /* else error */ },
+        onClick = { onRecoverCode(code, password, newPassword) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary

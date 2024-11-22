@@ -1,0 +1,151 @@
+<resources>
+
+<!-- app general -->
+    <string name="app_name">Blueberry</string>
+    <string name="hamburger_icon_description">Hamburger menu icon</string>
+    <string name="welcome_message">Welcome to Blueberry!</string>
+    <string name="home_description">Your digital bank for all your financial needs</string>
+    <string name="back_button_description">Go back</string>
+    <string name="close_menu_button_description">Close menu</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="close_button">Close</string>
+    <string name="continue_button">Continue</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="no_selected_option_error">Payment method not selected</string>
+    <string name="activity_balance_type">Account balance</string>
+    <string name="activity_card_type">Card</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_close">Accept</string>
+
+<!-- login -->
+    <string name="login_title">Login</string>
+    <string name="login_email_label">Email</string>
+    <string name="login_password_label">Password</string>
+    <string name="login_forgot_password">Forgot your password?</string>
+    <string name="login_button">Log in</string>
+    <string name="no_account_text">Don't have an account?</string>
+    <string name="register_link">Sign up</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="security_info">Security Information</string>
+
+<!-- register -->
+    <string name="register_title">Create your account</string>
+    <string name="register_name_label">First Name</string>
+    <string name="register_lastname_label">Last Name</string>
+    <string name="register_email_label">Email</string>
+    <string name="register_birth_date_label">Date of Birth</string>
+    <string name="register_password_label">Password</string>
+    <string name="register_confirm_password_label">Confirm Password</string>
+    <string name="register_password_rules">
+    The password must not include the letter ñ and must contain:\n
+    - At least 1 (one) uppercase letter\n
+    - At least 1 (one) lowercase letter\n
+    - At least 1 (one) number\n
+    - At least 1 (one) special character
+    </string>
+    <string name="register_button">Sign up</string>
+    <string name="validate_email_title">Validate Email</string>
+    <string name="have_account">Already have an account?</string>
+
+<!-- recover password -->
+    <string name="password_invalid_message">The password must have at least 8 characters, one uppercase, one lowercase, a number, and a special character. It cannot include "ñ".</string>
+    <string name="password_mismatch_error">Passwords do not match.</string>
+    <string name="recover_title">Recover password</string>
+    <string name="recover_info">Enter your email to receive a link to a form to recover your password.</string>
+    <string name="recover_email_label">Email</string>
+    <string name="recover_button">Send</string>
+    <string name="recover_cancel_button">Cancel</string>
+    <string name="recover_password_code_message">Enter the code sent to your email to recover your password</string>
+    <string name="new_password_code_message">Enter your new password</string>
+    <string name="validate_email_message">Enter the code sent to your email to validate your account</string>
+    <string name="code_label">Code</string>
+    <string name="recover_password_code_title">Recover Password</string>
+    <string name="register_new_password_label">New Password</string>
+    <string name="register_new_password_confirm_label">Confirm New Password</string>
+    <string name="pro">Confirm New Password</string>
+
+<!-- home -->
+    <string name="home_title">Home</string>
+    <string name="insert_money">Deposit money</string>
+    <string name="go_to_profile">My Profile</string>
+    <string name="transfer_money">Transfer</string>
+    <string name="last_activity_string">Last Activity</string>
+    <string name="no_activities_message">No activities</string>
+
+<!-- activity -->
+    <string name="activity_title">Activity</string>
+    <string name="activity_description">Review your recent transactions and activities</string>
+
+<!-- cards -->
+    <string name="cards_title">Cards</string>
+    <string name="add_card_title">Add Card</string>
+    <string name="cards_description">Manage your cards and their settings</string>
+    <string name="add_card_button">+ Add</string>
+    <string name="delete_card_button">Delete</string>
+    <string name="card_number_label">Card Number</string>
+    <string name="card_holder_name_label">Cardholder Name</string>
+    <string name="expiry_date_label">Expiry Date</string>
+    <string name="card_logo_description">Card Logo</string>
+    <string name="card_holder_label">CARDHOLDER</string>
+    <string name="card_expiry_label">EXPIRY</string>
+    <string name="cvv_label">CVV</string>
+    <string name="card_type_label">Card Type</string>
+    <string name="no_cards_message">No cards</string>
+
+<!-- profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_description">Manage your personal information and preferences</string>
+    <string name="profile_name">First Name</string>
+    <string name="profile_surname">Last Name</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_alias">Alias</string>
+    <string name="profile_cvu">CVU/CBU</string>
+    <string name="logout">Logout</string>
+
+<!-- deposit money/alias -->
+    <string name="alias_title">Deposit Money</string>
+    <string name="alias_screen_title">Deposit Money</string>
+    <string name="alias_description">Manage your aliases for fast transfers</string>
+    <string name="balance_title">Account Balance</string>
+    <string name="toggle_balance_visibility">Toggle balance visibility</string>
+    <string name="balance_description">To deposit money into your account, transfer from any bank to your alias or CVU</string>
+    <string name="copy_cbu">Copy CVU</string>
+    <string name="copy_alias">Copy Alias</string>
+    <string name="cvu_copied">CVU copied</string>
+    <string name="alias_copied">Alias copied</string>
+    <string name="change_alias">Change Alias</string>
+    <string name="change_alias_title">Change Alias</string>
+    <string name="change_alias_description">Remember it can only contain letters and dots. Do not include ñ or other special characters.</string>
+    <string name="change_alias_placeholder">Enter new alias</string>
+    <string name="recharge_title">Recharge Money</string>
+    <string name="recharge_amount_label">Amount</string>
+    <string name="select_card_label">Select Card</string>
+    <string name="recharge_confirm_button">Confirm</string>
+    <string name="recharge_with_card_button">Recharge with Card</string>
+
+<!-- transfer -->
+    <string name="transfer_title">Transfer</string>
+    <string name="transfer_description">Make fast and secure transfers</string>
+    <string name="transfer_sent">Transfer sent</string>
+    <string name="transfer_received">Transfer received</string>
+    <string name="payment_sent">Payment sent</string>
+    <string name="amount_label">Amount</string>
+    <string name="description_label">Description</string>
+    <string name="transfer_email_label">Recipient’s Email</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="pay_button">Pay</string>
+
+<!-- randoms -->
+    <string name="link_description">Link your external accounts and services</string>
+    <string name="date_format">d 'of' MMMM</string>
+    <string name="date_format_with_year">d 'of' MMMM, YYYY</string>
+    <string name="today_string">Today</string>
+    <string name="enter_data">Enter data</string>
+    <string name="destination_label">Destination</string>
+    <string name="change_password">Change Password</string>
+   
+</resources>

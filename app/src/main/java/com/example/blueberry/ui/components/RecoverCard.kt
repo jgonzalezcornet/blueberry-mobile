@@ -49,7 +49,8 @@ fun RecoverCard(
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
-                )
+                ),
+                color = Color.Black
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
@@ -63,7 +64,12 @@ fun RecoverCard(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(stringResource(R.string.recover_email_label)) },
+                label = {
+                    Text(
+                        stringResource(R.string.recover_email_label),
+                        color = Color.Gray
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )

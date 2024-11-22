@@ -28,7 +28,7 @@ fun RechargeCard(
     modifier: Modifier = Modifier,
     availableCards: List<Card>,
     onClose: () -> Unit = {},
-    onConfirm: (amount: String) -> Unit = { _, -> }
+    onConfirm: (amount: String, selectedCard: Card?) -> Unit
 ) {
     var amount by remember { mutableStateOf("") }
     var selectedCard by remember { mutableStateOf<Card?>(null) }
@@ -125,11 +125,7 @@ fun RechargeCard(
 
                 Button(
                     onClick = { 
-                        selectedCard?.let { card ->
-                            if (amount.isNotEmpty()) {
-                                onConfirm(amount)
-                            }
-                        }
+                        onConfirm(amount, selectedCard)
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),

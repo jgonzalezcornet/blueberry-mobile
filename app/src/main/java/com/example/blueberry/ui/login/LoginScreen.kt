@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
+import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.LoginCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
@@ -38,8 +39,6 @@ fun LoginScreen(
     onNavigateToSecurityInfo: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        var uiState = viewModel.uiState
-
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -54,10 +53,9 @@ fun LoginScreen(
                 onForgotPassword = onForgotPassword,
                 onLogin = { email, password ->
                     try {
-                        viewModel.login(email, password)
-                        onLoginSuccess()
+                        viewModel.login(email, password, onLoginSuccess)
                     } catch(e: Exception) {
-
+                        viewModel.setError(Error(400, e.message.toString()))
                     }
                 }
             )

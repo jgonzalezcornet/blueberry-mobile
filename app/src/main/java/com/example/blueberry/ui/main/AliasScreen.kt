@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Recharge
 import com.example.blueberry.ui.components.AliasCard
@@ -34,6 +33,7 @@ import com.example.blueberry.ui.components.RechargeCard
 import com.example.blueberry.ui.components.ScreenTitle
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
+import com.example.blueberry.data.model.Error
 
 @Composable
 fun AliasScreen(
@@ -43,6 +43,7 @@ fun AliasScreen(
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
         val uiState = viewModel.uiState
+        val context = LocalContext.current
 
         if(!uiState.isAuthenticated && !uiState.isFetching){
             onUnauthenticated()
@@ -111,9 +112,14 @@ fun AliasScreen(
                 ChangeAliasCard(
                     onClose = { changeAliasModalOpen = false },
                     onConfirm = { newAlias ->
-                        viewModel.updateAlias(newAlias)
-                        changeAliasModalOpen = false
-                        refreshTrigger += 1
+                        try {
+                            viewModel.updateAlias(newAlias, {
+                                changeAliasModalOpen = false
+                                refreshTrigger += 1
+                            })
+                        } catch(e: Exception) {
+                            viewModel.setError(Error(400, e.message.toString()))
+                        }
                     }
                 )
             }
@@ -122,10 +128,19 @@ fun AliasScreen(
                 RechargeCard(
                     availableCards = viewModel.uiState.cards ?: emptyList(),
                     onClose = { rechargeModalOpen = false },
-                    onConfirm = { amount ->
-                        viewModel.recharge(Recharge(amount.toDouble()))
-                        rechargeModalOpen = false
-                        refreshTrigger += 1
+                    onConfirm = { amount, selectedCard ->
+                        if(selectedCard == null){
+                            viewModel.setError(Error(400, context.getString(R.string.no_selected_option_error)))
+                        } else {
+                            try {
+                                viewModel.recharge(Recharge(amount.toDouble()), {
+                                    rechargeModalOpen = false
+                                    refreshTrigger += 1
+                                })
+                            } catch(e: Exception) {
+                                viewModel.setError(Error(400, e.message.toString()))
+                            }
+                        }
                     }
                 )
             }

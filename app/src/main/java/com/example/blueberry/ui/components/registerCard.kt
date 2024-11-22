@@ -57,13 +57,19 @@ fun RegisterCard(
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
-                    )
+                    ),
+                    color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text(stringResource(R.string.register_name_label)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.register_name_label),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -71,7 +77,12 @@ fun RegisterCard(
                 OutlinedTextField(
                     value = lastName,
                     onValueChange = { lastName = it },
-                    label = { Text(stringResource(R.string.register_lastname_label)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.register_lastname_label),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -79,7 +90,12 @@ fun RegisterCard(
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text(stringResource(R.string.register_email_label)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.register_email_label),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -87,7 +103,12 @@ fun RegisterCard(
                 OutlinedTextField(
                     value = birthDate,
                     onValueChange = { birthDate = it },
-                    label = { Text(stringResource(R.string.register_birth_date_label)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.register_birth_date_label),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -95,7 +116,12 @@ fun RegisterCard(
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text(stringResource(R.string.register_password_label)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.register_password_label),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -103,7 +129,8 @@ fun RegisterCard(
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                tint = Color.Gray
                             )
                         }
                     }
@@ -112,7 +139,12 @@ fun RegisterCard(
                 OutlinedTextField(
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
-                    label = { Text(stringResource(R.string.register_confirm_password_label)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.register_confirm_password_label),
+                            color = Color.Gray
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -120,7 +152,8 @@ fun RegisterCard(
                         IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                             Icon(
                                 imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                contentDescription = if (confirmPasswordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+                                contentDescription = if (confirmPasswordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                tint = Color.Gray
                             )
                         }
                     }
@@ -150,10 +183,4 @@ fun RegisterCard(
             }
         }
     }
-}
-
-@PreviewScreenSizes
-@Composable
-fun RegisterCardPreview() {
-    RegisterCard(onRegister = { _, _, _, _, _, _ -> })
 }

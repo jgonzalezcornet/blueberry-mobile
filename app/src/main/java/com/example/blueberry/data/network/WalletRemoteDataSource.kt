@@ -4,6 +4,7 @@ import com.example.blueberry.data.network.api.WalletApiService
 import com.example.blueberry.data.network.model.NetworkAlias
 import com.example.blueberry.data.network.model.NetworkBalance
 import com.example.blueberry.data.network.model.NetworkCard
+import com.example.blueberry.data.network.model.NetworkNewBalance
 import com.example.blueberry.data.network.model.NetworkRecharge
 import com.example.blueberry.data.network.model.NetworkWalletDetails
 
@@ -42,7 +43,7 @@ class WalletRemoteDataSource(
         }
     }
 
-    suspend fun recharge(recharge: NetworkRecharge): NetworkBalance {
+    suspend fun recharge(recharge: NetworkRecharge): NetworkNewBalance {
         return handleApiResponse {
             walletApiService.recharge(recharge)
         }

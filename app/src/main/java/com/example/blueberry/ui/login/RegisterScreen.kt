@@ -32,11 +32,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
+import com.example.blueberry.data.DataSourceException
+import com.example.blueberry.data.model.Error
 import com.example.blueberry.ui.components.RegisterCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
 import com.example.blueberry.utils.checkPassword
 import com.example.blueberry.utils.checkPasswordMismatch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.sql.DataSource
 
 @Composable
 fun RegisterScreen(
@@ -47,34 +52,7 @@ fun RegisterScreen(
     onNavigateToSecurityInfo: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
-        var showErrorDialog by remember { mutableStateOf(false) }
-        var errorMessage by remember { mutableStateOf("") }
         val context = LocalContext.current
-
-        if (showErrorDialog) {
-            AlertDialog(
-                onDismissRequest = { showErrorDialog = false },
-                title = {
-                    Text(
-                        text = "Error",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Red
-                    )
-                },
-                text = {
-                    Text(
-                        text = errorMessage,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
-                confirmButton = {
-                    TextButton(onClick = { showErrorDialog = false }) {
-                        Text("Aceptar")
-                    }
-                },
-                containerColor = Color.White
-            )
-        }
 
         Column(
             modifier = modifier
@@ -90,18 +68,19 @@ fun RegisterScreen(
                 onRegister = { name, lastName, email, birthDate, password, confirmPassword ->
                     when {
                         !checkPassword(password) -> {
-                            errorMessage = context.getString(R.string.password_invalid_message)
-                            showErrorDialog = true
+                            viewModel.setError(Error(400, context.getString(R.string.password_invalid_message)))
                         }
 
                         !checkPasswordMismatch(password, confirmPassword) -> {
-                            errorMessage = context.getString(R.string.password_mismatch_error)
-                            showErrorDialog = true
+                            viewModel.setError(Error(400, context.getString(R.string.password_mismatch_error)))
                         }
 
                         else -> {
-                            viewModel.register(name, lastName, birthDate, email, password)
-                            onRegisterSuccess()
+                            try {
+                                viewModel.register(name, lastName, birthDate, email, password, onRegisterSuccess)
+                            } catch(e: Exception) {
+                                viewModel.setError(Error(400, e.message.toString()))
+                            }
                         }
                     }
                 }

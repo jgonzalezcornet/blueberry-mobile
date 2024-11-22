@@ -39,11 +39,13 @@ fun HomeScreen(
         onUnauthenticated()
     }
 
-    LaunchedEffect(uiState.isAuthenticated) {
-        viewModel.getCards()
-        viewModel.getWalletDetails()
-        viewModel.getCurrentUser()
-        viewModel.getPayments()
+    LaunchedEffect(uiState.isAuthenticated, uiState.isFetching) {
+        if(!uiState.isFetching && uiState.isAuthenticated) {
+            viewModel.getCards()
+            viewModel.getWalletDetails()
+            viewModel.getCurrentUser()
+            viewModel.getPayments()
+        }
     }
 
 

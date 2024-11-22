@@ -32,14 +32,16 @@ class HomeViewModel(
     var uiState by mutableStateOf(HomeUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
 
-    fun register(firstName: String, lastName: String, birthDate: String, email: String, password: String) = runOnViewModelScope(
+    fun register(firstName: String, lastName: String, birthDate: String, email: String, password: String, callback: () -> Unit) = runOnViewModelScope(
         { userRepository.register(firstName, lastName, birthDate, email, password) },
-        { state, _ -> state.copy() }
+        { state, _ -> state.copy() },
+        callback
     )
 
-    fun login(username: String, password: String) = runOnViewModelScope(
+    fun login(username: String, password: String, callback: () -> Unit) = runOnViewModelScope(
         { userRepository.login(username, password) },
-        { state, _ -> state.copy(isAuthenticated = true) }
+        { state, _ -> state.copy(isAuthenticated = true) },
+        callback
     )
 
     fun logout() = runOnViewModelScope(
@@ -53,7 +55,6 @@ class HomeViewModel(
                 details = null
             )
         }
-
     )
 
     fun verify(code: String) = runOnViewModelScope(
@@ -66,14 +67,16 @@ class HomeViewModel(
         { state, response -> state.copy(currentUser = response) }
     )
 
-    fun recoverPassword(email: String) = runOnViewModelScope(
+    fun recoverPassword(email: String, callback: () -> Unit) = runOnViewModelScope(
         { userRepository.recoverPassword(email) },
-        { state, _ -> state.copy() }
+        { state, _ -> state.copy() },
+        callback
     )
 
-    fun resetPassword(code: String, password: String) = runOnViewModelScope(
+    fun resetPassword(code: String, password: String, callback: () -> Unit) = runOnViewModelScope(
         { userRepository.resetPassword(code, password) },
-        { state, _ -> state.copy() }
+        { state, _ -> state.copy() },
+        callback
     )
 
     fun getCards() = runOnViewModelScope(
@@ -108,14 +111,16 @@ class HomeViewModel(
         { state, response -> state.copy(details = response) }
     )
 
-    fun updateAlias(alias: String) = runOnViewModelScope(
+    fun updateAlias(alias: String, callback: () -> Unit) = runOnViewModelScope(
         { walletRepository.updateAlias(NetworkAlias(alias)) },
-        { state, _ -> state.copy() }
+        { state, _ -> state.copy() },
+        callback
     )
 
-    fun recharge(amount: Recharge) = runOnViewModelScope(
+    fun recharge(amount: Recharge, callback: () -> Unit) = runOnViewModelScope(
         { walletRepository.recharge(amount) },
-        { state, _ -> state.copy() }
+        { state, _ -> state.copy() },
+        callback
     )
 
     fun makePayment(payment: Payment) = runOnViewModelScope(
@@ -128,16 +133,27 @@ class HomeViewModel(
         { state, response -> state.copy(activities = response.payments) }
     )
 
+    fun clearError() = runOnViewModelScope(
+        { },
+        { state, _ -> state.copy(error = null) }
+    )
+
+    fun setError(error: Error) = runOnViewModelScope(
+        { },
+        { state, _ -> state.copy(error = error) }
+    )
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
-        updateState: (HomeUiState, R) -> HomeUiState
+        updateState: (HomeUiState, R) -> HomeUiState,
+        callback: () -> Unit = { }
     ): Job = viewModelScope.launch {
         uiState = uiState.copy(isFetching = true, error = null)
         runCatching {
             block()
         }.onSuccess { response ->
             uiState = updateState(uiState, response).copy(isFetching = false)
+            callback()
         }.onFailure { e ->
             uiState = uiState.copy(isFetching = false, error = handleError(e))
             Log.e(TAG, "Coroutine execution failed", e)

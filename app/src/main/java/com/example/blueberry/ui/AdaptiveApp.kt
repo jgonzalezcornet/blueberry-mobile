@@ -18,9 +18,9 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.CreditCard
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.Paid
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,8 +64,10 @@ import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.launch
 import androidx.compose.material3.NavigationDrawerItemDefaults
+import androidx.compose.material3.TextButton
 import java.util.Stack
 import androidx.compose.runtime.LaunchedEffect
+import com.example.blueberry.ui.components.ErrorHandler
 
 @Composable
 fun DrawerItems(
@@ -132,6 +134,8 @@ fun AppContent(
     currentDestination: MutableState<AppDestinations>,
     paddingValues: androidx.compose.foundation.layout.PaddingValues = androidx.compose.foundation.layout.PaddingValues()
 ) {
+    ErrorHandler()
+
     when (currentDestination.value) {
         AppDestinations.LOGIN -> LoginScreen(
             modifier = Modifier.padding(paddingValues),

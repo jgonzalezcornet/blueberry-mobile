@@ -15,6 +15,7 @@ import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.ui.components.RecoverCard
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.home.HomeViewModel
+import com.example.blueberry.data.model.Error
 
 @Composable
 fun RecoverScreen(
@@ -36,8 +37,11 @@ fun RecoverScreen(
         RecoverCard(
             onCancel = onCancel,
             onRecover = { email ->
-                viewModel.recoverPassword(email)
-                onRecoverSuccess()
+                try{
+                    viewModel.recoverPassword(email, onRecoverSuccess)
+                } catch(e: Exception) {
+                    viewModel.setError(Error(400, e.message.toString()))
+                }
             }
         )
     }

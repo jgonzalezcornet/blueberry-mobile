@@ -11,6 +11,13 @@
     <string name="close_button">Cerrar</string>
     <string name="continue_button">Continuar</string>
     <string name="cancel_button">Cancelar</string>
+    <string name="no_selected_option_error">Metodo de pago no seleccionado</string>
+    <string name="activity_balance_type">Dinero en cuenta</string>
+    <string name="activity_card_type">Tarjeta</string>
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="hide_password">Ocultar contraseña</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_close">Aceptar</string>
 
 <!-- login -->
     <string name="login_title">Iniciar sesión</string>
@@ -18,6 +25,10 @@
     <string name="login_password_label">Contraseña</string>
     <string name="login_forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="login_button">Ingresar</string>
+    <string name="no_account_text">¿No tienes una cuenta?</string>
+    <string name="register_link">Registrarse</string>
+    <string name="terms_and_conditions">Términos y Condiciones</string>
+    <string name="security_info">Información de Seguridad</string>
 
 <!-- register -->
     <string name="register_title">Crea tu cuenta</string>
@@ -36,6 +47,7 @@
     </string>
     <string name="register_button">Registrarse</string>
     <string name="validate_email_title">Validar Email</string>
+    <string name="have_account">¿Ya tienes una cuenta?</string>
 
 <!-- recuperar contraseña -->
     <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
@@ -52,11 +64,15 @@
     <string name="recover_password_code_title">Recuperar Contraseña</string>
     <string name="register_new_password_label">Nueva contraseña</string>
     <string name="register_new_password_confirm_label">Confirmar nueva contraseña</string>
-
     <string name="pro">Confirmar nueva contraseña</string>
 
 <!-- home -->
     <string name="home_title">Inicio</string>
+     <string name="insert_money">Ingresar dinero</string>
+    <string name="go_to_profile">Mi perfil</string>
+    <string name="transfer_money">Transferir</string>
+    <string name="last_activity_string">Última Actividad</string>
+    <string name="no_activities_message">No hay actividad</string>
 
 <!-- actividad -->
     <string name="activity_title">Actividad</string>
@@ -75,10 +91,18 @@
     <string name="card_holder_label">TITULAR</string>
     <string name="card_expiry_label">VENCIMIENTO</string>
     <string name="cvv_label">CVV</string>
+    <string name="card_type_label">Tipo de tarjeta</string>
+    <string name="no_cards_message">No hay tarjetas</string>
 
 <!-- perfil -->
     <string name="profile_title">Perfil</string>
     <string name="profile_description">Gestiona tu información personal y preferencias</string>
+    <string name="profile_name">Nombre</string>
+    <string name="profile_surname">Apellido</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_alias">Alias</string>
+    <string name="profile_cvu">CVU/CBU</string>
+    <string name="logout">Cerrar sesión</string>
 
 <!-- ingresar dinero/alias -->
     <string name="alias_title">Ingresar dinero</string>
@@ -111,62 +135,17 @@
     <string name="description_label">Descripción</string>
     <string name="transfer_email_label">Correo electrónico del destinatario</string>
     <string name="payment_details">Detalles del pago</string>
+    <string name="select_payment_method">Seleccionar método de pago</string>
+    <string name="account_balance">Dinero en cuenta</string>
+    <string name="pay_button">Pagar</string>
 
-
-
-
-<!-- PARA BORRAR y/o unificar usos -->
+<!-- randoms -->
     <string name="link_description">Vincula tus cuentas y servicios externos</string>
-
-
-
     <string name="date_format">d \'de\' MMMM</string>
     <string name="date_format_with_year">d \'de\' MMMM, YYYY</string>
     <string name="today_string">Hoy</string>
-
-
-
     <string name="enter_data">Ingrese los datos</string>
     <string name="destination_label">Destino</string>
-
-
-
-    <string name="select_payment_method">Seleccionar método de pago</string>
-    <string name="account_balance">Dinero en cuenta</string>
-
-    <string name="pay_button">Pagar</string>
     <string name="change_password">Cambiar contraseña</string>
-    <string name="logout">Cerrar sesión</string>
-
-    <string name="insert_money">Ingresar dinero</string>
-    <string name="go_to_profile">Mi perfil</string>
-    <string name="transfer_money">Transferir</string>
-    <string name="last_activity_string">Última Actividad</string>
-    <string name="no_activities_message">No hay actividad</string>
-
-    <string name="no_account_text">¿No tienes una cuenta?</string>
-    <string name="register_link">Registrarse</string>
-    <string name="terms_and_conditions">Términos y Condiciones</string>
-    <string name="security_info">Información de Seguridad</string>
-    <string name="have_account">¿Ya tienes una cuenta?</string>
-
-
-
-    <string name="profile_name">Nombre</string>
-    <string name="profile_surname">Apellido</string>
-    <string name="profile_email">Email</string>
-    <string name="profile_alias">Alias</string>
-    <string name="profile_cvu">CVU/CBU</string>
-
-    <string name="card_type_label">Tipo de tarjeta</string>
-
-    <string name="no_cards_message">No hay tarjetas</string>
-
-
-    <string name="activity_balance_type">Dinero en cuenta</string>
-    <string name="activity_card_type">Tarjeta</string>
-
-    <string name="show_password">Mostrar contraseña</string>
-    <string name="hide_password">Ocultar contraseña</string>
-
+   
 </resources>
