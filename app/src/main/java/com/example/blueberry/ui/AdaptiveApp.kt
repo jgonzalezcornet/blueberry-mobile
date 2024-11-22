@@ -63,6 +63,7 @@ import com.example.blueberry.ui.main.ProfileScreen
 import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
 import kotlinx.coroutines.launch
+import androidx.compose.material3.NavigationDrawerItemDefaults
 
 
 @Composable
@@ -73,11 +74,15 @@ fun DrawerItems(
 ) {
     items.forEach { (icon, labelResId, destination) ->
         NavigationDrawerItem(
+            colors = NavigationDrawerItemDefaults.colors(
+                unselectedContainerColor = Color.White,
+                selectedContainerColor = MaterialTheme.colorScheme.secondary,
+            ),
             label = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(icon, contentDescription = stringResource(labelResId), tint = Color.Black)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = stringResource(labelResId))
+                    Text(text = stringResource(labelResId), color = Color.Black)
                 }
             },
             selected = currentDestination == destination,
@@ -259,7 +264,7 @@ fun AdaptiveApp() {
                         NavigationRail(
                             modifier = Modifier
                                 .fillMaxHeight(),
-                            containerColor = MaterialTheme.colorScheme.background
+                            containerColor = Color.White
                         ) {
                             RailItems(
                                 currentDestination = currentDestination.value,
@@ -276,7 +281,7 @@ fun AdaptiveApp() {
                         drawerState = drawerState,
                         drawerContent = {
                             ModalDrawerSheet(
-                                drawerContainerColor = MaterialTheme.colorScheme.background
+                                drawerContainerColor = Color.White
                             ) {
                                 Box(
                                     modifier = Modifier

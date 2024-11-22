@@ -49,7 +49,8 @@ class HomeViewModel(
                 isAuthenticated = false,
                 currentUser = null,
                 currentCard = null,
-                cards = null
+                cards = null,
+                details = null
             )
         }
 
