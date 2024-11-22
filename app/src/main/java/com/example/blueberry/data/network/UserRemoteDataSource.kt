@@ -5,6 +5,8 @@ import com.example.blueberry.data.network.model.NetworkCredentials
 import com.example.blueberry.data.network.model.NetworkUser
 import com.example.blueberry.SessionManager
 import com.example.blueberry.data.network.model.NetworkCode
+import com.example.blueberry.data.network.model.NetworkEmail
+import com.example.blueberry.data.network.model.NetworkReset
 import com.example.blueberry.data.network.model.NetworkRegisterUser
 
 class UserRemoteDataSource(
@@ -35,4 +37,12 @@ class UserRemoteDataSource(
     suspend fun getCurrentUser(): NetworkUser {
         return handleApiResponse { userApiService.getCurrentUser() }
     }
+
+    suspend fun recoverPassword(email: String) {
+        handleApiResponse { userApiService.recoverPassword(NetworkEmail(email)) }
+    }
+
+    suspend fun resetPassword(code: String, password: String) {
+        handleApiResponse { userApiService.resetPassword(NetworkReset(code, password)) }
+ }
 }

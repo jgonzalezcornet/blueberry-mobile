@@ -8,7 +8,6 @@ import kotlinx.coroutines.sync.withLock
 class UserRepository(
     private val remoteDataSource: UserRemoteDataSource
 ) {
-
     // Mutex to make writes to cached values thread-safe.
     private val currentUserMutex = Mutex()
     // Cache of the current user got from the network.
@@ -41,5 +40,13 @@ class UserRepository(
         }
 
         return currentUserMutex.withLock { this.currentUser }
+    }
+
+    suspend fun recoverPassword(email: String) {
+        remoteDataSource.recoverPassword(email)
+    }
+    
+    suspend fun resetPassword(code: String, password: String) {
+        remoteDataSource.resetPassword(code, password)
     }
 }

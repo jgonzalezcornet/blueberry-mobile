@@ -31,7 +31,7 @@ import androidx.compose.material3.MaterialTheme
 @Composable
 fun RecoverPasswordCodeCard(
     onCancel: () -> Unit = {},
-    onRecoverCodeSuccess: () -> Unit = {}
+    onRecoverCode: (String, String) -> Unit
 ) {
     var code by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -95,7 +95,7 @@ fun RecoverPasswordCodeCard(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button (
-                onClick = { onRecoverCodeSuccess() },
+        onClick = { if(password == newPassword) onRecoverCode(code, password) /* else error */ },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
@@ -121,10 +121,4 @@ fun RecoverPasswordCodeCard(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RecoverPasswordCodeCardPreview() {
-    RecoverPasswordCodeCard()
 }

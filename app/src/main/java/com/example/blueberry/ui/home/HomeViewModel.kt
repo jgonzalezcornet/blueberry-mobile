@@ -66,6 +66,16 @@ class HomeViewModel(
         { state, response -> state.copy(currentUser = response) }
     )
 
+    fun recoverPassword(email: String) = runOnViewModelScope(
+        { userRepository.recoverPassword(email) },
+        { state, _ -> state.copy() }
+    )
+
+    fun resetPassword(code: String, password: String) = runOnViewModelScope(
+        { userRepository.resetPassword(code, password) },
+        { state, _ -> state.copy() }
+    )
+
     fun getCards() = runOnViewModelScope(
         { walletRepository.getCards(true) },
         { state, response -> state.copy(cards = response) }

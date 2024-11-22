@@ -8,15 +8,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blueberry.MyApplication
 import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.ui.components.getPadding
 import com.example.blueberry.ui.components.home.RecoverPasswordCodeCard
+import com.example.blueberry.ui.home.HomeViewModel
 
 @Composable
 fun RecoverCodeScreen(
     modifier: Modifier = Modifier,
     onCancel: () -> Unit = {},
-    onRecoverCodeSuccess: () -> Unit = {}
+    onRecoverCodeSuccess: () -> Unit = {},
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
 ) {
         Column(
             modifier = modifier
@@ -30,7 +35,10 @@ fun RecoverCodeScreen(
         ) {
             RecoverPasswordCodeCard(
                 onCancel = onCancel,
-                onRecoverCodeSuccess = onRecoverCodeSuccess
+                onRecoverCode = { code, password ->
+                    viewModel.resetPassword(code, password)
+                    onRecoverCodeSuccess()
+                }
             )
         }
 
