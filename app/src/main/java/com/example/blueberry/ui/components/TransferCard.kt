@@ -46,7 +46,8 @@ fun TransferCard(
                 onValueChange = { destinationInput = it },
                 label = { 
                     Text(
-                        stringResource(R.string.transfer_email_label)
+                        stringResource(R.string.transfer_email_label),
+                        color = Color.Gray
                     )
                 },
                 leadingIcon = {
@@ -66,7 +67,12 @@ fun TransferCard(
             OutlinedTextField(
                 value = amount,
                 onValueChange = { amount = it },
-                label = { Text(stringResource(id = R.string.amount_label)) },
+                label = {
+                    Text(
+                        stringResource(id = R.string.amount_label),
+                        color = Color.Gray
+                    )
+                },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.AttachMoney,
@@ -85,7 +91,12 @@ fun TransferCard(
             OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
-                label = { Text(stringResource(id = R.string.description_label)) },
+                label = {
+                    Text(
+                        stringResource(id = R.string.description_label),
+                        color = Color.Gray
+                    )
+                },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Description,
@@ -120,10 +131,4 @@ fun TransferCard(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TransferCardPreview() {
-    TransferCard()
 }

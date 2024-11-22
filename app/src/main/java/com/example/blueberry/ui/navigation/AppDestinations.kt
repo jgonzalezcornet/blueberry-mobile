@@ -27,7 +27,6 @@ enum class AppDestinations (
     CARDS(R.string.cards_title, Icons.Rounded.CreditCard, R.string.cards_title),
     ADD_CARD(R.string.add_card_title, Icons.Rounded.CreditCard, R.string.add_card_title),
     ALIAS(R.string.alias_title, Icons.Rounded.Paid, R.string.alias_title),
-    LINK(R.string.link_title, Icons.Rounded.Link, R.string.link_title),
     TRANSFER(R.string.transfer_title, Icons.Rounded.AccountBalance, R.string.transfer_title),
     LOGIN(R.string.login_title, Icons.Rounded.AccountCircle, R.string.login_title),
     REGISTER(R.string.register_title, Icons.Rounded.ManageAccounts, R.string.register_title),

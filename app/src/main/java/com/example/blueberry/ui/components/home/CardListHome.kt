@@ -34,11 +34,7 @@ fun CardListHome(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+        Column {
             Text(
                 text = stringResource(R.string.cards_title),
                 fontSize = 20.sp,
@@ -50,7 +46,7 @@ fun CardListHome(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 32.dp),
+                        .padding(vertical = 16.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

@@ -32,12 +32,12 @@ fun ActivityCard(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
 
         // Activity row
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val activityType = if (activity.payer.id == currentUser.id) ActivityType.SENT else ActivityType.RECEIVED

@@ -100,6 +100,7 @@ fun AliasCard(
                     Text(
                         text = "CVU",
                         style = TextStyle(fontWeight = FontWeight.Bold),
+                        color = Color.Black
                     )
                     Spacer(Modifier.width(6.dp))
                     Icon(
@@ -111,7 +112,11 @@ fun AliasCard(
                         .size(16.dp)
                         )
                     Spacer(Modifier.weight(1f))
-                    Text(text = cbu)
+                    Text(
+                        text = cbu,
+                        color = Color.Black,
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                    )
                 }
 
                 Row(
@@ -121,6 +126,7 @@ fun AliasCard(
                     Text(
                         text = "Alias",
                         style = TextStyle(fontWeight = FontWeight.Bold),
+                        color = Color.Black
                     )
                     Spacer(Modifier.width(6.dp))
                     Icon(
@@ -132,7 +138,11 @@ fun AliasCard(
                         .size(16.dp)
                         )
                     Spacer(Modifier.weight(1f))
-                    Text(text = alias)
+                    Text(
+                        text = alias,
+                        color = Color.Black,
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                    )
                 }
             }
         }

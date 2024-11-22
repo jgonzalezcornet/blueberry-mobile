@@ -59,7 +59,6 @@ import com.example.blueberry.ui.main.AddCardScreen
 import com.example.blueberry.ui.main.AliasScreen
 import com.example.blueberry.ui.main.CardsScreen
 import com.example.blueberry.ui.main.HomeScreen
-import com.example.blueberry.ui.main.LinkScreen
 import com.example.blueberry.ui.main.ProfileScreen
 import com.example.blueberry.ui.main.TransferScreen
 import com.example.blueberry.ui.navigation.AppDestinations
@@ -175,8 +174,8 @@ fun AppContent(
         AppDestinations.HOME -> HomeScreen(
             modifier = Modifier.padding(paddingValues),
             onInsertMoneyClick = { currentDestination.value = AppDestinations.ALIAS },
-            onChargeMoneyClick = { currentDestination.value = AppDestinations.LINK },
             onTransferMoneyClick = { currentDestination.value = AppDestinations.TRANSFER },
+            onGoToProfileClick = { currentDestination.value = AppDestinations.PROFILE },
             onActivityClick = { currentDestination.value = AppDestinations.ACTIVITY },
             onCardsClick = { currentDestination.value = AppDestinations.CARDS },
             onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
@@ -201,14 +200,10 @@ fun AppContent(
         AppDestinations.ADD_CARD -> AddCardScreen(
             modifier = Modifier.padding(paddingValues),
             onBackNavigation = { currentDestination.value = AppDestinations.CARDS },
+            onAddCardSuccess = { currentDestination.value = AppDestinations.CARDS },
             onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
         )
         AppDestinations.ALIAS -> AliasScreen(
-            modifier = Modifier.padding(paddingValues),
-            onBackNavigation = { currentDestination.value = AppDestinations.HOME },
-            onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
-        )
-        AppDestinations.LINK -> LinkScreen(
             modifier = Modifier.padding(paddingValues),
             onBackNavigation = { currentDestination.value = AppDestinations.HOME },
             onUnauthenticated =  { currentDestination.value = AppDestinations.LOGIN }
@@ -252,7 +247,6 @@ fun AdaptiveApp() {
         Triple(Icons.Rounded.Paid, R.string.alias_title, AppDestinations.ALIAS),
         Triple(Icons.Rounded.History, R.string.activity_title, AppDestinations.ACTIVITY),
         Triple(Icons.Rounded.CreditCard, R.string.cards_title, AppDestinations.CARDS),
-        Triple(Icons.Rounded.Link, R.string.link_title, AppDestinations.LINK),
         Triple(Icons.Rounded.Person, R.string.profile_title, AppDestinations.PROFILE)
     )
     Box(

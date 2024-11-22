@@ -13,28 +13,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountBalance
+import androidx.compose.material.icons.rounded.Paid
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blueberry.R
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun HomeButtons(
     onInsertMoneyClick: () -> Unit = {},
     onTransferMoneyClick: () -> Unit = {},
-    onChargeMoneyClick: () -> Unit = {}
+    onGoToProfileClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -43,17 +45,17 @@ fun HomeButtons(
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         ActionButton(
-            icon = painterResource(R.drawable.insertmoney),
+            icon = Icons.Rounded.Paid,
             text = stringResource(R.string.insert_money),
             onClick = onInsertMoneyClick // Call onInsertMoneyClick when clicked
         )
         ActionButton(
-            icon = painterResource(R.drawable.link),
-            text = stringResource(R.string.charge_money),
-            onClick = onChargeMoneyClick // Call onTransferMoneyClick when clicked
+            icon = Icons.Rounded.Person,
+            text = stringResource(R.string.go_to_profile),
+            onClick = onGoToProfileClick // Call onTransferMoneyClick when clicked
         )
         ActionButton(
-            icon = painterResource(R.drawable.transfer),
+            icon = Icons.Rounded.AccountBalance,
             text = stringResource(R.string.transfer_money),
             onClick = onTransferMoneyClick // Call onChargeMoneyClick when clicked
         )
@@ -62,7 +64,7 @@ fun HomeButtons(
 
 @Composable
 fun ActionButton(
-    icon: Painter,
+    icon: ImageVector,
     text: String,
     onClick: () -> Unit
 ) {
@@ -80,10 +82,10 @@ fun ActionButton(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = icon,
-                contentDescription = text,
-                tint = Color.White,
-                modifier = Modifier.size(30.dp)
+                icon,
+                text,
+                Modifier.size(30.dp),
+                Color.White
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -96,10 +98,3 @@ fun ActionButton(
         )
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ActionButtonsPreview() {
-    HomeButtons()
-}
-

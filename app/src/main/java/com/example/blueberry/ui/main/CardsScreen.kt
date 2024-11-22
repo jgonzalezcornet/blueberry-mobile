@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -24,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.blueberry.MyApplication
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 import com.example.blueberry.data.model.Card
 import com.example.blueberry.ui.components.ScreenTitle
@@ -45,14 +45,16 @@ fun CardsScreen(
         
         if(!uiState.isAuthenticated && !uiState.isFetching){
             onUnauthenticated()
-        }    
-    
-        LaunchedEffect(Unit) {
+        }
+
+        var updateTrigger by rememberSaveable { mutableIntStateOf(0) }
+
+        LaunchedEffect(updateTrigger) {
             viewModel.getCards()
         }
 
         var selectedCard by rememberSaveable { mutableStateOf<Card?>(null) }
-    
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -81,6 +83,7 @@ fun CardsScreen(
                     onDelete = { cardToDelete ->
                         viewModel.deleteCard(cardToDelete.id!!)
                         selectedCard = null
+                        updateTrigger += 1
                     }
                 )
             }
@@ -106,10 +109,3 @@ fun CardsScreen(
         }
 
 }
-
-@PreviewScreenSizes
-@Composable
-fun CardsScreenPreview() {
-    CardsScreen()
-}
-

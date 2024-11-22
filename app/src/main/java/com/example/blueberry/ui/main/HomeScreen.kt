@@ -27,7 +27,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onInsertMoneyClick: () -> Unit = {},
     onTransferMoneyClick: () -> Unit = {},
-    onChargeMoneyClick: () -> Unit = {},
+    onGoToProfileClick: () -> Unit = {},
     onActivityClick: () -> Unit = {},
     onCardsClick: () -> Unit = {},
     onUnauthenticated: () -> Unit = {},
@@ -63,7 +63,7 @@ fun HomeScreen(
         HomeButtons(
             onInsertMoneyClick = onInsertMoneyClick,
             onTransferMoneyClick = onTransferMoneyClick,
-            onChargeMoneyClick = onChargeMoneyClick
+            onGoToProfileClick = onGoToProfileClick
         )
         LastActivityCard(
             activity = uiState.activities?.firstOrNull(),

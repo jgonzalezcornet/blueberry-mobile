@@ -78,14 +78,15 @@ fun AliasScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = getPadding()),
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
                     onClick = { changeAliasModalOpen = true },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
-                    )
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = stringResource(R.string.change_alias),
@@ -97,7 +98,8 @@ fun AliasScreen(
                     onClick = { rechargeModalOpen = true },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
-                    )
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = stringResource(R.string.recharge_with_card_button),
@@ -129,10 +131,4 @@ fun AliasScreen(
             }
         }
 
-}
-
-@PreviewScreenSizes
-@Composable
-fun AliasScreenPreview() {
-    AliasScreen()
 }

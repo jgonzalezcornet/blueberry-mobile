@@ -51,7 +51,8 @@ fun PayTransferCard(
             Text(
                 text = stringResource(R.string.payment_details),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
             )
 
             Column(
@@ -66,7 +67,8 @@ fun PayTransferCard(
                 Text(
                     text = "Email: $destination",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
                 )
             }
 
@@ -82,7 +84,8 @@ fun PayTransferCard(
                 Text(
                     text = "$ $amount",
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
                 )
             }
 
@@ -176,7 +179,10 @@ fun PayTransferCard(
                         containerColor = Color.Gray
                     )
                 ) {
-                    Text(stringResource(R.string.cancel_button))
+                    Text(
+                        text = stringResource(R.string.cancel_button),
+                        color = Color.White
+                    )
                 }
 
                 Button(
@@ -194,7 +200,10 @@ fun PayTransferCard(
                     ),
                     enabled = selectedPaymentMethod != null
                 ) {
-                    Text(stringResource(R.string.pay_button))
+                    Text(
+                        text = stringResource(R.string.pay_button),
+                        color = Color.White
+                    )
                 }
             }
         }

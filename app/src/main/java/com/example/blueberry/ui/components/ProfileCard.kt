@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.blueberry.PreviewScreenSizes
 import com.example.blueberry.R
 
 @Composable
@@ -84,7 +84,8 @@ fun ProfileCard(
 fun ProfileInfoRow(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = "$label:",
@@ -95,7 +96,9 @@ fun ProfileInfoRow(label: String, value: String) {
         Text(
             text = value,
             fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.End,
+            modifier = Modifier.fillMaxWidth(0.9f)
         )
     }
 }
@@ -121,10 +124,4 @@ fun obfuscateEmail(email: String): String {
     val username = email.substringBefore("@")
     val domain = email.substringAfter("@")
     return "${username.take(4)}****@$domain"
-}
-
-@PreviewScreenSizes
-@Composable
-fun ProfileCardPreview() {
-    ProfileCard("Juan Ignacio Lategana", "45748655", "j@lategana.com", "jua.blueberry", "313123213123", {}, {})
 }

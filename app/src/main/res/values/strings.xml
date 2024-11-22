@@ -1,10 +1,25 @@
 <resources>
+
+<!-- app general -->
     <string name="app_name">Blueberry</string>
+    <string name="hamburger_icon_description">Icono de menu hamburguesa</string>
+    <string name="welcome_message">¡Bienvenido a Blueberry!</string>
+    <string name="home_description">Tu banco digital para todas tus necesidades financieras</string>
+    <string name="back_button_description">Volver</string>
+    <string name="close_menu_button_description">Cerrar menu</string>
+    <string name="confirm_button">Confirmar</string>
+    <string name="close_button">Cerrar</string>
+    <string name="continue_button">Continuar</string>
+    <string name="cancel_button">Cancelar</string>
+
+<!-- login -->
     <string name="login_title">Iniciar sesión</string>
     <string name="login_email_label">Correo electrónico</string>
     <string name="login_password_label">Contraseña</string>
     <string name="login_forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="login_button">Ingresar</string>
+
+<!-- register -->
     <string name="register_title">Crea tu cuenta</string>
     <string name="register_name_label">Nombre</string>
     <string name="register_lastname_label">Apellido</string>
@@ -20,85 +35,114 @@
     - Al menos 1 (un) carácter especial
     </string>
     <string name="register_button">Registrarse</string>
-    <string name="hamburger_icon_description">Icono de menu hamburguesa</string>
+    <string name="validate_email_title">Validar Email</string>
+
+<!-- recuperar contraseña -->
+    <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
+    <string name="password_mismatch_error">Las contraseñas no coinciden.</string>
+    <string name="recover_title">Recuperar contraseña</string>
+    <string name="recover_info">Ingrese su correo electronico para recibir un link a un formulario para recuperar su contraseña.</string>
+    <string name="recover_email_label">Correo electrónico</string>
+    <string name="recover_button">Enviar</string>
+    <string name="recover_cancel_button">Cancelar</string>
+    <string name="recover_password_code_message">Ingrese el código enviado a su correo electrónico para recuperar su contraseña</string>
+    <string name="new_password_code_message">Ingrese su nueva contraseña</string>
+    <string name="validate_email_message">Ingrese el código enviado a su correo electrónico para validar su cuenta</string>
+    <string name="code_label">Código</string>
+    <string name="recover_password_code_title">Recuperar Contraseña</string>
+    <string name="register_new_password_label">Nueva contraseña</string>
+    <string name="register_new_password_confirm_label">Confirmar nueva contraseña</string>
+
+    <string name="pro">Confirmar nueva contraseña</string>
+
+<!-- home -->
     <string name="home_title">Inicio</string>
+
+<!-- actividad -->
     <string name="activity_title">Actividad</string>
+    <string name="activity_description">Revisa tus últimos movimientos y transacciones</string>
+
+<!-- tarjetas -->
     <string name="cards_title">Tarjetas</string>
     <string name="add_card_title">Agregar tarjeta</string>
-    <string name="profile_title">Perfil</string>
-    <string name="link_title">Cobrar con link de pago</string>
-    <string name="alias_title">Ingresar dinero</string>
-    <string name="transfer_title">Transferir</string>
-    <string name="welcome_message">¡Bienvenido a Blueberry!</string>
-    <string name="home_description">Tu banco digital para todas tus necesidades financieras</string>
-    <string name="activity_description">Revisa tus últimos movimientos y transacciones</string>
-    <string name="alias_description">Gestiona tus alias para transferencias rápidas</string>
     <string name="cards_description">Administra tus tarjetas y sus configuraciones</string>
-    <string name="link_description">Vincula tus cuentas y servicios externos</string>
+    <string name="add_card_button">+ Agregar</string>
+    <string name="delete_card_button">Eliminar</string>
+    <string name="card_number_label">Número de tarjeta</string>
+    <string name="card_holder_name_label">Nombre del titular</string>
+    <string name="expiry_date_label">Vencimiento</string>
+    <string name="card_logo_description">Logo de la tarjeta</string>
+    <string name="card_holder_label">TITULAR</string>
+    <string name="card_expiry_label">VENCIMIENTO</string>
+    <string name="cvv_label">CVV</string>
+
+<!-- perfil -->
+    <string name="profile_title">Perfil</string>
     <string name="profile_description">Gestiona tu información personal y preferencias</string>
-    <string name="transfer_description">Realiza transferencias de forma rápida y segura</string>
+
+<!-- ingresar dinero/alias -->
+    <string name="alias_title">Ingresar dinero</string>
+    <string name="alias_screen_title">Ingresar dinero</string>
+    <string name="alias_description">Gestiona tus alias para transferencias rápidas</string>
     <string name="balance_title">Dinero en cuenta</string>
     <string name="toggle_balance_visibility">Alternar visibilidad del balance</string>
     <string name="balance_description">Para ingresar dinero a tu cuenta, transferí desde cualquier banco a tu alias o CVU</string>
     <string name="copy_cbu">Copiar CVU</string>
     <string name="copy_alias">Copiar Alias</string>
-    <string name="back_button_description">Volver</string>
-    <string name="close_menu_button_description">Cerrar menu</string>
-    <string name="alias_screen_title">Ingresar dinero</string>
-    <string name="link_screen_title">Cobrar mediante link de pago</string>
-    <string name="link_label">Monto</string>
     <string name="cvu_copied">CVU copiado</string>
     <string name="alias_copied">Alias copiado</string>
-    <string name="link_text">Para generar un link de pago, ingrese el monto a cobrar:</string>
     <string name="change_alias">Cambiar alias</string>
     <string name="change_alias_title">Cambiar alias</string>
     <string name="change_alias_description">Recordar que solo puede llevar letras y puntos. No incluir la ñ ni otros caracteres especiales.</string>
     <string name="change_alias_placeholder">Ingrese el nuevo alias</string>
-    <string name="confirm_button">Confirmar</string>
-    <string name="close_button">Cerrar</string>
-    <string name="link_generated_title">Link de pago generado</string>
-    <string name="copy_button">Copiar</string>
-    <string name="link_copied_message">Link copiado al portapapeles</string>
+    <string name="recharge_title">Cargar dinero</string>
+    <string name="recharge_amount_label">Monto</string>
+    <string name="select_card_label">Seleccionar tarjeta</string>
+    <string name="recharge_confirm_button">Confirmar</string>
+    <string name="recharge_with_card_button">Cargar dinero con tarjeta</string>
+
+<!-- transferir -->
+    <string name="transfer_title">Transferir</string>
+    <string name="transfer_description">Realiza transferencias de forma rápida y segura</string>
     <string name="transfer_sent">Transferencia enviada</string>
     <string name="transfer_received">Transferencia Recibida</string>
     <string name="payment_sent">Pago enviado</string>
+    <string name="amount_label">Monto</string>
+    <string name="description_label">Descripción</string>
+    <string name="transfer_email_label">Correo electrónico del destinatario</string>
+    <string name="payment_details">Detalles del pago</string>
+
+
+
+
+<!-- PARA BORRAR y/o unificar usos -->
+    <string name="link_description">Vincula tus cuentas y servicios externos</string>
+
+
+
     <string name="date_format">d \'de\' MMMM</string>
     <string name="date_format_with_year">d \'de\' MMMM, YYYY</string>
     <string name="today_string">Hoy</string>
-    <string name="add_card_button">+ Agregar</string>
-    <string name="card_number_label">Número de tarjeta</string>
-    <string name="card_holder_name_label">Nombre del titular</string>
-    <string name="expiry_date_label">Vencimiento</string>
-    <string name="cvv_label">CVV</string>
-    <string name="account_type">Tipo de cuenta</string>
-    <string name="alias">Alias</string>
-    <string name="cvu_cbu">CVU/CBU</string>
-    <string name="payment_link">Link de pago</string>
-    <string name="amount_label">Monto</string>
-    <string name="description_label">Descripción</string>
-    <string name="continue_button">Continuar</string>
-    <string name="transfer_email_label">Correo electrónico del destinatario</string>
+
+
+
     <string name="enter_data">Ingrese los datos</string>
-    <string name="enter_alias_title">Ingrese el alias</string>
-    <string name="enter_cvu_title">Ingrese el CVU/CBU</string>
-    <string name="enter_payment_link_title">Ingrese el link de pago</string>
-    <string name="card_logo_description">Logo de la tarjeta</string>
-    <string name="card_holder_label">TITULAR</string>
-    <string name="card_expiry_label">VENCIMIENTO</string>
-    <string name="delete_card_button">Eliminar</string>
-    <string name="payment_details">Detalles del pago</string>
     <string name="destination_label">Destino</string>
+
+
+
     <string name="select_payment_method">Seleccionar método de pago</string>
     <string name="account_balance">Dinero en cuenta</string>
-    <string name="cancel_button">Cancelar</string>
+
     <string name="pay_button">Pagar</string>
     <string name="change_password">Cambiar contraseña</string>
     <string name="logout">Cerrar sesión</string>
 
     <string name="insert_money">Ingresar dinero</string>
-    <string name="charge_money">Cobrar con link</string>
+    <string name="go_to_profile">Mi perfil</string>
     <string name="transfer_money">Transferir</string>
     <string name="last_activity_string">Última Actividad</string>
+    <string name="no_activities_message">No hay actividad</string>
 
     <string name="no_account_text">¿No tienes una cuenta?</string>
     <string name="register_link">Registrarse</string>
@@ -106,30 +150,7 @@
     <string name="security_info">Información de Seguridad</string>
     <string name="have_account">¿Ya tienes una cuenta?</string>
 
-    <string name="change_password_title">Cambiar Contraseña</string>
-    <string name="current_password_placeholder">Ingrese su actual contraseña</string>
-    <string name="new_password_placeholder">Ingrese su nueva contraseña</string>
-    <string name="confirm_new_password_placeholder">Confirme su nueva contraseña</string>
-    <string name="password_invalid_message">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número, y un carácter especial. No puede incluir "ñ".</string>
-    <string name="password_mismatch_error">Las contraseñas no coinciden.</string>
 
-
-    <string name="recover_title">Recuperar contraseña</string>
-    <string name="recover_info">Ingrese su correo electronico para recibir un link a un formulario para recuperar su contraseña.</string>
-    <string name="recover_email_label">Correo electrónico</string>
-    <string name="recover_button">Enviar</string>
-    <string name="recover_cancel_button">Cancelar</string>
-
-    <string name="recover_password_code_message">Ingrese el código enviado a su correo electrónico para recuperar su contraseña</string>
-    <string name="new_password_code_message">Ingrese su nueva contraseña</string>
-    <string name="validate_email_message">Ingrese el código enviado a su correo electrónico para validar su cuenta</string>
-    <string name="code_label">Código</string>
-    <string name="recover_password_code_title">Recuperar Contraseña</string>
-    <string name="validate_email_title">Validar Email</string>
-    <string name="register_new_password_label">Nueva contraseña</string>
-    <string name="register_new_password_confirm_label">Confirmar nueva contraseña</string>
-
-    <string name="pro">Confirmar nueva contraseña</string>
 
     <string name="profile_name">Nombre</string>
     <string name="profile_surname">Apellido</string>
@@ -141,15 +162,11 @@
 
     <string name="no_cards_message">No hay tarjetas</string>
 
-    <string name="recharge_title">Cargar dinero</string>
-    <string name="recharge_amount_label">Monto</string>
-    <string name="select_card_label">Seleccionar tarjeta</string>
-    <string name="recharge_confirm_button">Confirmar</string>
-    <string name="recharge_with_card_button">Cargar dinero con tarjeta</string>
 
     <string name="activity_balance_type">Dinero en cuenta</string>
     <string name="activity_card_type">Tarjeta</string>
 
     <string name="show_password">Mostrar contraseña</string>
     <string name="hide_password">Ocultar contraseña</string>
+
 </resources>

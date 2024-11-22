@@ -35,7 +35,7 @@ fun CardListCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(32.dp),
+                    .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

@@ -88,7 +88,7 @@ fun TransferScreen(
                             description = description,
                             type = method,
                             cardId = cardId,
-                            receiverEmail = "johndoe@email.com"
+                            receiverEmail = destination
                         )
                     )
                     onTransferSuccess()
