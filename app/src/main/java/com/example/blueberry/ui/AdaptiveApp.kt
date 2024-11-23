@@ -252,14 +252,6 @@ fun AdaptiveApp() {
         AppDestinations.SECURITY
     )
 
-    LaunchedEffect(drawerState) {
-        if(drawerState.isOpen && currentDestination.value in noNavRoutes){
-            scope.launch {
-                drawerState.close()
-            }
-        }
-    }
-
     LaunchedEffect(currentDestination.value) {
         if(currentDestination.value == AppDestinations.HOME && routeStack.peek() == AppDestinations.LOGIN){
             routeStack.clear()
@@ -340,6 +332,7 @@ fun AdaptiveApp() {
                 } else {
                     ModalNavigationDrawer(
                         drawerState = drawerState,
+                        gesturesEnabled = currentDestination.value !in noNavRoutes,
                         drawerContent = {
                             ModalDrawerSheet(
                                 drawerContainerColor = Color.White
