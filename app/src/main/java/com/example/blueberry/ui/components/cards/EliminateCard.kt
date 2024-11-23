@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.blueberry.R
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Alignment
 import com.example.blueberry.data.model.Card
 
 @Composable
@@ -34,9 +35,10 @@ fun EliminateCard(
                     .fillMaxWidth()
                     .padding(8.dp)
             ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
+                    Spacer( modifier = Modifier.weight(1f) )
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = stringResource(R.string.close_button),
